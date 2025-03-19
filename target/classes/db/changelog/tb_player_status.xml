@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Changelog para a criação da tabela compras -->
+    <changeSet author="lucas" id="155519032025">
+    <createTable tableName="tb_player_status">
+        <column name="id_player_status" type="INT">
+            <constraints primaryKey="true"/>
+        </column>
+        <column name="pontos" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="nivel" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="vida" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="stamina" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="forca" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        
+        <column name="dinheiro" type="INT">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+</changeSet>
+
+</databaseChangeLog>

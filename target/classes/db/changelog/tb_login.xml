@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <!-- Changelog para a criação da tabela compras -->
+    <changeSet author="lucas" id="104919032025">
+    <createTable tableName="tb_login">
+        <column name="id" type="INT" autoIncrement="true">
+            <constraints primaryKey="true" nullable="false"/>
+        </column>
+        <column name="usuario" type="VARCHAR(30)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="senha" type="VARCHAR(60)">
+            <constraints nullable="false"/>
+        </column>
+        <column name="token" type="VARCHAR(255)">
+            <constraints nullable="false"/>
+        </column>
+    </createTable>
+</changeSet>
+
+</databaseChangeLog>
