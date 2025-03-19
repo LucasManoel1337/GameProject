@@ -3,6 +3,8 @@ package game.gameproject.front.Autenticacao;
 import game.gameproject.controller.GameFrame;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.VersoesDto;
+import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.services.AutenticacaoService;
 import game.gameproject.services.LoginService;
 import game.gameproject.services.RegistrarService;
 import javax.imageio.ImageIO;
@@ -114,6 +116,10 @@ public class JpLogin extends JPanel {
                 if (resultado == 0) {
                     // Login bem-sucedido, inicia o jogo
                     System.out.println("Login bem-sucedido! Iniciando o jogo...");
+                    
+                    AutenticacaoService autenticacaoService = new AutenticacaoService();
+                    infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
+                    
                     GameFrame gameFrame = new GameFrame();
                     launcherFrame.dispose();
                 } else {

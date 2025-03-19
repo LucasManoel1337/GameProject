@@ -21,7 +21,9 @@ public class MenuBarService {
         JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame);
         JLabel lBtnJogar = createMenuButton("JOGAR", 460, panel, Color.RED, gameFrame);
         JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame);
+        JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame);
         JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame);
+        
 
         // Adicionando os itens de menu ao painel
         panel.add(lBtnStatus);
@@ -31,6 +33,7 @@ public class MenuBarService {
         panel.add(lBtnAmigos);
         panel.add(lBtnJogar);
         panel.add(lBtnGuilda);
+        panel.add(lBtnSair);
         panel.add(lBtnDescESair);
     }
 
@@ -46,24 +49,25 @@ public class MenuBarService {
         } else if (text == "Status") {
             label.setBounds(30, 10, 55, 30);
         } else if (text == "Inventario") {
-            label.setBounds(30 + 70, 10, 80, 30);
+            label.setBounds(100, 10, 80, 30);
         } else if (text == "Mapa") {
-            label.setBounds(30 + 170, 10, 50, 30);
+            label.setBounds(200, 10, 50, 30);
         } else if (text == "Missões") {
-            label.setBounds(30 + 240, 10, 60, 30);
+            label.setBounds(270, 10, 60, 30);
         } else if (text == "Amigos") {
-            label.setBounds(30 + 330, 10, 60, 30);
+            label.setBounds(360, 10, 60, 30);
         } else if (text == "JOGAR") {
-            label.setBounds(30 + 430, 15, 70, 30);
+            label.setBounds(470, 15, 70, 30);
         } else if (text == "Guilda") {
-            label.setBounds(30 + 550, 10, 60, 30);
+            label.setBounds(580, 10, 60, 30);
+        } else if (text == "Sair") {
+            label.setBounds(660, 10, 50, 30);
         }
         label.setForeground(textColor);
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent evt) {
-                System.out.println("Abrir tela de " + text + "...");
                 if (text.equals("Status")) {
                     gameFrame.switchToStatusPanel(); // Chama a troca de tela
                 } else if (text.equals("Inventario")) {
@@ -78,7 +82,9 @@ public class MenuBarService {
                     gameFrame.switchToGamePanel(); // Chama a troca de tela
                 } else if (text.equals("Guilda")) {
                     gameFrame.switchToGuildaPanel(); // Chama a troca de tela
-                } else if (text.equals("Desconectar e Sair")) {
+                } else if (text.equals("Sair")) {
+                    gameFrame.dispose();
+                }else if (text.equals("Desconectar e Sair")) {
                     File configFile = new File("config.json");
 
                     if (configFile.exists()) {
@@ -95,22 +101,7 @@ public class MenuBarService {
                     gameFrame.dispose();
                 }
             }
-
-            @Override
-            public void mouseEntered(MouseEvent evt) {
-                if (text == "JOGAR") {
-                    label.setForeground(Color.BLUE); // Muda a cor ao passar o mouse 
-                } else {
-                   label.setForeground(Color.RED); // Muda a cor ao passar o mouse 
-                }
-            }
-
-            @Override
-            public void mouseExited(MouseEvent evt) {
-                label.setForeground(textColor); // Volta à cor original ao tirar o mouse
-            }
         });
-
         return label;
     }
 }

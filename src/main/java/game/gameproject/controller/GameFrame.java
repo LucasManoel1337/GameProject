@@ -9,6 +9,7 @@ import game.gameproject.front.JpInventario;
 import game.gameproject.front.JpMapa;
 import game.gameproject.front.JpMissoes;
 import game.gameproject.front.JpStatus;
+import game.gameproject.services.StatusService;
 
 import javax.swing.*;
 
@@ -17,7 +18,7 @@ public class GameFrame extends JFrame {
     private JPanel currentPanel;
     private JpMenu telaMenu;
     private JpGame telaJogo;
-    private infoPlayerDto playerInfo;  // Variável para armazenar as informações do player
+    infoPlayerDto playerInfo = new infoPlayerDto("a");
 
     private JpStatus telaStatus;
     private JpInventario telaInventario;
@@ -25,6 +26,8 @@ public class GameFrame extends JFrame {
     private JpMissoes telaMissoes;
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
+    
+    private final StatusService playerService = new StatusService();
 
     public GameFrame() {
         setTitle("Room 5 Studios - Game");
@@ -32,9 +35,7 @@ public class GameFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
-
-        // Inicialize playerInfo com dados reais de login ou padrão
-        playerInfo = login();  // Substitua com a lógica de obtenção das informações do jogador
+        setResizable(false);
 
         // Agora, o playerInfo está inicializado corretamente
         telaMenu = new JpMenu(this, playerInfo);
@@ -42,13 +43,6 @@ public class GameFrame extends JFrame {
         add(currentPanel);
 
         setVisible(true);
-    }
-
-    // Método de login fictício para obter o infoPlayerDto
-    private infoPlayerDto login() {
-        // Aqui você deve implementar a lógica de login e retornar o infoPlayerDto adequado.
-        // Caso o login falhe, você pode retornar null ou criar um objeto padrão.
-        return new infoPlayerDto("playerNickname");  // Exemplo de retorno com dados fictícios
     }
 
     // Método para mudar para a tela de Jogo

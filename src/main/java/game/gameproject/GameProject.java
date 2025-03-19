@@ -17,14 +17,14 @@ public class GameProject {
 
         if (playerInfo != null) {
             // Usuário autenticado, você pode acessar playerInfo.getNickPlayer() e playerInfo.getIdPlayer()
-            System.out.println("Jogador autenticado: " + playerInfo.getNickPlayer());
+            System.out.println("ID: " +playerInfo.getIdPlayer());
+            System.out.println("Nick: " +playerInfo.getNickPlayer());
+            
             GameFrame GF = new GameFrame();
         } else {
             // Token inválido ou erro na autenticação
             System.out.println("Falha na autenticação.");
             LauncherFrame LF = new LauncherFrame();
         }
-        
-        System.out.println(playerInfo.getNickPlayer());
     }
 }

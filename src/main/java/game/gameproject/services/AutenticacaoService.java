@@ -15,6 +15,8 @@ import java.sql.SQLException;
 
 public class AutenticacaoService {
 
+    private final StatusService playerService = new StatusService();
+
     // Método para autenticar o usuário com o token do config.json
     public infoPlayerDto autenticarUsuario() {
         // Verifica se o arquivo config.json existe
@@ -69,6 +71,13 @@ public class AutenticacaoService {
                     infoPlayerDto IPDto = new infoPlayerDto("playerNickname");
                     IPDto.setIdPlayer(resultSet.getInt("id"));
                     IPDto.setNickPlayer(resultSet.getString("usuario"));
+                    
+                    IPDto.setNivel(playerService.getPlayerNivel(resultSet.getInt("id")));
+                    IPDto.setPontos(playerService.getPlayerPontos(resultSet.getInt("id")));
+                    IPDto.setVida(playerService.getPlayerVida(resultSet.getInt("id")));
+                    IPDto.setStamina(playerService.getPlayerStamina(resultSet.getInt("id")));
+                    IPDto.setForca(playerService.getPlayerVida(resultSet.getInt("id")));
+                    IPDto.setDinheiro(playerService.getPlayerNivel(resultSet.getInt("id")));
 
                     // Retorna o infoPlayerDto preenchido
                     return IPDto;
