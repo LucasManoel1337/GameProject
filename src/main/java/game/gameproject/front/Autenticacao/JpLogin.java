@@ -2,6 +2,7 @@ package game.gameproject.front.Autenticacao;
 
 import game.gameproject.controller.GameFrame;
 import game.gameproject.controller.LauncherFrame;
+import game.gameproject.dto.VersoesDto;
 import game.gameproject.services.LoginService;
 import game.gameproject.services.RegistrarService;
 import javax.imageio.ImageIO;
@@ -33,6 +34,14 @@ public class JpLogin extends JPanel {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        VersoesDto versoesDto = new VersoesDto();
+        
+        JLabel lVersao = new JLabel(versoesDto.getVersaoLauncher());
+        lVersao.setFont(new Font("Arial", Font.BOLD, 12));
+        lVersao.setBounds(0, 685, 350, 40);
+        lVersao.setForeground(Color.BLACK);
+        add(lVersao);
 
         // Título LOGIN
         JLabel lLogin = new JLabel("LOGIN");
