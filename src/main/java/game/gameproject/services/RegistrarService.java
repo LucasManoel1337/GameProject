@@ -28,6 +28,14 @@ public class RegistrarService {
         try {
             // Salva o usuário, senha e token no banco de dados
             if (salvarUsuarioNoBanco(usuario, senha, token)) {
+                // Obtém o ID do usuário recém-criado
+                int idPlayer = obterIdPlayer(usuario);
+
+                if (idPlayer != -1) {
+                    // Salva os dados na tabela tb_player_status
+                    salvarPlayerStatus(idPlayer);
+                }
+
                 // Cria o arquivo config.json com o token
                 criarConfigJson(token);
                 return 1;  // Retorna 1 se o registro for bem-sucedido
@@ -75,6 +83,44 @@ public class RegistrarService {
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    // Obtém o ID do jogador recém-criado
+    private int obterIdPlayer(String usuario) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            // A consulta agora usa a coluna correta 'id'
+            String query = "SELECT id FROM tb_login WHERE usuario = ?"; // Alterado para 'id'
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setString(1, usuario);
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+                    return resultSet.getInt("id"); // Alterado para 'id'
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 caso não encontre o ID
+    }
+
+    // Salva os dados na tabela tb_player_status
+    private void salvarPlayerStatus(int id) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            String query = "INSERT INTO tb_player_status (id_player_status, pontos, nivel, vida, stamina, forca, dinheiro) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, id);  // ID do player (da tabela tb_login)
+                statement.setInt(2, 2);         // Pontos
+                statement.setInt(3, 1);         // Nível
+                statement.setInt(4, 2);         // Vida
+                statement.setInt(5, 2);         // Stamina
+                statement.setInt(6, 2);         // Força
+                statement.setInt(7, 200);       // Dinheiro
+                statement.executeUpdate();
+                System.out.println("Player status inserido com sucesso!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

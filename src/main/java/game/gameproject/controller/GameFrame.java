@@ -1,8 +1,8 @@
 package game.gameproject.controller;
 
 import game.gameproject.dto.infoPlayerDto;
-import game.gameproject.front.Autenticacao.JpMenu;
-import game.gameproject.front.Autenticacao.JpGame;
+import game.gameproject.front.JpMenu;
+import game.gameproject.front.JpGame;
 
 import javax.swing.*;
 

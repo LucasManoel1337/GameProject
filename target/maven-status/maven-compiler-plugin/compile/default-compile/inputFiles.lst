@@ -3,10 +3,10 @@ C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproje
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\controller\LauncherFrame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\infoPlayerDto.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\VersoesDto.java
-C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpGame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpLogin.java
-C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpMenu.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpRegistrar.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpGame.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpMenu.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\GameProject.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\AutenticacaoService.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\LoginService.java

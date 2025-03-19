@@ -1,4 +1,4 @@
-package game.gameproject.front.Autenticacao;
+package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
 import java.awt.Color;
