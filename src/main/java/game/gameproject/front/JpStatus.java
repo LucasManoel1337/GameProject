@@ -6,8 +6,10 @@ import game.gameproject.services.MenuBarService;
 import game.gameproject.services.StatusService;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,11 +26,11 @@ public class JpStatus extends JPanel {
     public JLabel lStamina = new JLabel("");
     public JLabel lForca = new JLabel("");
     public JLabel lDinheiro = new JLabel("");
-    
+
     public JButton btnAddVida;
     public JButton btnAddStamina;
     public JButton btnAddForca;
-    
+
     public StatusService playerService = new StatusService();
 
     public JpStatus(GameFrame gameFrame, infoPlayerDto playerInfo) {
@@ -37,14 +39,22 @@ public class JpStatus extends JPanel {
         setLayout(null);
         setBackground(Color.WHITE);
 
-        JLabel lTituloTela = new JLabel("Tela Status");
+        // Criar o título
+        JLabel lTituloTela = new JLabel("Status");
         lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
         lTituloTela.setForeground(Color.BLACK);
-        lTituloTela.setBounds(10, 100, 700, 30);
+        lTituloTela.setBounds(55, 90, 700, 30);  // Coloquei a posição mais alta para que o título fique acima
         lTituloTela.setVisible(true);
         add(lTituloTela);
 
-        MenuBarService.addMenu(this, gameFrame);
+        // Criar a imagem
+        ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
+        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        logoIcon = new ImageIcon(img);
+
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabel);
 
         lJogador = new JLabel("Nick: " + playerInfo.getNickPlayer());
         lJogador.setFont(new Font("Arial", Font.BOLD, 16));
@@ -108,7 +118,7 @@ public class JpStatus extends JPanel {
             }
         });
         add(btnAddVida);
-        
+
         btnAddStamina = new JButton("");
         btnAddStamina.setBackground(Color.YELLOW);
         btnAddStamina.setBounds(100, 210 + 30, 10, 10);
@@ -122,7 +132,7 @@ public class JpStatus extends JPanel {
             }
         });
         add(btnAddStamina);
-        
+
         btnAddForca = new JButton("");
         btnAddForca.setBackground(Color.YELLOW);
         btnAddForca.setBounds(100, 210 + 45, 10, 10);
@@ -136,6 +146,8 @@ public class JpStatus extends JPanel {
             }
         });
         add(btnAddForca);
+        
+        MenuBarService.addMenu(this, gameFrame);
     }
 
     public void atualizarLabelsEAtualizar() {
@@ -155,7 +167,7 @@ public class JpStatus extends JPanel {
         revalidate();
         repaint();
     }
-    
+
     public void aumentarVida() {
         playerInfo.setPontos(playerInfo.getPontos() - 1);
         playerInfo.setVida(playerInfo.getVida() + 1);

@@ -10,7 +10,6 @@ import game.gameproject.front.JpMapa;
 import game.gameproject.front.JpMissoes;
 import game.gameproject.front.JpStatus;
 import game.gameproject.services.StatusService;
-
 import javax.swing.*;
 
 public class GameFrame extends JFrame {
@@ -26,7 +25,7 @@ public class GameFrame extends JFrame {
     private JpMissoes telaMissoes;
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
-    
+
     private final StatusService playerService = new StatusService();
 
     public GameFrame() {
@@ -41,7 +40,7 @@ public class GameFrame extends JFrame {
         telaMenu = new JpMenu(this, playerInfo);
         currentPanel = telaMenu;
         add(currentPanel);
-
+        
         setVisible(true);
     }
 

@@ -5,6 +5,7 @@ game\gameproject\front\JpStatus$1.class
 game\gameproject\bdd\DatabaseConfig.class
 game\gameproject\front\JpGuilda.class
 game\gameproject\front\JpMenu.class
+game\gameproject\front\JpGame$1.class
 game\gameproject\dto\VersoesDto.class
 game\gameproject\front\Autenticacao\JpRegistrar$1.class
 game\gameproject\front\JpMissoes.class
