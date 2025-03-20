@@ -1,14 +1,9 @@
 package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
-import java.awt.Color;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.KeyStroke;
+import javax.swing.*;
 
 public class JpGame extends JPanel {
 
@@ -30,17 +25,17 @@ public class JpGame extends JPanel {
 
         // Adicionar ao painel
         add(imageLabel);
-        
+
         bindEscapeKey();
     }
-    
+
     private void bindEscapeKey() {
         getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exitAction");
         getActionMap().put("exitAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ESC pressionado!"); // Aqui você define a ação desejada
-                
+
                 gameFrame.switchToMenuPanel();
             }
         });

@@ -48,6 +48,25 @@ public class JpInventario extends JPanel {
 
         add(imageLabel);
 
+        ImageIcon originalIconD = new ImageIcon("imagens/Menu/inventario/descricao.png");
+
+// Obter dimensões originais
+        int originalWidthD = originalIconD.getIconWidth();
+        int originalHeightD = originalIconD.getIconHeight();
+
+// Calcular novas dimensões mantendo a proporção
+        int newWidthD = 352; // Largura desejada
+        int newHeightD = 600; // Altura proporcional
+
+        Image scaledImageD = originalIconD.getImage().getScaledInstance(newWidthD, newHeightD, Image.SCALE_SMOOTH);
+        ImageIcon scaledIconD = new ImageIcon(scaledImageD);
+
+// Criar JLabel com a imagem redimensionada corretamente
+        JLabel imageLabelD = new JLabel(scaledIconD);
+        imageLabelD.setBounds((1600 - newWidth) / 2, 100, newWidthD, newHeightD);
+
+        add(imageLabelD);
+
         // Criar a imagem
         ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
         Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
