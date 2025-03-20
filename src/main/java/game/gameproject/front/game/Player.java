@@ -65,10 +65,6 @@ public class Player extends JPanel implements KeyListener {
     private int lastX;
     private int lastY;
 
-    //Animação do Combate
-    private animacaoAM animacaoAM;
-    private animacaoAP animacaoAP;
-
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
     	
@@ -209,7 +205,6 @@ public class Player extends JPanel implements KeyListener {
             }
         }
 
-
         // Sistema para o personagem spawnar no local certo após mudar de mapa.
         if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.musicam1.contains(xPersonagem, yPersonagem)) {
             trilhaSonoraMapa1.tocarSomEmLoop("Sons/emCasa.wav");
@@ -235,13 +230,7 @@ public class Player extends JPanel implements KeyListener {
             mudarMapa(new Mapa(2, this.personagemDireita1));
             xPersonagem = 733; // Coordenada X para o Mundo 2
             yPersonagem = 10; // Coordenada Y para o Mundo 2
-        } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo5.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 5
-            trilhaSonoraMapa2.pararSom();
-            trilhaSonoraMapa5.tocarSomEmLoop("Sons/mapaBoss.wav");
-            mudarMapa(new Mapa(5, this.personagemDireita1));
-            xPersonagem = 20; // Coordenada X para o Mundo 5
-            yPersonagem = 330; // Coordenada Y para o Mundo 5
-        } 
+        }
     }
     // Método para atualizar o estado do personagem
     public void atualizar() {

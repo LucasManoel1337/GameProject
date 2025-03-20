@@ -22,7 +22,6 @@ public class Mapa{
     public Rectangle areaMudancaFundo2;
     public Rectangle areaMudancaFundo3;
     public Rectangle areaMudancaFundo4;
-    public Rectangle areaMudancaFundo5;
     private int xSpawn;
     private int ySpawn;
     public Mapa(int numeroMapa, BufferedImage personagem) {
@@ -37,7 +36,6 @@ public class Mapa{
         areaMudancaFundo2 = new Rectangle(733, -20, 30, 30);
         areaMudancaFundo3 = new Rectangle(725, 655, 50, 50); // Area de transição
         areaMudancaFundo4 = new Rectangle(1020, 200, 20, 30); // Area de transição
-        areaMudancaFundo5 = new Rectangle(1220, 250, 50, 67); // Area de transição
         musicam1 = new Rectangle(390,440,20,20); // Area de interação para aparecer a imagem de controles e começar a musica da casa.
         
         // Define as coordenadas de spawn para cada mapa
@@ -187,7 +185,6 @@ public class Mapa{
                 g.fillRect(areaMudancaFundo2.x, areaMudancaFundo2.y, areaMudancaFundo2.width, areaMudancaFundo2.height); // Desenhar area de innteração
                 g.setColor(Color.orange); // Definindo a cor
                 g.setColor(Color.gray); // Definindo a cor
-                g.fillRect(areaMudancaFundo5.x, areaMudancaFundo5.y, areaMudancaFundo5.width, areaMudancaFundo5.height); // Desenhar area de innteração
                 }
                 break;
         }
