@@ -9,60 +9,22 @@ import java.io.IOException;
 public class Mapa{
     
     // Variaveis Globais
-    private boolean desenvolvedor = false; // Modo desenvolvedor, Caso estiver false varios itens que faz o jogo funcionar ira ficar invisiveis, caso estiver true ira ficar visivel.
     public int numeroMapa;
     private BufferedImage interiorCasaInicial;
     private BufferedImage paredesInteriorCasa;
     private BufferedImage novoFundo; // Novo fundo da tela
     private BufferedImage fundoMundoAFora;
-    private BufferedImage novoFundo3;
-    private BufferedImage ilusaoMapa3;
-    private BufferedImage mapaCombateGrama;
-    private BufferedImage mapaCombateBoss;
-    private BufferedImage mapaBoss;
-    private BufferedImage isulaoMapa5;
-    private BufferedImage boss;
-    private BufferedImage mapaLoja;
-    private BufferedImage ilusaoMapaLoja;
     // Array especifico para cada mapa
     private Rectangle[] obstaculosMapa1 = new Rectangle[100]; // Ajuste o tamanho do array
     private Rectangle[] obstaculosMapa2 = new Rectangle[100]; // Ajuste o tamanho do array para o mapa 2
-    private Rectangle[] obstaculosMapa3 = new Rectangle[100]; // Ajuste o tamanho do array para o mapa 3
-    private Rectangle[] obstaculosMapa5 = new Rectangle[100]; // Ajuste o tamanho do array para o mapa 5
-    private Rectangle[] obstaculosMapa7 = new Rectangle[100]; // Ajuste o tamanho do array para o mapa 7
     public Rectangle musicam1;
-    public Rectangle cacamba;
     public Rectangle areaMudancaFundo; // Área retangular para mudar o fundo
     public Rectangle areaMudancaFundo2;
     public Rectangle areaMudancaFundo3;
     public Rectangle areaMudancaFundo4;
     public Rectangle areaMudancaFundo5;
-    public Rectangle areaMudancaFundo6;
-    public Rectangle areaMudancaFundo7;
-    public Rectangle areaMudancaFundo8;
-    public Rectangle areaMudancaFundo9;
-    public Rectangle areaMudancaFundo10;
-    public Rectangle areaCombateGrama;
-    public Rectangle areaCombateGrama1;
-    public Rectangle areaCombateGrama2;
-    public Rectangle areaCombateGrama3;
-    public Rectangle areaCombateBoss;
-    public Rectangle placa1;
-    public Rectangle placa2;
-    public Rectangle placa3;
-    public Rectangle placa4;
-    public Rectangle placa5;
-    public Rectangle placa6;
-    public Rectangle areaShop;
     private int xSpawn;
     private int ySpawn;
-    private BufferedImage personagemMapaCombate; 
-    private BufferedImage monstroImagem;
-    private BufferedImage imagemBoss;// Variável para armazenar a imagem do monstro
-    private BufferedImage bauPrata;
-    private BufferedImage bauDourado;
-    public Rectangle retanguloBau;
-    public Rectangle retanguloBauAbrir;
     public Mapa(int numeroMapa, BufferedImage personagem) {
     this.numeroMapa = numeroMapa;
         
@@ -76,29 +38,8 @@ public class Mapa{
         areaMudancaFundo3 = new Rectangle(725, 655, 50, 50); // Area de transição
         areaMudancaFundo4 = new Rectangle(1020, 200, 20, 30); // Area de transição
         areaMudancaFundo5 = new Rectangle(1220, 250, 50, 67); // Area de transição
-        areaMudancaFundo6 = new Rectangle(-2, 320, 14, 50); // Area de transição
-        areaMudancaFundo7 = new Rectangle(1220, 470, 50, 67); // Area de transição
-        areaMudancaFundo8 = new Rectangle(-1, 540, 14, 60); // Area de transição
-        areaMudancaFundo9 = new Rectangle(190, 140, 20, 20); // Area de transição
-        areaMudancaFundo10 = new Rectangle(570, 690, 100, 20); // Area de transição
-        areaCombateGrama = new Rectangle(555,520,130,120); // Area 1 de transição para mapa combate
-        areaCombateGrama2 = new Rectangle(140,240,100,120);  // Area 2 de transição para mapa combate
-        areaCombateGrama3 = new Rectangle(1026,215,40,170); // Area 3 de transição para mapa combate
-        areaShop = new Rectangle(565,200,80,70); // Area de interação do shop
         musicam1 = new Rectangle(390,440,20,20); // Area de interação para aparecer a imagem de controles e começar a musica da casa.
-        cacamba = new Rectangle(330,250,80,40);
-        areaCombateBoss = new Rectangle(660,10,300,180); // Area de transição para o combate com o boss
         
-        // Areas de interação
-        placa1 = new Rectangle(763, 7, 33, 32); // Area de interação da placa 1
-        placa2 = new Rectangle(284, 167, 33, 32); // Area de interação da placa 2
-        placa3 = new Rectangle(505, 327, 33, 32); // Area de interação da placa 3
-        placa4 = new Rectangle(1148, 247, 33, 32); // Area de interação da placa 4
-        placa5 = new Rectangle(1055, 464, 33, 32); // Area de interação da placa 5
-        placa6 = new Rectangle(735, 293, 33, 32); // Area de interação da placa 6
-        //Retangulos Baus
-        retanguloBau = new Rectangle(868,10,4,1); // Area de interação da do bau
-        retanguloBauAbrir = new Rectangle(835, 0,40,35);
         // Define as coordenadas de spawn para cada mapa
         switch (numeroMapa) {
             case 1:
@@ -114,10 +55,6 @@ public class Mapa{
                 ySpawn = 600;
                 break;
         }
-        
-        if (numeroMapa == 4 || numeroMapa == 6) { // Caso estiver no mapa 4 ou 6
-            this.personagemMapaCombate = personagem ;
-        }
     }
 
     //Funcao inicializar array obstaculos
@@ -126,9 +63,6 @@ public class Mapa{
         for (int i = 0; i < obstaculosMapa1.length; i++) {
             obstaculosMapa1[i] = new Rectangle(); // Inicializa o array do mapa 1
             obstaculosMapa2[i] = new Rectangle(); // Inicializa o array do mapa 2
-            obstaculosMapa3[i] = new Rectangle(); // Inicializa o array do mapa 3
-            obstaculosMapa5[i] = new Rectangle(); // Inicializa o array do mapa 5
-            obstaculosMapa7[i] = new Rectangle(); // Inicializa o array do mapa 7
         }
         //Array obstaculo do mapa 1
         obstaculosMapa1[0] = new Rectangle(372, 375, 85, 67);
@@ -202,73 +136,6 @@ public class Mapa{
         obstaculosMapa2[46] = new Rectangle(1200, 140, 52, 3);
         obstaculosMapa2[47] = new Rectangle(140, 140, 150, 10);
         obstaculosMapa2[48] = new Rectangle(560, 20, 3, 3);
-        
-        //Array obstaculo do mapa 3
-        obstaculosMapa3[0] = new Rectangle(367, 440, 28, 3);
-        obstaculosMapa3[1] = new Rectangle(149, 220, 36, 1);
-        obstaculosMapa3[2] = new Rectangle(22, 155, 36, 1);
-        obstaculosMapa3[3] = new Rectangle(85, 68, 37, 1);
-        obstaculosMapa3[4] = new Rectangle(470, 44, 35, 1);
-        obstaculosMapa3[5] = new Rectangle(820, 163, 32, 1);
-        obstaculosMapa3[6] = new Rectangle(1106, 190, 39, 1);
-        obstaculosMapa3[7] = new Rectangle(1040, 528, 39, 1);
-        obstaculosMapa3[8] = new Rectangle(945, 432, 39, 1);
-        obstaculosMapa3[9] = new Rectangle(782, 643, 39, 1);
-        obstaculosMapa3[10] = new Rectangle(690, 415, 1, 1); 
-        obstaculosMapa3[11] = new Rectangle(433, 210, 3, 3); 
-        obstaculosMapa3[12] = new Rectangle(947, 135, 1, 1);
-        obstaculosMapa3[13] = new Rectangle(1203, 436, 1, 1); 
-        obstaculosMapa3[14] = new Rectangle(1042, 650, 1, 1);
-        obstaculosMapa3[15] = new Rectangle(473, 537, 1, 300);
-        obstaculosMapa3[16] = new Rectangle(436, 537, 1, 300);
-        obstaculosMapa3[17] = new Rectangle(473, 400, 1, 42);
-        obstaculosMapa3[18] = new Rectangle(434, 400, 2, 42);
-        obstaculosMapa3[19] = new Rectangle(434, 258, 2, 170);
-        obstaculosMapa3[20] = new Rectangle(434, 258, 140, 1);
-        obstaculosMapa3[21] = new Rectangle(574, 258, 1, 90);
-        obstaculosMapa3[22] = new Rectangle(574, 348, 290, 1);
-        obstaculosMapa3[23] = new Rectangle(864, 348, 1, 10);
-        obstaculosMapa3[24] = new Rectangle(474, 358, 390, 1);
-        
-        //Array obstaculo do mapa 5
-        obstaculosMapa5[0] = new Rectangle(0, 468, 1280, 3);
-        obstaculosMapa5[1] = new Rectangle(12, 0, 3, 315);
-        obstaculosMapa5[2] = new Rectangle(12, 428, 3, 42);
-        obstaculosMapa5[3] = new Rectangle(608, 0, 1, 245);
-        obstaculosMapa5[4] = new Rectangle(1000, 0, 1, 245);
-        obstaculosMapa5[5] = new Rectangle(608, 245, 152, 1);
-        obstaculosMapa5[6] = new Rectangle(852, 245, 147, 1);
-        obstaculosMapa5[7] = new Rectangle(760, 245, 1, 30);
-        obstaculosMapa5[8] = new Rectangle(852, 245, 1, 30);
-        obstaculosMapa5[9] = new Rectangle(1275, 0, 1, 515);
-        obstaculosMapa5[10] = new Rectangle(0, -7, 1267, 1);
-        obstaculosMapa5[11] = new Rectangle(240, 110, 33, 1);
-        obstaculosMapa5[12] = new Rectangle(1200, 174, 45, 1);
-        obstaculosMapa5[13] = new Rectangle(-1, 540, 160, 01);
-        obstaculosMapa5[14] = new Rectangle(-1, 660, 160, 01);
-        obstaculosMapa5[15] = new Rectangle(144, 540, 01, 110);
-        obstaculosMapa5[16] = new Rectangle(790, 3, 27, 91); // Colisão do Boss
-        
-        //Array obstaculo do mapa 7
-        obstaculosMapa7[0] = new Rectangle(219, 146, 01, 270);
-        obstaculosMapa7[1] = new Rectangle(219, 146, 820, 01);
-        obstaculosMapa7[2] = new Rectangle(1039, 146, 01, 827);
-        obstaculosMapa7[3] = new Rectangle(690, 720, 700, 01);
-        obstaculosMapa7[4] = new Rectangle(477, 720, 90, 01);
-        obstaculosMapa7[5] = new Rectangle(477, 307, 01, 900);
-        obstaculosMapa7[6] = new Rectangle(396, 307, 80, 01);
-        obstaculosMapa7[7] = new Rectangle(396, 307, 01, 110);
-        obstaculosMapa7[8] = new Rectangle(219, 407, 180, 01);
-        obstaculosMapa7[9] = new Rectangle(530, 0, 01, 233);
-        obstaculosMapa7[10] = new Rectangle(730, 0, 01, 233);
-        obstaculosMapa7[11] = new Rectangle(530, 233, 197, 01);
-        obstaculosMapa7[12] = new Rectangle(740, 0, 300, 180);
-        obstaculosMapa7[13] = new Rectangle(219, 0, 320, 180);
-        obstaculosMapa7[14] = new Rectangle(1010, 300, 10, 77);
-        obstaculosMapa7[15] = new Rectangle(792, 340, 56, 34);
-        obstaculosMapa7[16] = new Rectangle(856, 502, 58, 34);
-        obstaculosMapa7[17] = new Rectangle(856, 502, 58, 34);
-        obstaculosMapa7[18] = new Rectangle(219, 340, 95, 01);
     }
 
     // Método para carregar as imagens necessarias para o jogo
@@ -279,16 +146,6 @@ public class Mapa{
             paredesInteriorCasa = ImageIO.read(new File("imagens/mapa/paredesInteriorCasa.png"));
             novoFundo = ImageIO.read(new File("imagens/mapa/mundoAFora.png"));
             fundoMundoAFora = ImageIO.read(new File("imagens/mapa/fundoMundoAFora.png"));
-            novoFundo3 = ImageIO.read(new File("imagens/mapa/Mapa2-pokemon.png"));
-            ilusaoMapa3 = ImageIO.read(new File("imagens/mapa/ilusaoMapa3.png"));
-            mapaCombateGrama = ImageIO.read(new File("imagens/mapa/MapaCombateGrama.png"));
-            mapaCombateBoss = ImageIO.read(new File("imagens/mapa/batalhaBoss.png"));
-            mapaBoss = ImageIO.read(new File("imagens/mapa/mapaBoss.png"));
-            isulaoMapa5 = ImageIO.read(new File("imagens/mapa/isulaoMapa5.png"));
-            mapaLoja = ImageIO.read(new File("imagens/mapa/mapaLoja.png"));
-            ilusaoMapaLoja = ImageIO.read(new File("imagens/mapa/ilusaoMapaLoja.png"));
-            bauPrata = ImageIO.read(new File("imagens/Baus/bauPrata.png"));
-            bauDourado = ImageIO.read(new File("imagens/Baus/bauDourado.png"));
         } catch (IOException e) { // Caso der erro em alguma das imagens.
             System.err.println("Erro ao carregar imagens na classe Mapa!" + e.getMessage()); // Ira aparecer esse codigo de erro
             System.exit(1); // Fechar o Jogo
@@ -302,57 +159,9 @@ public class Mapa{
         switch (numeroMapa) {
             case 1:
                 g.drawImage(interiorCasaInicial, 0, 0, 1280, 768, null); // Desenhar o mapa
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                    g.fillRect(cacamba.x, cacamba.y, cacamba.width, cacamba.height);
-                }
                 break;
             case 2:
                 g.drawImage(novoFundo, 0, 0, 1280, 768, null); // Desenhar o mapa
-                break;
-            case 3:
-                g.drawImage(novoFundo3, 0, 0, 1280, 730, null); // Desenhar o mapa
-                g.drawImage(bauPrata, 850, 20, 31, 30, null); // Desenhar o bau no mapa
-                if(desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                    g.fillRect(retanguloBau.x, retanguloBau.y, retanguloBau.width, retanguloBau.height); // Desenhar area de interação
-                    g.setColor(Color.RED);
-                    g.fillRect(areaCombateGrama.x, areaCombateGrama.y, areaCombateGrama.width, areaCombateGrama.height); // Desenhar area de interação
-                    g.fillRect(areaCombateGrama2.x, areaCombateGrama2.y, areaCombateGrama2.width, areaCombateGrama2.height); // Desenhar area de interação
-                    g.fillRect(areaCombateGrama3.x, areaCombateGrama3.y, areaCombateGrama3.width, areaCombateGrama3.height); // Desenhar area de interação
-                    g.fillRect(retanguloBauAbrir.x, retanguloBauAbrir.y, retanguloBauAbrir.width, retanguloBauAbrir.height); // Desenhar area de interação
-                }
-                break;
-            case 4:
-                g.drawImage(mapaCombateGrama, 0, 0, 1280, 768, null); // Desenhar o mapa
-                if(monstroImagem != null) { // Verifica se a imagem do monstro foi carregada
-                    if(monstro.getTipo().equals("Slime")) { // Caso for Slime
-                        g.drawImage(monstroImagem, 680, 350, 70, 70, null); // Desenha o modelo do personagem parado na tela
-                    }else if(monstro.getTipo().equals("Goblin")) { // Caso for Goblin
-                        g.drawImage(monstroImagem, 680, 350, 70, 70, null); // Desenha o modelo do personagem parado na tela
-                    }else{ // Caso for FadaMacabra
-                        g.drawImage(monstroImagem, 680, 350, 70, 70, null); // Desenha o modelo do personagem parado na tela
-                    }
-                }
-                g.drawImage(personagemMapaCombate, 540, 350, 50, 70, null); // Desenha o player na tela de combate
-                break;
-            case 5:
-                g.drawImage(mapaBoss, 0, 0, 1280, 768, null); // Desenhar o mapa
-                    if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                        g.fillRect(areaCombateBoss.x, areaCombateBoss.y, areaCombateBoss.width, areaCombateBoss.height); // Desenhar area de interação
-                    }
-                g.drawImage(imagemBoss, 740, 10, 120, 140, null);
-                break;
-            case 6:
-                g.drawImage(mapaCombateBoss,0,0,1280,768,null); // Desenhar o mapa
-                if(imagemBoss != null){ // Verificação se a imagem esta vazia ou não
-                    g.drawImage(imagemBoss, 665, 270, 120, 140, null); // Desenhar o boss na tela
-                }
-                g.drawImage(personagemMapaCombate, 540, 350, 30, 50, null); // Desenhar o personagem na tela de combate do boss
-                break;
-            case 7:
-                g.drawImage(mapaLoja, 0, 0, 1280, 768, null); // Desenhar o mapa
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                g.fillRect(areaShop.x, areaShop.y, areaShop.width, areaShop.height); // Desenhar area de interação
-                }
                 break;
         }
     }
@@ -363,10 +172,8 @@ public class Mapa{
             case 1:
                 g.drawImage(paredesInteriorCasa, 0, 0, 1280, 768, null);
                 g.setColor(Color.RED); // Definindo a cor
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
                 for (Rectangle obstaculo : obstaculosMapa1) { // Utilizando for para imprimir as colisões
                     g.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height); // Desenhando as colisões
-                }
                 g.fillRect(areaMudancaFundo.x, areaMudancaFundo.y, areaMudancaFundo.width, areaMudancaFundo.height); // Desenhar area de innteração
                 g.fillRect(musicam1.x, musicam1.y, musicam1.width, musicam1.height); // Desenhar area de innteração
                 }
@@ -374,61 +181,13 @@ public class Mapa{
             case 2:
                 g.drawImage(fundoMundoAFora, 0, -2, 1280, 768, null); 
                 g.setColor(Color.RED); // Definindo a cor
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
                     for (Rectangle obstaculo : obstaculosMapa2) { // Utilizando for para imprimir as colisões
                         g.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height); // Desenhando as colisões
-                }
                 g.fillRect(areaMudancaFundo4.x, areaMudancaFundo4.y, areaMudancaFundo4.width, areaMudancaFundo4.height); // Desenhar area de innteração
                 g.fillRect(areaMudancaFundo2.x, areaMudancaFundo2.y, areaMudancaFundo2.width, areaMudancaFundo2.height); // Desenhar area de innteração
                 g.setColor(Color.orange); // Definindo a cor
-                g.fillRect(placa1.x, placa1.y, placa1.width, placa1.height); // Desenhar area de innteração
-                g.fillRect(placa2.x, placa2.y, placa2.width, placa2.height); // Desenhar area de innteração
-                g.fillRect(placa3.x, placa3.y, placa3.width, placa3.height); // Desenhar area de innteração
-                g.fillRect(placa4.x, placa4.y, placa4.width, placa4.height); // Desenhar area de innteração
-                g.fillRect(placa5.x, placa5.y, placa5.width, placa5.height); // Desenhar area de innteração
                 g.setColor(Color.gray); // Definindo a cor
                 g.fillRect(areaMudancaFundo5.x, areaMudancaFundo5.y, areaMudancaFundo5.width, areaMudancaFundo5.height); // Desenhar area de innteração
-                g.fillRect(areaMudancaFundo7.x, areaMudancaFundo7.y, areaMudancaFundo7.width, areaMudancaFundo7.height); // Desenhar area de innteração
-                g.fillRect(areaMudancaFundo9.x, areaMudancaFundo9.y, areaMudancaFundo9.width, areaMudancaFundo9.height); // Desenhar area de innteração
-                }
-                break;
-            case 3:
-                g.drawImage(ilusaoMapa3, 0, 0, 1280, 768, null);
-                g.setColor(Color.RED); // Cor para os obstáculos
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                for (Rectangle obstaculo : obstaculosMapa3) { // Utilizando for para imprimir as colisões
-                g.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height); // Desenhando as colisões
-            }
-                g.fillRect(areaMudancaFundo3.x, areaMudancaFundo3.y, areaMudancaFundo3.width, areaMudancaFundo3.height); // Desenhar area de innteração
-                }
-                break;
-            case 4:
-                break;
-            case 5:
-                g.drawImage(isulaoMapa5, 0, 0, 1280, 768, null);
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                    g.setColor(Color.RED); // Cor para os obstáculos
-                    for (Rectangle obstaculo : obstaculosMapa5) { // Utilizando for para imprimir as colisões
-                        g.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height); // Desenhando as colisões
-                    }
-                    g.setColor(Color.gray); // Definindo cor
-                    g.fillRect(areaMudancaFundo6.x, areaMudancaFundo6.y, areaMudancaFundo6.width, areaMudancaFundo6.height); // Desenhar area de innteração
-                    g.fillRect(areaMudancaFundo8.x, areaMudancaFundo8.y, areaMudancaFundo8.width, areaMudancaFundo8.height); // Desenhar area de innteração
-                    g.setColor(Color.orange); // Definindo cor
-                    g.fillRect(placa6.x, placa6.y, placa6.width, placa6.height); // Desenhar area de innteração
-                }
-                break;
-            case 6:
-                break;
-            case 7:
-                g.drawImage(ilusaoMapaLoja, 0, 0, 1280, 768, null);
-                if (desenvolvedor) { // Caso estiver modo desenvolvedor desenhar os codigos dentro do if
-                    g.setColor(Color.RED); // Cor para os obstáculos1
-                    for (Rectangle obstaculo : obstaculosMapa7) { // Utilizando for para imprimir as colisões
-                        g.fillRect(obstaculo.x, obstaculo.y, obstaculo.width, obstaculo.height); // Desenhando as colisões
-                    }
-                    g.setColor(Color.gray); // Definindo cor
-                    g.fillRect(areaMudancaFundo10.x, areaMudancaFundo10.y, areaMudancaFundo10.width, areaMudancaFundo10.height); // Desenhar area de innteração
                 }
                 break;
         }
@@ -453,38 +212,9 @@ public class Mapa{
                     }
                 }
                 break;
-            case 3:
-                for (Rectangle obstaculo : obstaculosMapa3) { // Ele meio que Carrega todos as colisoes desse mapa
-                    if (obstaculo != null && areaPlayer.intersects(obstaculo)) { // Caso o player tentando entrar dentro ca colisão
-                        return false; // Colisão detectada, não pode mover
-                    }
-                }
-                if(retanguloBau != null && areaPlayer.intersects(retanguloBau)){ // Caso o player tentando entrar dentro ca colisão
-                    return false;
-                }
-                break;
-            case 5:
-                for (Rectangle obstaculo : obstaculosMapa5) { // Ele meio que Carrega todos as colisoes desse mapa
-                    if (obstaculo != null && areaPlayer.intersects(obstaculo)) { // Caso o player tentando entrar dentro ca colisão
-                        return false; // Colisão detectada, não pode mover
-                    }
-                }
-                break;
-            case 7:
-                for (Rectangle obstaculo : obstaculosMapa7) { // Ele meio que Carrega todos as colisoes desse mapa
-                    if (obstaculo != null && areaPlayer.intersects(obstaculo)) { // Caso o player tentando entrar dentro ca colisão
-                        return false; // Colisão detectada, não pode mover
-                    }
-                }
-                break;
 
         }
         return true; // Sem colisão, pode mover
-    }
-
-    // Metodo para caso o bau foi aberto ou não
-    public void setBauPrata(BufferedImage bauPrata) {
-        this.bauPrata = bauPrata;
     }
 
     // Método para obter as coordenadas de spawn do mapa
@@ -507,9 +237,9 @@ public class Mapa{
         return numeroMapa;
     }
 
-    // Métodos para obter as áreas de transição
+    //Métodos para obter as áreas de transição
     public Rectangle getAreaMudancaFundo() {
-        return areaMudancaFundo;
+    	return areaMudancaFundo;
     }
     // Métodos para obter as áreas de transição
     public Rectangle getAreaMudancaFundo2() {
@@ -523,31 +253,5 @@ public class Mapa{
     public Rectangle getAreaMudancaFundo4() {
         return areaMudancaFundo4;
     }
-
-    // Método para carregar a imagem do monstro (chamado apenas na tela de combate)
-    public void carregarImagemMonstro(Monstros monstro) {
-        try {
-            this.monstroImagem = ImageIO.read(new File("imagens/monstros/" + monstro.getTipo() + ".png"));
-        } catch (IOException e) {
-            System.err.println("Erro ao carregar imagem do monstro " + monstro.getTipo() + " na classe Mapa!" + e.getMessage());
-        }
-    }
-    public void carregarImagemBoss(Monstros monstro){
-        try {
-            this.imagemBoss = ImageIO.read(new File("imagens/monstros/MoonDust.png"));
-        } catch (IOException e) {
-            System.err.println("Erro ao carregar imagem do monstro " + monstro.getTipo() + " na classe Mapa!" + e.getMessage());
-        }
-    }
-
-    // Metodo get do Desenvolvedor
-    public boolean isDesenvolvedor() {
-        return desenvolvedor;
-    }
-    // Metodo set do Desenvolvedor
-    public void setDesenvolvedor(boolean desenvolvedor) {
-        this.desenvolvedor = desenvolvedor;
-    }
-
     
 }
