@@ -30,7 +30,7 @@ public class GameFrame extends JFrame {
 
     public GameFrame() {
         setTitle("Room 5 Studios - Game");
-        setSize(1000, 750);  // Tamanho do jogo
+        setSize(1280, 768);  // Tamanho do jogo
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
