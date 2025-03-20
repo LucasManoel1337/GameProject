@@ -1,6 +1,7 @@
 package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
+import game.gameproject.dto.infoPlayerDto;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -8,9 +9,12 @@ import javax.swing.*;
 public class JpGame extends JPanel {
 
     private GameFrame gameFrame;
+    private infoPlayerDto playerInfo;
 
-    public JpGame(GameFrame gameFrame) {
-        this.gameFrame = gameFrame;
+    public JpGame(GameFrame gameFrame, infoPlayerDto playerInfo) {
+        this.gameFrame = gameFrame;  // Agora gameFrame não será mais null
+        this.playerInfo = playerInfo;  // Atribui o playerInfo passado no construtor
+        setLayout(null);
         setLayout(null);
         setBackground(Color.WHITE);
 
@@ -40,4 +44,4 @@ public class JpGame extends JPanel {
             }
         });
     }
-}
+        }

@@ -17,7 +17,6 @@ game\gameproject\services\LoginService.class
 game\gameproject\front\JpMapa.class
 game\gameproject\services\MenuBarService$1.class
 game\gameproject\front\Autenticacao\JpRegistrar$3.class
-game\gameproject\front\JpGame$3.class
 game\gameproject\front\JpInventario.class
 game\gameproject\GameProject.class
 game\gameproject\front\Autenticacao\JpLogin$1.class
@@ -30,9 +29,7 @@ game\gameproject\controller\LauncherFrame.class
 game\gameproject\front\Autenticacao\JpRegistrar.class
 game\gameproject\front\JpGame.class
 game\gameproject\front\JpStatus$2.class
-game\gameproject\front\JpGame$2.class
 game\gameproject\front\JpStatus.class
 game\gameproject\front\Autenticacao\JpLogin.class
 game\gameproject\controller\GameFrame.class
-game\gameproject\dto\CoordenadasDto.class
 game\gameproject\front\Autenticacao\JpRegistrar$BotaoArredondado.class

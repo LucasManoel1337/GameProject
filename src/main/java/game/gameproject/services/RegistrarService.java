@@ -34,6 +34,9 @@ public class RegistrarService {
                 if (idPlayer != -1) {
                     // Salva os dados na tabela tb_player_status
                     salvarPlayerStatus(idPlayer);
+                    
+                    // Salva as coordenadas iniciais na tabela tb_player_coordenadas
+                    salvarCoordenadasPlayer(idPlayer);
                 }
 
                 // Cria o arquivo config.json com o token
@@ -118,6 +121,25 @@ public class RegistrarService {
                 statement.setInt(7, 200);       // Dinheiro
                 statement.executeUpdate();
                 System.out.println("Player status inserido com sucesso!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Salva as coordenadas iniciais na tabela tb_player_coordenadas
+    private void salvarCoordenadasPlayer(int id) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            // Vamos supor que o jogador começa em (0, 0) e com o sprite inicial '1'
+            String query = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, id);  // ID do player (da tabela tb_login)
+                statement.setInt(2, 0);    // Coordenada X inicial
+                statement.setInt(3, 0);    // Coordenada Y inicial
+                statement.setInt(4, 1);    // Sprite inicial
+                statement.setBoolean(5, false);  // Inicialmente offline
+                statement.executeUpdate();
+                System.out.println("Coordenadas do jogador inseridas com sucesso!");
             }
         } catch (SQLException e) {
             e.printStackTrace();

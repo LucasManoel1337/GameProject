@@ -1,13 +1,12 @@
 package game.gameproject.services;
 
 import game.gameproject.controller.GameFrame;
+import game.gameproject.dto.infoPlayerDto;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.MediaTracker;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -18,7 +17,7 @@ import javax.swing.JPanel;
 public class MenuBarService {
 
     public String[] menuOptions = {"Status", "Inventário", "Mapa", "Missões", "Amigos", "Guilda"};
-
+    
     public static void addMenu(JPanel panel, GameFrame gameFrame) {
     // Criando os botões de navegação (JLabel)
     JLabel lBtnStatus = createMenuButton("Status", 30, panel, gameFrame);
@@ -90,23 +89,23 @@ public class MenuBarService {
     private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 14));
-        if (text == "Desconectar e Sair") {
+        if (text.equals("Desconectar e Sair")) {
             label.setBounds(xPosition, 10, 180, 30);
-        } else if (text == "Status") {
+        } else if (text.equals("Status")) {
             label.setBounds(30, 10, 55, 30);
-        } else if (text == "Inventario") {
+        } else if (text.equals("Inventario")) {
             label.setBounds(100, 10, 80, 30);
-        } else if (text == "Mapa") {
+        } else if (text.equals("Mapa")) {
             label.setBounds(200, 10, 50, 30);
-        } else if (text == "Missões") {
+        } else if (text.equals("Missões")) {
             label.setBounds(270, 10, 60, 30);
-        } else if (text == "Amigos") {
+        } else if (text.equals("Amigos")) {
             label.setBounds(360, 10, 60, 30);
-        } else if (text == "JOGAR") {
+        } else if (text.equals("JOGAR")) {
             label.setBounds(470, 15, 70, 30);
-        } else if (text == "Guilda") {
+        } else if (text.equals("Guilda")) {
             label.setBounds(580, 10, 60, 30);
-        } else if (text == "Sair") {
+        } else if (text.equals("Sair")) {
             label.setBounds(660, 10, 50, 30);
         }
         label.setForeground(textColor);

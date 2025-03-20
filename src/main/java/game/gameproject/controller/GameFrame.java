@@ -48,7 +48,7 @@ public class GameFrame extends JFrame {
     public void switchToGamePanel() {
         remove(currentPanel);
         if (telaJogo == null) {
-            telaJogo = new JpGame(this); // Cria a tela de jogo
+            telaJogo = new JpGame(this, playerInfo); // Cria a tela de jogo
         }
         currentPanel = telaJogo;
         add(currentPanel);
