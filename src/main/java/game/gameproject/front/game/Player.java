@@ -36,7 +36,11 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage hotbar;
     private BufferedImage fundoTest;
     private BufferedImage simOnline;
-    private BufferedImage simPing;
+    private BufferedImage simPing1;
+    private BufferedImage simPing2;
+    private BufferedImage simPing3;
+    private BufferedImage simPing4;
+    private BufferedImage simPing5;
     private int xPersonagem; // Posição X inicial do boneco.
     private int yPersonagem; // Posição Y inicial do boneco.
     private int velocidade = 9; // Velocidade de movimentação do boneco
@@ -114,7 +118,11 @@ public class Player extends JPanel implements KeyListener {
             hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
             fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
             simOnline = ImageIO.read(new File(String.format("imagens/game/interface/online.png")));
-            simPing = ImageIO.read(new File(String.format("imagens/game/interface/ping.png")));
+            simPing1 = ImageIO.read(new File(String.format("imagens/game/interface/ping1.png")));
+            simPing2 = ImageIO.read(new File(String.format("imagens/game/interface/ping2.png")));
+            simPing3 = ImageIO.read(new File(String.format("imagens/game/interface/ping3.png")));
+            simPing4 = ImageIO.read(new File(String.format("imagens/game/interface/ping4.png")));
+            simPing5 = ImageIO.read(new File(String.format("imagens/game/interface/ping5.png")));
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagens na classe Player!" + e.getMessage());
             System.exit(1);
@@ -254,7 +262,20 @@ public class Player extends JPanel implements KeyListener {
         
         g.drawImage(hotbar, 385, 678, 500, 50, this);
         
-        g.drawImage(simPing, 1140, 709, 20, 20, this);
+        int ping = (int) DatabaseConfig.getDatabasePing();
+        
+        if (ping <= 15) {
+            g.drawImage(simPing1, 1140, 709, 20, 20, this);
+        } else if (ping <= 22) {
+            g.drawImage(simPing2, 1140, 709, 20, 20, this);
+        } else if (ping <= 28) {
+            g.drawImage(simPing3, 1140, 709, 20, 20, this);
+        } else if (ping <= 38) {
+            g.drawImage(simPing4, 1140, 709, 20, 20, this);
+        } else {
+            g.drawImage(simPing5, 1140, 709, 20, 20, this);
+        }
+        
         g.setColor(Color.WHITE);
         g.drawString(DatabaseConfig.getDatabasePing()+"ms", 1160, 722);
         

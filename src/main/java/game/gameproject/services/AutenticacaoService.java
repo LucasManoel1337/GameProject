@@ -78,7 +78,7 @@ public class AutenticacaoService {
                     IPDto.setStamina(playerService.getPlayerStamina(resultSet.getInt("id")));
                     IPDto.setForca(playerService.getPlayerVida(resultSet.getInt("id")));
                     IPDto.setDinheiro(playerService.getPlayerDinheiro(resultSet.getInt("id")));
-                    IPDto.setOp(playerService.getPlayerOp(resultSet.getInt(resultSet.getInt("id"))));
+                    IPDto.setOp(playerService.getPlayerOp(resultSet.getInt("id")));
 
                     // Retorna o infoPlayerDto preenchido
                     return IPDto;
