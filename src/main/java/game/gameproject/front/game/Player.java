@@ -69,6 +69,8 @@ public class Player extends JPanel implements KeyListener {
     private String sprite = "";
     
     private BufferedImage personagemOn1 = personagemDireita1;
+    private int xPersonagemOn1;
+    private int yPersonagemOn1; 
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
@@ -142,20 +144,27 @@ public class Player extends JPanel implements KeyListener {
 
     // Metodo para trocar a imagem do personagem enquanto anda.
     private void trocarImagem() {
+        int numeroImagem = 1; // Inicializa com o número 1.
+
         if (movendoCima) {
             personagemAtual = (personagemAtual == personagemCima1) ? personagemCima2 : personagemCima1;
-            sprite = "imagens/player/modelo1d/modeloCosta1.png";
+            numeroImagem = (personagemAtual == personagemCima1) ? 1 : 2; // Alterna entre 1 e 2
+            sprite = "imagens/player/modelo1d/modeloCosta" + numeroImagem + ".png"; // Usa o número dinamicamente
         } else if (movendoBaixo) {
             personagemAtual = (personagemAtual == personagemBaixo1) ? personagemBaixo2 : personagemBaixo1;
-            sprite = "imagens/player/modelo1d/modeloFrente1.png";
+            numeroImagem = (personagemAtual == personagemBaixo1) ? 1 : 2; // Alterna entre 1 e 2
+            sprite = "imagens/player/modelo1d/modeloFrente" + numeroImagem + ".png"; // Usa o número dinamicamente
         } else if (movendoEsquerda) {
             personagemAtual = (personagemAtual == personagemEsquerda1) ? personagemEsquerda2 : personagemEsquerda1;
-            sprite = "imagens/player/modelo1d/modeloDireito1.png";
+            numeroImagem = (personagemAtual == personagemEsquerda1) ? 1 : 2; // Alterna entre 1 e 2
+            sprite = "imagens/player/modelo1d/modeloDireito" + numeroImagem + ".png"; // Usa o número dinamicamente
         } else if (movendoDireita) {
             personagemAtual = (personagemAtual == personagemDireita1) ? personagemDireita2 : personagemDireita1;
-            sprite = "imagens/player/modelo1d/modeloEsquerdo1.png";
+            numeroImagem = (personagemAtual == personagemDireita1) ? 1 : 2; // Alterna entre 1 e 2
+            sprite = "imagens/player/modelo1d/modeloEsquerdo" + numeroImagem + ".png"; // Usa o número dinamicamente
         }
     }
+
 
     // Método para mover o personagem (chama o mapa para verificar colisões)
     private void moverPersonagem() {
@@ -276,7 +285,7 @@ public void paintComponent(Graphics g) {
     //Desenhando boneco
     g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
     
-    
+    g.drawImage(personagemOn1, xPersonagemOn1, yPersonagemOn1, larguraPersonagem, alturaPersonagem, this);
   
 
     // Nome do jogador
