@@ -25,7 +25,6 @@ import static javax.swing.SwingConstants.CENTER;
 
 public class Player extends JPanel implements KeyListener {
 
-    private boolean tutorial = true;
     private int modeloSelecionado; // Modelo escolhido
     private String nomePersonagem; // Nome do Personagem
     private int nivel = 0; // Nivel do player
@@ -46,6 +45,8 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage personagemDireita1;
     private BufferedImage personagemDireita2;
     private BufferedImage personagemAtual;
+    private BufferedImage hotbar;
+    private BufferedImage fundoTest;
     private int xPersonagem; // Posição X inicial do boneco.
     private int yPersonagem; // Posição Y inicial do boneco.
     private int velocidade = 9; // Velocidade de movimentação do boneco
@@ -61,11 +62,9 @@ public class Player extends JPanel implements KeyListener {
     private String sprite = "";
     
     private String personagemOn1 = "";
-    private BufferedImage imgPersonagemOn1;
     private int xPersonagemOn1;
-    private int yPersonagemOn1; 
-    
-    private boolean liberadoCarregar = false;
+    private int yPersonagemOn1;
+    private String nomePlayerOn1 = "";
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
@@ -99,8 +98,7 @@ public class Player extends JPanel implements KeyListener {
                 PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
 
                 // Primeiro, buscar as informações do jogador 2
-                buscarJogadorId2();
-
+                buscarJogadorId1();
                 // Aqui você pode então fazer a impressão ou o que for necessário
             }
         });
@@ -130,6 +128,8 @@ public class Player extends JPanel implements KeyListener {
             personagemEsquerda2 = ImageIO.read(new File(String.format("imagens/player/modelo%d/modeloDireito2.png", modeloSelecionado)));
             personagemDireita1 = ImageIO.read(new File(String.format("imagens/player/modelo%d/modeloEsquerdo1.png", modeloSelecionado)));
             personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/modelo%d/modeloEsquerdo2.png", modeloSelecionado)));
+            hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
+            fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagens na classe Player!" + e.getMessage());
             System.exit(1);
@@ -186,7 +186,6 @@ public class Player extends JPanel implements KeyListener {
             mudarMapa(new Mapa(2, this.personagemDireita1));
             xPersonagem = 1020; // Coordenada X para o Mundo 2
             yPersonagem = 260; // Coordenada Y para o Mundo 2
-            tutorial = false;
         } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo2.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 3
             mudarMapa(new Mapa(3, this.personagemDireita1));
             xPersonagem = 725; // Coordenada X para o Mundo 3
@@ -266,17 +265,60 @@ public void paintComponent(Graphics g) {
 
     int larguraPersonagem = 30;
     int alturaPersonagem = 50;
-
-    //Desenhando boneco
-    g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
+    
+    g.drawImage(fundoTest, 0, 0, 1280, 768, this);
     
     g.drawImage(personagemAtual, xPersonagemOn1, yPersonagemOn1, larguraPersonagem, alturaPersonagem, this);
-  
+    g.setColor(Color.BLACK);
+ // Obtém as métricas da fonte para calcular a largura e altura do texto
+    FontMetrics fontMetricsOn1 = g.getFontMetrics();
+    int larguraTextoOn1 = fontMetricsOn1.stringWidth(nomePlayerOn1);
+    int alturaTextoOn1 = fontMetricsOn1.getHeight();
+
+    // Calcula a posição X para centralizar o texto
+    int xTextoOn1 = xPersonagemOn1 + (larguraPersonagem - larguraTextoOn1) / 2;
+    int yTextoOn1 = yPersonagemOn1 - 10; // Pode ajustar esse valor conforme necessário
+
+    // Desenha o retângulo branco com borda preta ao redor do nome
+    // Borda preta
+    g.setColor(Color.BLACK);
+    g.fillRect(xTextoOn1 - 5, yTextoOn1 - alturaTextoOn1, larguraTextoOn1 + 10, alturaTextoOn1 + 5); // Borda preta
+
+    // Retângulo branco
+    g.setColor(Color.WHITE);
+    g.fillRect(xTextoOn1 - 4, yTextoOn1 - alturaTextoOn1 + 1, larguraTextoOn1 + 8, alturaTextoOn1 + 3); // Retângulo branco
+
+    // Desenha o nome do jogador centralizado sobre o retângulo
+    g.setColor(Color.BLACK);
+    g.drawString(nomePlayerOn1, xTextoOn1, yTextoOn1);
+    
+    g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
+ // Obtém as métricas da fonte para calcular a largura e altura do texto
+ FontMetrics fontMetrics = g.getFontMetrics();
+ int larguraTexto = fontMetrics.stringWidth(playerInfo.getNickPlayer());
+ int alturaTexto = fontMetrics.getHeight();
+
+ // Calcula a posição X para centralizar o texto
+ int xTexto = xPersonagem + (larguraPersonagem - larguraTexto) / 2;
+ int yTexto = yPersonagem - 10; // Pode ajustar esse valor conforme necessário
+
+ // Desenha o retângulo branco com borda preta ao redor do nome
+ // Borda preta
+ g.setColor(Color.BLACK);
+ g.fillRect(xTexto - 5, yTexto - alturaTexto, larguraTexto + 10, alturaTexto + 5); // Borda preta
+
+ // Retângulo branco
+ g.setColor(Color.WHITE);
+ g.fillRect(xTexto - 4, yTexto - alturaTexto + 1, larguraTexto + 8, alturaTexto + 3); // Retângulo branco
+
+ // Desenha o nome do jogador centralizado sobre o retângulo
+ g.setColor(Color.BLACK);
+ g.drawString(playerInfo.getNickPlayer(), xTexto, yTexto);
 
     // Nome do jogador
     g.setFont(new Font("Arial", Font.BOLD, 16));
     g.setColor(Color.WHITE);
-    g.drawString("Personagem: " + nomePersonagem, 10, 20);
+    g.drawString(nomePersonagem, 10, 20);
 
     // Nível do jogador
     g.setFont(new Font("Arial", Font.BOLD, 20));
@@ -294,6 +336,9 @@ public void paintComponent(Graphics g) {
     g.fillRect(10, 45, 400, 10);
     g.setColor(xpColor);
     g.fillRect(10, 45, (int) (((double) xp / xpMax) * 400), 10);
+    
+    //Desenhando hotbar
+    g.drawImage(hotbar, 385, 678, 500, 50, this);
 }
 
     //Função que adiciona vida
@@ -368,9 +413,9 @@ public void paintComponent(Graphics g) {
         this.xPersonagem = this.lastX;
         this.yPersonagem = this.lastY + 20 ;
     }
-
-        public void buscarJogadorId2() {
-            String sql = "SELECT x, y, sprite FROM tb_player_coordenadas WHERE id_player = 2"; // Consulta SQL
+        
+        public void buscarJogadorId1() {
+            String sql = "SELECT x, y, sprite FROM tb_player_coordenadas WHERE id_player = 1"; // Consulta SQL
 
             try (Connection conn = DatabaseConfig.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -379,11 +424,26 @@ public void paintComponent(Graphics g) {
 
                 if (rs.next()) { // Se encontrar o jogador com ID 2
                     // Atribui os valores das colunas às variáveis
+                	nomePlayerOn1 = rs.getString("x");
                     xPersonagemOn1 = rs.getInt("x");
                     yPersonagemOn1 = rs.getInt("y");
                     personagemOn1 = rs.getString("sprite");
-                    
-                    liberadoCarregar = true;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace(); // Trata exceção caso ocorra
+            }
+            
+            String sql1 = "SELECT usuario FROM tb_login WHERE id = 1"; // Consulta SQL
+
+            try (Connection conn = DatabaseConfig.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql1)) {
+
+                ResultSet rs = stmt.executeQuery(); // Executa a consulta
+
+                if (rs.next()) { // Se encontrar o jogador com ID 2
+                    // Atribui os valores das colunas às variáveis
+                	nomePlayerOn1 = rs.getString("usuario");
                 }
 
             } catch (SQLException e) {
