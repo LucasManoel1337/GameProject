@@ -9,7 +9,12 @@ import game.gameproject.front.JpInventario;
 import game.gameproject.front.JpMapa;
 import game.gameproject.front.JpMissoes;
 import game.gameproject.front.JpStatus;
+import game.gameproject.services.PlayerService;
 import game.gameproject.services.StatusService;
+
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.*;
 
 public class GameFrame extends JFrame {
@@ -26,7 +31,7 @@ public class GameFrame extends JFrame {
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
 
-    private final StatusService playerService = new StatusService();
+    private PlayerService PS = new PlayerService();
 
     public GameFrame() {
         setTitle("Room 5 Studios - Game");
@@ -42,6 +47,21 @@ public class GameFrame extends JFrame {
         add(currentPanel);
         
         setVisible(true);
+        
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Impede fechamento imediato
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int idPlayer = playerInfo.getIdPlayer();
+                if (PS.setOffline(idPlayer) == 1) {
+                    System.out.println("Jogador " + idPlayer + " desconectado ao fechar o jogo.");
+                } else {
+                    System.err.println("Falha ao atualizar status do jogador.");
+                }
+                System.exit(1); // Mata completamente o jogo
+            }
+        });
+
     }
 
     // Método para mudar para a tela de Jogo
