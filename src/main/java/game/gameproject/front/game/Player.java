@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
 
 import game.gameproject.bdd.DatabaseConfig;
+import game.gameproject.dto.Jogador;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.PlayerService;
 
@@ -65,6 +66,8 @@ public class Player extends JPanel implements KeyListener {
     private int xPersonagemOn1;
     private int yPersonagemOn1;
     private String nomePlayerOn1 = "";
+    
+    private List<Jogador> jogadores = new ArrayList<>();
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
@@ -98,7 +101,7 @@ public class Player extends JPanel implements KeyListener {
                 PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
 
                 // Primeiro, buscar as informações do jogador 2
-                buscarJogadorId1();
+                buscarJogadores();
                 // Aqui você pode então fazer a impressão ou o que for necessário
             }
         });
@@ -259,87 +262,58 @@ public class Player extends JPanel implements KeyListener {
 
     // Função para imprimir as coisas na tela (Essencial para o jogo Funcionar corretamente)
     @Override
-public void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    mapaAtual.desenhar(g); // Desenha o fundo do mapa
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        mapaAtual.desenhar(g); // Desenha o fundo do mapa
 
-    int larguraPersonagem = 30;
-    int alturaPersonagem = 50;
-    
-    g.drawImage(fundoTest, 0, 0, 1280, 768, this);
-    
-    g.drawImage(personagemAtual, xPersonagemOn1, yPersonagemOn1, larguraPersonagem, alturaPersonagem, this);
-    g.setColor(Color.BLACK);
- // Obtém as métricas da fonte para calcular a largura e altura do texto
-    FontMetrics fontMetricsOn1 = g.getFontMetrics();
-    int larguraTextoOn1 = fontMetricsOn1.stringWidth(nomePlayerOn1);
-    int alturaTextoOn1 = fontMetricsOn1.getHeight();
+        int larguraPersonagem = 30;
+        int alturaPersonagem = 50;
 
-    // Calcula a posição X para centralizar o texto
-    int xTextoOn1 = xPersonagemOn1 + (larguraPersonagem - larguraTextoOn1) / 2;
-    int yTextoOn1 = yPersonagemOn1 - 10; // Pode ajustar esse valor conforme necessário
+        g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
-    // Desenha o retângulo branco com borda preta ao redor do nome
-    // Borda preta
-    g.setColor(Color.BLACK);
-    g.fillRect(xTextoOn1 - 5, yTextoOn1 - alturaTextoOn1, larguraTextoOn1 + 10, alturaTextoOn1 + 5); // Borda preta
+        for (Jogador jogador : jogadores) {
+            // Desenha o personagem do jogador
+            g.drawImage(personagemAtual, jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
+            
+            // Desenha o nome do jogador sobre o personagem
+            desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+        }
 
-    // Retângulo branco
-    g.setColor(Color.WHITE);
-    g.fillRect(xTextoOn1 - 4, yTextoOn1 - alturaTextoOn1 + 1, larguraTextoOn1 + 8, alturaTextoOn1 + 3); // Retângulo branco
-
-    // Desenha o nome do jogador centralizado sobre o retângulo
-    g.setColor(Color.BLACK);
-    g.drawString(nomePlayerOn1, xTextoOn1, yTextoOn1);
-    
-    g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
- // Obtém as métricas da fonte para calcular a largura e altura do texto
- FontMetrics fontMetrics = g.getFontMetrics();
- int larguraTexto = fontMetrics.stringWidth(playerInfo.getNickPlayer());
- int alturaTexto = fontMetrics.getHeight();
-
- // Calcula a posição X para centralizar o texto
- int xTexto = xPersonagem + (larguraPersonagem - larguraTexto) / 2;
- int yTexto = yPersonagem - 10; // Pode ajustar esse valor conforme necessário
-
- // Desenha o retângulo branco com borda preta ao redor do nome
- // Borda preta
- g.setColor(Color.BLACK);
- g.fillRect(xTexto - 5, yTexto - alturaTexto, larguraTexto + 10, alturaTexto + 5); // Borda preta
-
- // Retângulo branco
- g.setColor(Color.WHITE);
- g.fillRect(xTexto - 4, yTexto - alturaTexto + 1, larguraTexto + 8, alturaTexto + 3); // Retângulo branco
-
- // Desenha o nome do jogador centralizado sobre o retângulo
- g.setColor(Color.BLACK);
- g.drawString(playerInfo.getNickPlayer(), xTexto, yTexto);
-
-    // Nome do jogador
-    g.setFont(new Font("Arial", Font.BOLD, 16));
-    g.setColor(Color.WHITE);
-    g.drawString(nomePersonagem, 10, 20);
-
-    // Nível do jogador
-    g.setFont(new Font("Arial", Font.BOLD, 20));
-    g.setColor(Color.WHITE);
-    g.drawString("Nivel: " + nivel, 300, 105);
-
-    // Barra de vida
-    if (vida > 0) {
-        g.setColor(Color.RED);
-        g.fillRect(10, 27, (int) (vida * 2), 15);
+        // Desenha o personagem do jogador 2
+        g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
+        
+        // Desenha o nome do jogador 2 sobre o personagem
+        desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        
+        g.drawImage(hotbar, 385, 678, 500, 50, this);
     }
 
-    // Barra de XP
-    g.setColor(xpBgColor);
-    g.fillRect(10, 45, 400, 10);
-    g.setColor(xpColor);
-    g.fillRect(10, 45, (int) (((double) xp / xpMax) * 400), 10);
-    
-    //Desenhando hotbar
-    g.drawImage(hotbar, 385, 678, 500, 50, this);
-}
+    private void desenharNomeJogador(Graphics g, String nome, int xPersonagem, int yPersonagem, int larguraPersonagem) {
+        g.setColor(Color.BLACK);
+
+        // Obtém as métricas da fonte para calcular a largura e altura do texto
+        FontMetrics fontMetrics = g.getFontMetrics();
+        int larguraTexto = fontMetrics.stringWidth(nome);
+        int alturaTexto = fontMetrics.getHeight();
+
+        // Calcula a posição X para centralizar o texto sobre o personagem
+        int xTexto = xPersonagem + (larguraPersonagem - larguraTexto) / 2;
+        int yTexto = yPersonagem - alturaTexto; // Ajuste para colocar o texto logo acima do personagem
+
+        // Desenha o retângulo de fundo branco com borda preta
+        // Borda preta
+        g.setColor(Color.BLACK);
+        g.fillRect(xTexto - 5, yTexto - alturaTexto, larguraTexto + 10, alturaTexto + 5); // Borda preta
+
+        // Retângulo branco
+        g.setColor(Color.WHITE);
+        g.fillRect(xTexto - 4, yTexto - alturaTexto + 1, larguraTexto + 8, alturaTexto + 3); // Retângulo branco
+
+        // Desenha o nome do jogador sobre o retângulo
+        g.setColor(Color.BLACK);
+        g.drawString(nome, xTexto, yTexto);
+    }
+
 
     //Função que adiciona vida
     public void setVida(int vida) {
@@ -414,42 +388,35 @@ public void paintComponent(Graphics g) {
         this.yPersonagem = this.lastY + 20 ;
     }
         
-        public void buscarJogadorId1() {
-            String sql = "SELECT x, y, sprite FROM tb_player_coordenadas WHERE id_player = 1"; // Consulta SQL
+        public void buscarJogadores() {
+            String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
+                       + "JOIN tb_login l ON p.id_player = l.id ORDER BY p.id_player"; // Consulta SQL para pegar os dados dos jogadores
 
             try (Connection conn = DatabaseConfig.getConnection();
                  PreparedStatement stmt = conn.prepareStatement(sql)) {
 
                 ResultSet rs = stmt.executeQuery(); // Executa a consulta
 
-                if (rs.next()) { // Se encontrar o jogador com ID 2
-                    // Atribui os valores das colunas às variáveis
-                	nomePlayerOn1 = rs.getString("x");
-                    xPersonagemOn1 = rs.getInt("x");
-                    yPersonagemOn1 = rs.getInt("y");
-                    personagemOn1 = rs.getString("sprite");
-                }
+                // Limpa a lista de jogadores (caso já tenha jogadores cadastrados)
+                jogadores.clear();
 
-            } catch (SQLException e) {
-                e.printStackTrace(); // Trata exceção caso ocorra
-            }
-            
-            String sql1 = "SELECT usuario FROM tb_login WHERE id = 1"; // Consulta SQL
+                while (rs.next()) { // Para cada jogador encontrado
+                    int idPlayer = rs.getInt("id_player");
+                    String nomePlayer = rs.getString("usuario");
+                    int xPlayer = rs.getInt("x");
+                    int yPlayer = rs.getInt("y");
+                    String spritePlayer = rs.getString("sprite");
 
-            try (Connection conn = DatabaseConfig.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql1)) {
-
-                ResultSet rs = stmt.executeQuery(); // Executa a consulta
-
-                if (rs.next()) { // Se encontrar o jogador com ID 2
-                    // Atribui os valores das colunas às variáveis
-                	nomePlayerOn1 = rs.getString("usuario");
+                    // Cria um objeto Jogador e adiciona à lista
+                    Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, spritePlayer);
+                    jogadores.add(jogador);
                 }
 
             } catch (SQLException e) {
                 e.printStackTrace(); // Trata exceção caso ocorra
             }
         }
+
 
         // Getters para acessar as variáveis
         public int getxPersonagemOn1() {
