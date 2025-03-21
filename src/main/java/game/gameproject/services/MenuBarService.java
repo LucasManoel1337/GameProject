@@ -18,17 +18,18 @@ public class MenuBarService {
 
     public String[] menuOptions = {"Status", "Inventário", "Mapa", "Missões", "Amigos", "Guilda"};
     
-    public static void addMenu(JPanel panel, GameFrame gameFrame) {
+    public static void addMenu(JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
+    	
     // Criando os botões de navegação (JLabel)
-    JLabel lBtnStatus = createMenuButton("Status", 30, panel, gameFrame);
-    JLabel lBtnInventario = createMenuButton("Inventario", 100, panel, gameFrame);
-    JLabel lBtnMapa = createMenuButton("Mapa", 200, panel, gameFrame);
-    JLabel lBtnMissões = createMenuButton("Missões", 270, panel, gameFrame);
-    JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame);
-    JLabel lBtnJogar = createMenuButton("JOGAR", 460, panel, Color.RED, gameFrame);
-    JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame);
-    JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame);
-    JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame);
+    JLabel lBtnStatus = createMenuButton("Status", 30, panel, gameFrame, playerInfo);
+    JLabel lBtnInventario = createMenuButton("Inventario", 100, panel, gameFrame, playerInfo);
+    JLabel lBtnMapa = createMenuButton("Mapa", 200, panel, gameFrame, playerInfo);
+    JLabel lBtnMissões = createMenuButton("Missões", 270, panel, gameFrame, playerInfo);
+    JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo);
+    JLabel lBtnJogar = createMenuButton("JOGAR", 460, panel, Color.RED, gameFrame, playerInfo);
+    JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo);
+    JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo);
+    JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo);
 
     // Adicionando os itens de menu ao painel
     panel.add(lBtnStatus);
@@ -82,11 +83,13 @@ public class MenuBarService {
     panel.repaint();
 }
 
-    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, GameFrame gameFrame) {
-        return createMenuButton(text, xPosition, panel, Color.GRAY, gameFrame);
+    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
+        return createMenuButton(text, xPosition, panel, Color.GRAY, gameFrame, playerInfo);
     }
 
-    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame) {
+    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame, infoPlayerDto playerInfo) {
+    	PlayerService PS = new PlayerService();
+
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 14));
         if (text.equals("Desconectar e Sair")) {
@@ -128,8 +131,11 @@ public class MenuBarService {
                 } else if (text.equals("Guilda")) {
                     gameFrame.switchToGuildaPanel(); // Chama a troca de tela
                 } else if (text.equals("Sair")) {
+                	PS.setOffline(playerInfo.getIdPlayer());
                     gameFrame.dispose();
                 } else if (text.equals("Desconectar e Sair")) {
+                	PS.setOffline(playerInfo.getIdPlayer());
+                	
                     File configFile = new File("config.json");
 
                     if (configFile.exists()) {

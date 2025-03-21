@@ -2,6 +2,7 @@ package game.gameproject.services;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import game.gameproject.bdd.DatabaseConfig;
 
@@ -39,19 +40,35 @@ public class PlayerService {
             e.printStackTrace();
         }
     }
+
     
     public void setOffline(int idPlayer) {
-        String sql = "UPDATE tb_player_coordenadas SET false = true WHERE id_player = ?";
-        
+        String checkOnlineSql = "SELECT online FROM tb_player_coordenadas WHERE id_player = ?";
+        String updateOfflineSql = "UPDATE tb_player_coordenadas SET online = false WHERE id_player = ?";
+
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement checkStmt = conn.prepareStatement(checkOnlineSql)) {
              
-            stmt.setInt(1, idPlayer);
-            stmt.executeUpdate();
+            checkStmt.setInt(1, idPlayer);
+            ResultSet rs = checkStmt.executeQuery();
             
+            if (rs.next()) {
+                boolean isOnline = rs.getBoolean("online");
+                if (isOnline) {
+                    // Só atualiza se estiver online
+                    try (PreparedStatement updateStmt = conn.prepareStatement(updateOfflineSql)) {
+                        updateStmt.setInt(1, idPlayer);
+                        updateStmt.executeUpdate();
+                        System.out.println("Jogador " + idPlayer + " agora está offline.");
+                    }
+                } else {
+                    System.out.println("Jogador já está offline.");
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
     
 }

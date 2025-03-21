@@ -52,7 +52,7 @@ public class JpMenu extends JPanel {
         lPainelDeNovidades.setVisible(true);
         add(lPainelDeNovidades);
         
-        MenuBarService.addMenu(this, gameFrame);
+        MenuBarService.addMenu(this, gameFrame, playerInfo);
 
     }
 }

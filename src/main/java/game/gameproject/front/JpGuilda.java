@@ -37,6 +37,6 @@ public class JpGuilda extends JPanel {
         logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
         add(logoLabel);
         
-        MenuBarService.addMenu(this, gameFrame);
+        MenuBarService.addMenu(this, gameFrame, playerInfo);
     }
 }

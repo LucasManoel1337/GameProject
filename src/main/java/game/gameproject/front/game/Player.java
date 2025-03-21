@@ -390,8 +390,9 @@ public class Player extends JPanel implements KeyListener {
     }
         
     public void buscarJogadores() {
-        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
-                   + "JOIN tb_login l ON p.id_player = l.id ORDER BY p.id_player"; // Consulta SQL
+    	String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
+    	           + "JOIN tb_login l ON p.id_player = l.id "
+    	           + "WHERE p.online = 1 ORDER BY p.id_player"; // Filtra jogadores com status online
 
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {

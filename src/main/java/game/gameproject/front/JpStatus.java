@@ -147,7 +147,7 @@ public class JpStatus extends JPanel {
         });
         add(btnAddForca);
         
-        MenuBarService.addMenu(this, gameFrame);
+        MenuBarService.addMenu(this, gameFrame, playerInfo);
     }
 
     public void atualizarLabelsEAtualizar() {
