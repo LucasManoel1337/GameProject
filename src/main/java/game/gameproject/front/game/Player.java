@@ -29,15 +29,6 @@ public class Player extends JPanel implements KeyListener {
 
     private int modeloSelecionado; // Modelo escolhido
     private String nomePersonagem; // Nome do Personagem
-    private int nivel = 0; // Nivel do player
-    private int dinheiro = 0; // Dinheiro do player
-    public int vida = 50; // vida atual do player
-    public int vidaMax = 50; // Vida maxima do player
-    public int forca = 0; // força do player
-    private int xp = 15; // XP atual
-    private int xpMax = 100; // XP máximo
-    private Color xpColor = Color.GREEN; // Cor da barra de XP
-    private Color xpBgColor = Color.GRAY; // Cor de fundo da barra de XP
     private BufferedImage personagemCima1;
     private BufferedImage personagemCima2;
     private BufferedImage personagemBaixo1;
@@ -49,6 +40,8 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage personagemAtual;
     private BufferedImage hotbar;
     private BufferedImage fundoTest;
+    private BufferedImage simOnline;
+    private BufferedImage simPing;
     private int xPersonagem; // Posição X inicial do boneco.
     private int yPersonagem; // Posição Y inicial do boneco.
     private int velocidade = 9; // Velocidade de movimentação do boneco
@@ -63,29 +56,19 @@ public class Player extends JPanel implements KeyListener {
     private int lastY;
     private String sprite = "";
     
-    private String personagemOn1 = "";
-    private int xPersonagemOn1;
-    private int yPersonagemOn1;
-    private String nomePlayerOn1 = "";
-    
     private List<Jogador> jogadores = new ArrayList<>();
+    
+    PlayerService PS = new PlayerService();
+    DatabaseConfig bdd = new DatabaseConfig();
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
-    	
-    	setNivel(playerInfo.getNivel());
-    	setDinheiro(playerInfo.getDinheiro());
-    	setVida(playerInfo.getVida());
         this.setLayout(null);
-        
-        PlayerService PS = new PlayerService();
 
-        //Variaveis da classe Player
-        this.nomePersonagem = nome; // Atribuir o nome do personagem
         this.modeloSelecionado = modelo; // Atribuir o modelo do personagem
         this.mapaAtual = mapaInicial; // Atribui o mapa inicial
         carregarImagens(); // Carregar imagens (agora as imagens dependem do modelo)
-        personagemAtual = personagemDireita1; // Modelo/Posição Inicial do boneco
+        personagemAtual = personagemBaixo1; // Modelo/Posição Inicial do boneco
         setFocusable(true);
         xPersonagem = mapaAtual.getXSpawn(); // Define a posição inicial do player de acordo com o mapa
         yPersonagem = mapaAtual.getYSpawn(); // Define a posição inicial do player de acordo com o mapa
@@ -97,8 +80,8 @@ public class Player extends JPanel implements KeyListener {
                 moverPersonagem();
                 repaint();
                 
-                System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem 
-                        +" Sprite: "+sprite);
+                //System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem 
+                        //+" Sprite: "+sprite);
                 PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
 
                 // Primeiro, buscar as informações do jogador 2
@@ -106,6 +89,8 @@ public class Player extends JPanel implements KeyListener {
                 // Aqui você pode então fazer a impressão ou o que for necessário
             }
         });
+        
+        timerAnimacao.start();
 
         // Adicione um listener para a tecla Tab
         addKeyListener(new KeyAdapter() {
@@ -134,6 +119,8 @@ public class Player extends JPanel implements KeyListener {
             personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/modelo%d/modeloEsquerdo2.png", modeloSelecionado)));
             hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
             fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
+            simOnline = ImageIO.read(new File(String.format("imagens/game/interface/online.png")));
+            simPing = ImageIO.read(new File(String.format("imagens/game/interface/ping.png")));
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagens na classe Player!" + e.getMessage());
             System.exit(1);
@@ -287,6 +274,14 @@ public class Player extends JPanel implements KeyListener {
         desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
         
         g.drawImage(hotbar, 385, 678, 500, 50, this);
+        
+        g.drawImage(simPing, 1140, 709, 20, 20, this);
+        g.setColor(Color.WHITE);
+        g.drawString(bdd.getDatabasePing()+"ms", 1160, 722);
+        
+        g.drawImage(simOnline, 1200, 710, 15, 15, this);
+        g.setColor(Color.WHITE);
+        g.drawString(PS.getPlayersOnline()+"/20", 1220, 722);
     }
 
     private void desenharNomeJogador(Graphics g, String nome, int xPersonagem, int yPersonagem, int larguraPersonagem) {
@@ -315,12 +310,6 @@ public class Player extends JPanel implements KeyListener {
         g.drawString(nome, xTexto, yTexto);
     }
 
-
-    //Função que adiciona vida
-    public void setVida(int vida) {
-        this.vida = vida;
-    }
-
     // Método para trocar o mapa atual
     public void mudarMapa(Mapa novoMapa) {
         this.mapaAtual = novoMapa;
@@ -338,38 +327,7 @@ public class Player extends JPanel implements KeyListener {
             timerAnimacao.stop();
         }
     }
-    //Checa a vida maxima se passou de vida maxima
-    public void verificarVidaMaxima() {
-        if (vida > vidaMax) {
-            vida = vidaMax;
-        }
-    }
-
     
-    public int setNivel(int valor) {
-        return this.nivel += valor;
-    }
-
-    //Adiciona dinheiro ao player
-    public int setDinheiro(int valor) {
-        return this.dinheiro += valor;
-    }
-    //Retorna o valor de dinheiro
-    public int getDinheiro() {
-        return dinheiro;
-    }
-    //Retonar o valor de forca do personagem
-    public int getForca() {
-        return forca;
-    }
-    //Adiciona forca ao personagem
-    public void setForca(int forca) {
-        this.forca = forca;
-    }
-    //Retorna o valor de vida do personagem
-    public int getVida() {
-        return vida;
-    }
     //Pega a posicao X do personagem
     public int getPersonagemX() {
         return xPersonagem;
@@ -440,17 +398,4 @@ public class Player extends JPanel implements KeyListener {
             return null; // Retorna null caso ocorra algum erro
         }
     }
-
-        // Getters para acessar as variáveis
-        public int getxPersonagemOn1() {
-            return xPersonagemOn1;
-        }
-
-        public int getyPersonagemOn1() {
-            return yPersonagemOn1;
-        }
-
-        public String getPersonagemOn1() {
-            return personagemOn1;
-        }
     }

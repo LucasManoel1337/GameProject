@@ -9,10 +9,13 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.KeyStroke;
 
 public class JpStatus extends JPanel {
 
@@ -148,7 +151,20 @@ public class JpStatus extends JPanel {
         add(btnAddForca);
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
+        bindEscapeKey();
     }
+    
+    private void bindEscapeKey() {
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("ESCAPE"), "exitAction");
+        getActionMap().put("exitAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("ESC pressionado!");
+                
+                gameFrame.switchToGamePanel();
+            }
+        });
+}
 
     public void atualizarLabelsEAtualizar() {
         lNivel.setText("Nivel: " + playerInfo.getNivel());

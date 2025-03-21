@@ -34,8 +34,8 @@ public class Mapa{
         // Define as coordenadas de spawn para cada mapa
         switch (numeroMapa) {
             case 1:
-                xSpawn = 400;
-                ySpawn = 450;
+                xSpawn = 580;
+                ySpawn = 279;
                 break;
             case 2:
                 xSpawn = 1020;

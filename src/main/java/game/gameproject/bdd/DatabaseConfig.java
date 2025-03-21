@@ -8,6 +8,7 @@ import liquibase.database.core.MySQLDatabase;
 import liquibase.resource.ClassLoaderResourceAccessor;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import liquibase.database.jvm.JdbcConnection;
 
@@ -61,6 +62,24 @@ public class DatabaseConfig {
     public static void close() {
         if (dataSource != null) {
             dataSource.close();
+        }
+    }
+    
+    public static long getDatabasePing() {
+        String sql = "SELECT 1"; // Consulta leve para testar a conexão
+
+        try (Connection conn = getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            long startTime = System.nanoTime(); // Início do tempo
+            stmt.executeQuery(); // Executa a consulta
+            long endTime = System.nanoTime(); // Fim do tempo
+
+            return (endTime - startTime) / 1_000_000; // Converte nanossegundos para milissegundos (ms)
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1; // Retorna -1 em caso de erro
         }
     }
 }

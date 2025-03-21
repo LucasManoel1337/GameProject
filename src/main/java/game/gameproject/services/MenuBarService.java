@@ -150,6 +150,7 @@ public class MenuBarService {
 
                     // Fecha o JFrame usando a referência
                     gameFrame.dispose();
+                    PS.setOffline(playerInfo.getIdPlayer());
                 }
             }
         });

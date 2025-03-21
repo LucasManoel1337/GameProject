@@ -70,5 +70,20 @@ public class PlayerService {
         }
     }
 
+    public static int getPlayersOnline() {
+        String sql = "SELECT COUNT(*) FROM tb_player_coordenadas WHERE online = TRUE";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1); // Retorna o número de jogadores online
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Retorna -1 em caso de erro
+    }
     
 }
