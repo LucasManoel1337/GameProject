@@ -131,26 +131,32 @@ public class MenuBarService {
                 } else if (text.equals("Guilda")) {
                     gameFrame.switchToGuildaPanel(); // Chama a troca de tela
                 } else if (text.equals("Sair")) {
-                	PS.setOffline(playerInfo.getIdPlayer());
-                    gameFrame.dispose();
+                	if(PS.setOffline(playerInfo.getIdPlayer()) == 1) {
+                		System.out.println("Player desconectado com sucesso!");
+                		System.exit(1);
+                	} else {
+                		System.out.println("Ocorreu um problema para deixar o player offline!");
+                	}
                 } else if (text.equals("Desconectar e Sair")) {
-                	PS.setOffline(playerInfo.getIdPlayer());
-                	
-                    File configFile = new File("config.json");
+                	if (PS.setOffline(playerInfo.getIdPlayer()) == 1) {
+                		System.out.println("Player desconectado com sucesso!");
+                		
+                		File configFile = new File("config.json");
 
-                    if (configFile.exists()) {
-                        if (configFile.delete()) {
-                            System.out.println("Arquivo config.json deletado com sucesso.");
+                        if (configFile.exists()) {
+                            if (configFile.delete()) {
+                                System.out.println("Arquivo config.json deletado com sucesso.");
+                            } else {
+                                System.err.println("Falha ao deletar o arquivo config.json.");
+                            }
                         } else {
-                            System.err.println("Falha ao deletar o arquivo config.json.");
+                            System.err.println("Arquivo config.json não encontrado.");
                         }
-                    } else {
-                        System.err.println("Arquivo config.json não encontrado.");
-                    }
 
-                    // Fecha o JFrame usando a referência
-                    gameFrame.dispose();
-                    PS.setOffline(playerInfo.getIdPlayer());
+                        System.exit(1);
+                	} else {
+                		System.out.println("Ocorreu um problema para deixar o player offline!");
+                	}
                 }
             }
         });

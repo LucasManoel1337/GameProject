@@ -42,13 +42,13 @@ public class PlayerService {
     }
 
     
-    public void setOffline(int idPlayer) {
+    public int setOffline(int idPlayer) {
         String checkOnlineSql = "SELECT online FROM tb_player_coordenadas WHERE id_player = ?";
         String updateOfflineSql = "UPDATE tb_player_coordenadas SET online = false WHERE id_player = ?";
-
+        
         try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement checkStmt = conn.prepareStatement(checkOnlineSql)) {
-             
+            
             checkStmt.setInt(1, idPlayer);
             ResultSet rs = checkStmt.executeQuery();
             
@@ -58,17 +58,30 @@ public class PlayerService {
                     // Só atualiza se estiver online
                     try (PreparedStatement updateStmt = conn.prepareStatement(updateOfflineSql)) {
                         updateStmt.setInt(1, idPlayer);
-                        updateStmt.executeUpdate();
-                        System.out.println("Jogador " + idPlayer + " agora está offline.");
+                        int rowsAffected = updateStmt.executeUpdate();
+                        
+                        if (rowsAffected > 0) {
+                            System.out.println("Jogador " + idPlayer + " agora está offline.");
+                            return 1; // Sucesso
+                        } else {
+                            System.err.println("Falha ao atualizar status do jogador.");
+                            return 0; // Falha ao atualizar
+                        }
                     }
                 } else {
                     System.out.println("Jogador já está offline.");
+                    return 1; // Já estava offline, considerado sucesso
                 }
+            } else {
+                System.err.println("Jogador não encontrado no banco de dados.");
+                return 0; // Jogador não encontrado
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            return 0; // Erro no banco
         }
     }
+
 
     public static int getPlayersOnline() {
         String sql = "SELECT COUNT(*) FROM tb_player_coordenadas WHERE online = TRUE";

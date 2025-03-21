@@ -23,7 +23,7 @@ public class JpGame extends JPanel {
         setLayout(null);
         
         // Criando o Player
-        player = new Player(playerInfo.getNickPlayer(), 1, new Mapa(1, null), playerInfo);
+        player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
         player.setBounds(0, 0, 1280, 768); // Posição inicial e tamanho
         add(player);
         

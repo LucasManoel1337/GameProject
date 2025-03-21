@@ -27,8 +27,8 @@ import static javax.swing.SwingConstants.CENTER;
 
 public class Player extends JPanel implements KeyListener {
 
-    private int modeloSelecionado; // Modelo escolhido
-    private String nomePersonagem; // Nome do Personagem
+    private int modeloSelecionado = 1; 
+    private String nomePersonagem;
     private BufferedImage personagemCima1;
     private BufferedImage personagemCima2;
     private BufferedImage personagemBaixo1;
@@ -61,11 +61,10 @@ public class Player extends JPanel implements KeyListener {
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
 
-    public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
+    public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
         this.setLayout(null);
 
-        this.modeloSelecionado = modelo; // Atribuir o modelo do personagem
         this.mapaAtual = mapaInicial; // Atribui o mapa inicial
         carregarImagens(); // Carregar imagens (agora as imagens dependem do modelo)
         personagemAtual = personagemBaixo1; // Modelo/Posição Inicial do boneco
@@ -168,27 +167,6 @@ public class Player extends JPanel implements KeyListener {
         }
         if (movendoDireita && xPersonagem < larguraTela - 40) {
                 xPersonagem += velocidade; // Atualiza a coordenada xPersonagem
-        }
-
-        // Sistema para o personagem spawnar no local certo após mudar de mapa.
-        if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.musicam1.contains(xPersonagem, yPersonagem)) {
-
-        } else if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.areaMudancaFundo.contains(xPersonagem, yPersonagem)) { // Mundo 1 para o Mundo 2
-            mudarMapa(new Mapa(2, this.personagemDireita1));
-            xPersonagem = 1020; // Coordenada X para o Mundo 2
-            yPersonagem = 260; // Coordenada Y para o Mundo 2
-        } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo2.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 3
-            mudarMapa(new Mapa(3, this.personagemDireita1));
-            xPersonagem = 725; // Coordenada X para o Mundo 3
-            yPersonagem = 600; // Coordenada Y para o Mundo 3
-        } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo4.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 1
-            mudarMapa(new Mapa(1, this.personagemDireita1));
-            xPersonagem = 575; // Coordenada X para o Mundo 1
-            yPersonagem = 600; // Coordenada Y para o Mundo 1
-        } else if (mapaAtual.getNumeroMapa() == 3 && mapaAtual.areaMudancaFundo3.contains(xPersonagem, yPersonagem)) { // Mundo 3 para o Mundo 2 
-            mudarMapa(new Mapa(2, this.personagemDireita1));
-            xPersonagem = 733; // Coordenada X para o Mundo 2
-            yPersonagem = 10; // Coordenada Y para o Mundo 2
         }
     }
     // Método para atualizar o estado do personagem
@@ -390,7 +368,7 @@ public class Player extends JPanel implements KeyListener {
             if (file.exists()) {
                 return ImageIO.read(file);
             } else {
-                System.out.println("Arquivo não encontrado: " + caminhoCorrigido);
+                //System.out.println("Arquivo não encontrado: " + caminhoCorrigido);
                 return null;
             }
         } catch (IOException e) {
