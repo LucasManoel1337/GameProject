@@ -26,8 +26,8 @@ public class MenuBarService {
     JLabel lBtnMapa = createMenuButton("Mapa", 200, panel, gameFrame, playerInfo);
     JLabel lBtnMissões = createMenuButton("Missões", 270, panel, gameFrame, playerInfo);
     JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo);
-    JLabel lBtnJogar = createMenuButton("JOGAR", 460, panel, Color.RED, gameFrame, playerInfo);
     JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo);
+    JLabel lBtnJogar = createMenuButton("JOGAR", 460, panel, Color.RED, gameFrame, playerInfo);
     JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo);
     JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo);
 
@@ -44,32 +44,6 @@ public class MenuBarService {
 
     // Configurando o LayoutManager para null
     panel.setLayout(null);
-
-    // Criando a imagem e redimensionando
-    String imagePath = "imagens/Menu/fundos.jpg";
-    ImageIcon imageIcon = new ImageIcon(imagePath);
-
-    // Verificando se a imagem foi carregada corretamente
-    if (imageIcon.getImageLoadStatus() != MediaTracker.COMPLETE) {
-        System.out.println("Erro: A imagem não foi carregada corretamente. Verifique o caminho da imagem.");
-    } else {
-        System.out.println("Imagem carregada com sucesso.");
-    }
-
-    // Tentar redimensionar a imagem
-    try {
-        Image img = imageIcon.getImage().getScaledInstance(1000, 750, Image.SCALE_SMOOTH);
-        imageIcon = new ImageIcon(img);
-    } catch (Exception e) {
-        System.out.println("Erro ao redimensionar a imagem: " + e.getMessage());
-    }
-
-    // Criando o JLabel da imagem e definindo a posição para cobrir o painel
-    JLabel imageLabel = new JLabel(imageIcon);
-    imageLabel.setBounds(0, 0, 1000, 750); // A imagem vai preencher o painel
-
-    // Adicionando a imagem ao painel
-    panel.add(imageLabel);
 
     // Verificando se o painel foi atualizado corretamente
     if (panel.getComponentCount() > 0) {
@@ -93,7 +67,7 @@ public class MenuBarService {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 14));
         if (text.equals("Desconectar e Sair")) {
-            label.setBounds(xPosition, 10, 180, 30);
+            label.setBounds(1090, 10, 180, 30);
         } else if (text.equals("Status")) {
             label.setBounds(30, 10, 55, 30);
         } else if (text.equals("Inventario")) {
@@ -104,12 +78,12 @@ public class MenuBarService {
             label.setBounds(270, 10, 60, 30);
         } else if (text.equals("Amigos")) {
             label.setBounds(360, 10, 60, 30);
-        } else if (text.equals("JOGAR")) {
-            label.setBounds(470, 15, 70, 30);
         } else if (text.equals("Guilda")) {
-            label.setBounds(580, 10, 60, 30);
+            label.setBounds(440, 10, 60, 30);
+        }else if (text.equals("JOGAR")) {
+            label.setBounds(620, 15, 70, 30);
         } else if (text.equals("Sair")) {
-            label.setBounds(660, 10, 50, 30);
+            label.setBounds(1010, 10, 50, 30);
         }
         label.setForeground(textColor);
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
