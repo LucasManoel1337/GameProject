@@ -14,6 +14,7 @@ import game.gameproject.services.PlayerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -272,8 +273,8 @@ public class Player extends JPanel implements KeyListener {
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
         for (Jogador jogador : jogadores) {
-            // Desenha o personagem do jogador
-            g.drawImage(personagemAtual, jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
+            // Desenha o sprite do jogador
+            g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
             
             // Desenha o nome do jogador sobre o personagem
             desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
@@ -388,35 +389,56 @@ public class Player extends JPanel implements KeyListener {
         this.yPersonagem = this.lastY + 20 ;
     }
         
-        public void buscarJogadores() {
-            String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
-                       + "JOIN tb_login l ON p.id_player = l.id ORDER BY p.id_player"; // Consulta SQL para pegar os dados dos jogadores
+    public void buscarJogadores() {
+        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
+                   + "JOIN tb_login l ON p.id_player = l.id ORDER BY p.id_player"; // Consulta SQL
 
-            try (Connection conn = DatabaseConfig.getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-                ResultSet rs = stmt.executeQuery(); // Executa a consulta
+            ResultSet rs = stmt.executeQuery(); // Executa a consulta
 
-                // Limpa a lista de jogadores (caso já tenha jogadores cadastrados)
-                jogadores.clear();
+            // Limpa a lista de jogadores (caso já tenha jogadores cadastrados)
+            jogadores.clear();
 
-                while (rs.next()) { // Para cada jogador encontrado
-                    int idPlayer = rs.getInt("id_player");
-                    String nomePlayer = rs.getString("usuario");
-                    int xPlayer = rs.getInt("x");
-                    int yPlayer = rs.getInt("y");
-                    String spritePlayer = rs.getString("sprite");
+            while (rs.next()) { // Para cada jogador encontrado
+                int idPlayer = rs.getInt("id_player");
+                String nomePlayer = rs.getString("usuario");
+                int xPlayer = rs.getInt("x");
+                int yPlayer = rs.getInt("y");
+                String spritePath = rs.getString("sprite"); // Caminho completo do sprite
 
-                    // Cria um objeto Jogador e adiciona à lista
-                    Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, spritePlayer);
-                    jogadores.add(jogador);
-                }
+                // Carregar o sprite com base no caminho completo armazenado no banco
+                Image sprite = carregarSprite(spritePath);
 
-            } catch (SQLException e) {
-                e.printStackTrace(); // Trata exceção caso ocorra
+                // Cria um objeto Jogador e adiciona à lista
+                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite);
+                jogadores.add(jogador);
             }
-        }
 
+        } catch (SQLException e) {
+            e.printStackTrace(); // Trata exceção caso ocorra
+        }
+    }
+
+    public Image carregarSprite(String spritePath) {
+        try {
+            // Substitui "modelo1d" por "modelo1" no caminho
+            String caminhoCorrigido = spritePath.replace("modelo1d", "modelo1");
+
+            // Tenta carregar a imagem usando o caminho corrigido
+            File file = new File(caminhoCorrigido);
+            if (file.exists()) {
+                return ImageIO.read(file);
+            } else {
+                System.out.println("Arquivo não encontrado: " + caminhoCorrigido);
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null; // Retorna null caso ocorra algum erro
+        }
+    }
 
         // Getters para acessar as variáveis
         public int getxPersonagemOn1() {

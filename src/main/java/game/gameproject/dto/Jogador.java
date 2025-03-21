@@ -1,13 +1,15 @@
 package game.gameproject.dto;
 
+import java.awt.Image;
+
 public class Jogador {
     private int idPlayer;
     private String nomePlayer;
     private int xPlayer;
     private int yPlayer;
-    private String spritePlayer;
+    private Image spritePlayer;
 
-    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, String spritePlayer) {
+    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer) {
         this.idPlayer = idPlayer;
         this.nomePlayer = nomePlayer;
         this.xPlayer = xPlayer;
@@ -32,7 +34,7 @@ public class Jogador {
         return yPlayer;
     }
 
-    public String getSpritePlayer() {
+    public Image getSpritePlayer() {
         return spritePlayer;
     }
 }
