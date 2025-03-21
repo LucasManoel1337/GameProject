@@ -110,7 +110,7 @@ public class RegistrarService {
     // Salva os dados na tabela tb_player_status
     private void salvarPlayerStatus(int id) {
         try (Connection connection = DatabaseConfig.getConnection()) {
-            String query = "INSERT INTO tb_player_status (id_player_status, pontos, nivel, vida, stamina, forca, dinheiro, op) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO tb_player_status (id_player_status, pontos, nivel, vida, stamina, forca, dinheiro) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement statement = connection.prepareStatement(query)) {
                 statement.setInt(1, id);  // ID do player (da tabela tb_login)
                 statement.setInt(2, 2);         // Pontos
@@ -119,7 +119,6 @@ public class RegistrarService {
                 statement.setInt(5, 2);         // Stamina
                 statement.setInt(6, 2);         // Força
                 statement.setInt(7, 200);       // Dinheiro
-                statement.setBoolean(8, false);       // op
                 statement.executeUpdate();
                 System.out.println("Player status inserido com sucesso!");
             }

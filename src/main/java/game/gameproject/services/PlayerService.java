@@ -1,10 +1,19 @@
 package game.gameproject.services;
 
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.imageio.ImageIO;
+
 import game.gameproject.bdd.DatabaseConfig;
+import game.gameproject.dto.Jogador;
 
 public class PlayerService {
 
@@ -55,30 +64,29 @@ public class PlayerService {
             if (rs.next()) {
                 boolean isOnline = rs.getBoolean("online");
                 if (isOnline) {
-                    // Só atualiza se estiver online
                     try (PreparedStatement updateStmt = conn.prepareStatement(updateOfflineSql)) {
                         updateStmt.setInt(1, idPlayer);
                         int rowsAffected = updateStmt.executeUpdate();
                         
                         if (rowsAffected > 0) {
                             System.out.println("Jogador " + idPlayer + " agora está offline.");
-                            return 1; // Sucesso
+                            return 1;
                         } else {
                             System.err.println("Falha ao atualizar status do jogador.");
-                            return 0; // Falha ao atualizar
+                            return 0;
                         }
                     }
                 } else {
                     System.out.println("Jogador já está offline.");
-                    return 1; // Já estava offline, considerado sucesso
+                    return 1;
                 }
             } else {
                 System.err.println("Jogador não encontrado no banco de dados.");
-                return 0; // Jogador não encontrado
+                return 0;
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0; // Erro no banco
+            return 0;
         }
     }
 
@@ -91,12 +99,60 @@ public class PlayerService {
              ResultSet rs = stmt.executeQuery()) {
 
             if (rs.next()) {
-                return rs.getInt(1); // Retorna o número de jogadores online
+                return rs.getInt(1);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return -1; // Retorna -1 em caso de erro
+        return -1;
+    }
+    
+    public List<Jogador> buscarJogadores() {
+        List<Jogador> jogadores = new ArrayList<>();
+        
+        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
+                + "JOIN tb_login l ON p.id_player = l.id "
+                + "WHERE p.online = 1 ORDER BY p.id_player";
+
+        try (Connection conn = DatabaseConfig.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                int idPlayer = rs.getInt("id_player");
+                String nomePlayer = rs.getString("usuario");
+                int xPlayer = rs.getInt("x");
+                int yPlayer = rs.getInt("y");
+                String spritePath = rs.getString("sprite");
+
+                Image sprite = carregarSprite(spritePath);
+
+                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite);
+                jogadores.add(jogador);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return jogadores;
+    }
+
+    public Image carregarSprite(String spritePath) {
+        try {
+            String caminhoCorrigido = spritePath.replace("modelo1d", "modelo1");
+
+            File file = new File(caminhoCorrigido);
+            if (file.exists()) {
+                return ImageIO.read(file);
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
     
 }

@@ -138,7 +138,8 @@ public class JpRegistrar extends JPanel {
         lblNaoTenhoCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                System.out.println("Abrir tela de Login...");
+                cUsuario.setText("");
+                cSenha.setText("");
                 LF.switchToLoginPanel(); // Chama a troca de tela
             }
 

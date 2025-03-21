@@ -2,6 +2,7 @@ package game.gameproject.controller;
 
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.front.JpAmigos;
+import game.gameproject.front.JpConfiguracoes;
 import game.gameproject.front.JpMenu;
 import game.gameproject.front.JpGame;
 import game.gameproject.front.JpGuilda;
@@ -30,6 +31,7 @@ public class GameFrame extends JFrame {
     private JpMissoes telaMissoes;
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
+    private JpConfiguracoes telaConfiguracoes;
 
     private PlayerService PS = new PlayerService();
 
@@ -149,6 +151,17 @@ public class GameFrame extends JFrame {
             telaGuilda = new JpGuilda(this, playerInfo); // Cria a tela de jogo
         }
         currentPanel = telaGuilda;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToConfiguracoesPanel() {
+        remove(currentPanel);
+        if (telaConfiguracoes == null) {
+            telaConfiguracoes = new JpConfiguracoes(this, playerInfo);
+        }
+        currentPanel = telaConfiguracoes;
         add(currentPanel);
         revalidate();
         repaint();

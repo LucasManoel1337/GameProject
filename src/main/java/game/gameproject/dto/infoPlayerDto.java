@@ -13,7 +13,6 @@ public class infoPlayerDto {
     private static int stamina = -1;
     private static int forca = -1;
     private static int dinheiro = -1;
-    private static int op = 0;
 
     public int getIdPlayer() {
         return idPlayer;
@@ -77,13 +76,5 @@ public class infoPlayerDto {
 
     public void setDinheiro(int dinheiro) {
         infoPlayerDto.dinheiro = dinheiro;
-    }
-    
-    public int getOp() {
-        return op;
-    }
-
-    public static void setOp(int op) {
-        infoPlayerDto.op = op;
     }
 }

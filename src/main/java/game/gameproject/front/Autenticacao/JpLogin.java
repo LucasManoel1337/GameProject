@@ -144,6 +144,8 @@ public class JpLogin extends JPanel {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 System.out.println("Abrir tela de cadastro...");
+                cUsuario.setText("");
+                cSenha.setText("");
                 LF.switchToRegisterPanel(); // Chama a troca de tela
             }
 

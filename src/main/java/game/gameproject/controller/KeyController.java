@@ -30,23 +30,8 @@ public class KeyController {
                 } else {
                     player.keyReleased(new KeyEvent(player, KeyEvent.KEY_RELEASED, System.currentTimeMillis(), 0, keyCode, keyChar));
                 }
-
-                // Verifica se a tecla pressionada é a aspa simples
-                if (key.equals("'") && pressed) {
-                    toggleOpValue();
-                }
             }
         };
-    }
-
-    // Método para alternar o valor de 'op' entre 0 e 1
-    private void toggleOpValue() {
-        if (playerInfo.getOp() == 1) {
-            playerInfo.setOp(0);  // Se 'op' for 1, muda para 0
-        } else {
-            playerInfo.setOp(1);  // Se 'op' for 0, muda para 1
-        }
-        System.out.println("Valor de op alterado: " + playerInfo.getOp());
     }
 
     // Método para mapear a tecla de escape para ação de sair
@@ -69,7 +54,6 @@ public class KeyController {
             case "A": return KeyEvent.VK_A;
             case "D": return KeyEvent.VK_D;
             case "SHIFT": return KeyEvent.VK_SHIFT;
-            case "'": return KeyEvent.VK_QUOTE;  // Código para a tecla de aspa simples
             default: return -1;
         }
     }

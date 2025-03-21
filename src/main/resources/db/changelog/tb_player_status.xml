@@ -31,9 +31,6 @@
         <column name="dinheiro" type="INT">
             <constraints nullable="false"/>
         </column>
-        <column name="op" type="boolean">
-            <constraints nullable="false"/>
-        </column>
     </createTable>
 </changeSet>
 
