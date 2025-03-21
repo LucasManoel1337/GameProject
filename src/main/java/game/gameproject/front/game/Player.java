@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-import javax.swing.border.EmptyBorder;
 
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.Jogador;
@@ -14,21 +13,17 @@ import game.gameproject.services.PlayerService;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
-import static javax.swing.SwingConstants.CENTER;
 
 public class Player extends JPanel implements KeyListener {
 
     private int modeloSelecionado = 1; 
-    private String nomePersonagem;
     private BufferedImage personagemCima1;
     private BufferedImage personagemCima2;
     private BufferedImage personagemBaixo1;
@@ -241,29 +236,48 @@ public class Player extends JPanel implements KeyListener {
             // Desenha o sprite do jogador
             g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
             
-            // Desenha o nome do jogador sobre o personagem
-            desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+            // Verifica se o jogador é o jogador controlado pelo usuário (playerInfo)
+            if (jogador.equals(playerInfo)) {
+                // Desenha o nome do jogador controlado pelo usuário com a tag "[ADM]" se necessário
+                desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, true);
+            } else {
+                // Desenha o nome dos outros jogadores sem a tag "[ADM]"
+                desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, false);
+            }
         }
 
-        // Desenha o personagem do jogador 2
+        // Desenha o personagem do jogador 2 (se necessário)
         g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         
         // Desenha o nome do jogador 2 sobre o personagem
-        desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem, true);
         
         g.drawImage(hotbar, 385, 678, 500, 50, this);
         
         g.drawImage(simPing, 1140, 709, 20, 20, this);
         g.setColor(Color.WHITE);
-        g.drawString(bdd.getDatabasePing()+"ms", 1160, 722);
+        g.drawString(DatabaseConfig.getDatabasePing()+"ms", 1160, 722);
         
         g.drawImage(simOnline, 1200, 710, 15, 15, this);
         g.setColor(Color.WHITE);
-        g.drawString(PS.getPlayersOnline()+"/20", 1220, 722);
+        g.drawString(PlayerService.getPlayersOnline()+"/20", 1220, 722);
     }
 
-    private void desenharNomeJogador(Graphics g, String nome, int xPersonagem, int yPersonagem, int larguraPersonagem) {
+    private void desenharNomeJogador(Graphics g, String nome, int xPersonagem, int yPersonagem, int larguraPersonagem, boolean adicionarAdm) {
         g.setColor(Color.BLACK);
+
+        String prefixoAdm = "[ADM] ";
+        String nomeRestante = nome;
+
+        // Adiciona "[ADM]" apenas se for o jogador controlado pelo usuário e if playerInfo.getOp() == 1
+        if (adicionarAdm && playerInfo.getOp() == 1) {
+            nome = prefixoAdm + nome; // Adiciona "[ADM]" ao nome
+        }
+
+        // Se o nome começa com [ADM], separamos
+        if (nome.startsWith(prefixoAdm)) {
+            nomeRestante = nome.substring(prefixoAdm.length());
+        }
 
         // Obtém as métricas da fonte para calcular a largura e altura do texto
         FontMetrics fontMetrics = g.getFontMetrics();
@@ -283,10 +297,19 @@ public class Player extends JPanel implements KeyListener {
         g.setColor(Color.WHITE);
         g.fillRect(xTexto - 4, yTexto - alturaTexto + 1, larguraTexto + 8, alturaTexto + 3); // Retângulo branco
 
-        // Desenha o nome do jogador sobre o retângulo
+        // Desenha o prefixo "[ADM]" em vermelho, se existir
+        if (nome.startsWith(prefixoAdm)) {
+            g.setColor(Color.RED);
+            g.drawString(prefixoAdm, xTexto, yTexto);
+            // Atualiza a posição X para o restante do nome
+            xTexto += fontMetrics.stringWidth(prefixoAdm);
+        }
+
+        // Desenha o restante do nome em preto
         g.setColor(Color.BLACK);
-        g.drawString(nome, xTexto, yTexto);
+        g.drawString(nomeRestante, xTexto, yTexto);
     }
+
 
     // Método para trocar o mapa atual
     public void mudarMapa(Mapa novoMapa) {

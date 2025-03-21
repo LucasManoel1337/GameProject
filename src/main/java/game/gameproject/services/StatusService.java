@@ -110,6 +110,25 @@ public class StatusService {
         }
         return 0; // Retorno padrão se não encontrar o nível
     }
+    
+    public int getPlayerOp(int id) {
+        String query = "SELECT op FROM tb_player_status WHERE id_player_status = ?";
+
+        try (Connection connection = DatabaseConfig.getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getBoolean("op") ? 1 : 0; // Converte boolean para int
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return 0; // Retorno padrão caso não encontre o usuário ou ocorra erro
+    }
 
     public boolean atualizarStatusBanco(int id, int nivel, int pontos, int vida, int stamina, int forca, int dinheiro) {
         // SQL para atualizar os valores
