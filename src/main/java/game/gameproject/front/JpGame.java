@@ -47,8 +47,6 @@ public class JpGame extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ESC pressionado!");
                 
-                player.pararSons();
-                
                 gameFrame.switchToMenuPanel();
             }
         });

@@ -10,7 +10,6 @@ public class Mapa{
     
     // Variaveis Globais
     public int numeroMapa;
-    private BufferedImage interiorCasaInicial;
     // Array especifico para cada mapa
     public Rectangle musicam1;
     public Rectangle areaMudancaFundo; // Área retangular para mudar o fundo
@@ -53,13 +52,7 @@ public class Mapa{
 
     // Método para carregar as imagens necessarias para o jogo
     private void carregarImagens() {
-        // No caso ela pega a variavel global e ela armazena a imagem que foi carregada e distribuida para ela.
-        try { // Tentar carregar
-            interiorCasaInicial = ImageIO.read(new File("imagens/mapa/fundoCasaInicial.png"));
-        } catch (IOException e) { // Caso der erro em alguma das imagens.
-            System.err.println("Erro ao carregar imagens na classe Mapa!" + e.getMessage()); // Ira aparecer esse codigo de erro
-            System.exit(1); // Fechar o Jogo
-        }
+        System.out.println();
     }
 
     // Método para desenhar o fundo do mapa

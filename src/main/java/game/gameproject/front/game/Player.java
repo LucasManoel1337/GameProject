@@ -7,11 +7,16 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
 
+import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.PlayerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -20,18 +25,6 @@ import static javax.swing.SwingConstants.CENTER;
 
 public class Player extends JPanel implements KeyListener {
 
-    // Variaveis globais
-    Sounds trilhaSonoraMapa2 = new Sounds();
-    Sounds trilhaSonoraMapa1 = new Sounds();
-    Sounds trilhaSonoraMapa3 = new Sounds();
-    Sounds trilhaSonoraMapa4 = new Sounds();
-    Sounds trilhaSonoraMapa5 = new Sounds();
-    Sounds trilhaSonoraMapa6 = new Sounds();
-    Sounds trilhaSonoraMapa7 = new Sounds();
-    Sounds abrirBau = new Sounds();
-    Sounds somEspada = new Sounds();
-    Sounds somDanoRecebe = new Sounds();
-    Sounds trilhaSonoraMenu = new Sounds();
     private boolean tutorial = true;
     private int modeloSelecionado; // Modelo escolhido
     private String nomePersonagem; // Nome do Personagem
@@ -65,12 +58,14 @@ public class Player extends JPanel implements KeyListener {
     private infoPlayerDto playerInfo;
     private int lastX;
     private int lastY;
-    
     private String sprite = "";
     
-    private BufferedImage personagemOn1 = personagemDireita1;
+    private String personagemOn1 = "";
+    private BufferedImage imgPersonagemOn1;
     private int xPersonagemOn1;
     private int yPersonagemOn1; 
+    
+    private boolean liberadoCarregar = false;
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
@@ -78,12 +73,6 @@ public class Player extends JPanel implements KeyListener {
     	setNivel(playerInfo.getNivel());
     	setDinheiro(playerInfo.getDinheiro());
     	setVida(playerInfo.getVida());
-
-        //Trilha sonora dos mapas
-        trilhaSonoraMapa2.carregarSom("Sons/Mapa2.wav");
-        trilhaSonoraMapa1.carregarSom("Sons/emCasa.wav");
-        trilhaSonoraMapa3.carregarSom("Sons/mapa3.wav");
-        //Tira o layout padrao
         this.setLayout(null);
         
         PlayerService PS = new PlayerService();
@@ -100,14 +89,19 @@ public class Player extends JPanel implements KeyListener {
         // Timer para animação do personagem (apenas quando pressionar teclas)
         timerAnimacao = new Timer(60, new ActionListener() {
             @Override
-            public void actionPerformed(ActionEvent e) { //Caso seja clicado
+            public void actionPerformed(ActionEvent e) { 
                 trocarImagem();
                 moverPersonagem();
                 repaint();
                 
                 System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem 
-                		+" Sprite: "+sprite);
+                        +" Sprite: "+sprite);
                 PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
+
+                // Primeiro, buscar as informações do jogador 2
+                buscarJogadorId2();
+
+                // Aqui você pode então fazer a impressão ou o que for necessário
             }
         });
 
@@ -165,7 +159,6 @@ public class Player extends JPanel implements KeyListener {
         }
     }
 
-
     // Método para mover o personagem (chama o mapa para verificar colisões)
     private void moverPersonagem() {
         // Limites da tela
@@ -188,26 +181,21 @@ public class Player extends JPanel implements KeyListener {
 
         // Sistema para o personagem spawnar no local certo após mudar de mapa.
         if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.musicam1.contains(xPersonagem, yPersonagem)) {
-            trilhaSonoraMapa1.tocarSomEmLoop("Sons/emCasa.wav");
+
         } else if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.areaMudancaFundo.contains(xPersonagem, yPersonagem)) { // Mundo 1 para o Mundo 2
-            trilhaSonoraMapa1.pararSom();
-            trilhaSonoraMapa2.tocarSomEmLoop("Sons/Mapa2.wav");
             mudarMapa(new Mapa(2, this.personagemDireita1));
             xPersonagem = 1020; // Coordenada X para o Mundo 2
             yPersonagem = 260; // Coordenada Y para o Mundo 2
             tutorial = false;
-            trilhaSonoraMapa1.pararSom();
         } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo2.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 3
             mudarMapa(new Mapa(3, this.personagemDireita1));
             xPersonagem = 725; // Coordenada X para o Mundo 3
             yPersonagem = 600; // Coordenada Y para o Mundo 3
         } else if (mapaAtual.getNumeroMapa() == 2 && mapaAtual.areaMudancaFundo4.contains(xPersonagem, yPersonagem)) { // Mundo 2 para o Mundo 1
-            trilhaSonoraMapa2.pararSom();
-            trilhaSonoraMapa1.tocarSomEmLoop("Sons/emCasa.wav");
             mudarMapa(new Mapa(1, this.personagemDireita1));
             xPersonagem = 575; // Coordenada X para o Mundo 1
             yPersonagem = 600; // Coordenada Y para o Mundo 1
-        } else if (mapaAtual.getNumeroMapa() == 3 && mapaAtual.areaMudancaFundo3.contains(xPersonagem, yPersonagem)) { // Mundo 3 para o Mundo 2 aaaaaaaaaaaaaaaaaaaaaa
+        } else if (mapaAtual.getNumeroMapa() == 3 && mapaAtual.areaMudancaFundo3.contains(xPersonagem, yPersonagem)) { // Mundo 3 para o Mundo 2 
             mudarMapa(new Mapa(2, this.personagemDireita1));
             xPersonagem = 733; // Coordenada X para o Mundo 2
             yPersonagem = 10; // Coordenada Y para o Mundo 2
@@ -263,9 +251,6 @@ public class Player extends JPanel implements KeyListener {
                 velocidade = 9;
                 break;
         }
-        if (!movendoCima && !movendoBaixo && !movendoEsquerda && !movendoDireita) {
-            timerAnimacao.stop();
-        }
     }
 
     @Override
@@ -285,7 +270,7 @@ public void paintComponent(Graphics g) {
     //Desenhando boneco
     g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
     
-    g.drawImage(personagemOn1, xPersonagemOn1, yPersonagemOn1, larguraPersonagem, alturaPersonagem, this);
+    g.drawImage(personagemAtual, xPersonagemOn1, yPersonagemOn1, larguraPersonagem, alturaPersonagem, this);
   
 
     // Nome do jogador
@@ -310,18 +295,6 @@ public void paintComponent(Graphics g) {
     g.setColor(xpColor);
     g.fillRect(10, 45, (int) (((double) xp / xpMax) * 400), 10);
 }
-
-    
-    public void pararSons() {
-    	trilhaSonoraMapa1.pararSom();
-    	trilhaSonoraMapa2.pararSom();
-    	trilhaSonoraMapa3.pararSom();
-    	trilhaSonoraMapa4.pararSom();
-    	trilhaSonoraMapa5.pararSom();
-    	trilhaSonoraMapa6.pararSom();
-    	trilhaSonoraMapa7.pararSom();
-    	trilhaSonoraMenu.pararSom();
-    }
 
     //Função que adiciona vida
     public void setVida(int vida) {
@@ -395,4 +368,39 @@ public void paintComponent(Graphics g) {
         this.xPersonagem = this.lastX;
         this.yPersonagem = this.lastY + 20 ;
     }
-}
+
+        public void buscarJogadorId2() {
+            String sql = "SELECT x, y, sprite FROM tb_player_coordenadas WHERE id_player = 2"; // Consulta SQL
+
+            try (Connection conn = DatabaseConfig.getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+                ResultSet rs = stmt.executeQuery(); // Executa a consulta
+
+                if (rs.next()) { // Se encontrar o jogador com ID 2
+                    // Atribui os valores das colunas às variáveis
+                    xPersonagemOn1 = rs.getInt("x");
+                    yPersonagemOn1 = rs.getInt("y");
+                    personagemOn1 = rs.getString("sprite");
+                    
+                    liberadoCarregar = true;
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace(); // Trata exceção caso ocorra
+            }
+        }
+
+        // Getters para acessar as variáveis
+        public int getxPersonagemOn1() {
+            return xPersonagemOn1;
+        }
+
+        public int getyPersonagemOn1() {
+            return yPersonagemOn1;
+        }
+
+        public String getPersonagemOn1() {
+            return personagemOn1;
+        }
+    }
