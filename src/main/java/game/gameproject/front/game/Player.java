@@ -7,14 +7,12 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
 
-import game.gameproject.cache.JogadoresOnlineCache;
-import game.gameproject.dto.PlayerCoordenadasDto;
 import game.gameproject.dto.infoPlayerDto;
-import game.gameproject.services.PlayerCoordenadasService;
 import game.gameproject.services.PlayerService;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -55,7 +53,6 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage personagemDireita1;
     private BufferedImage personagemDireita2;
     private BufferedImage personagemAtual;
-    private BufferedImage imgTutorial;
     private int xPersonagem; // Posição X inicial do boneco.
     private int yPersonagem; // Posição Y inicial do boneco.
     private int velocidade = 9; // Velocidade de movimentação do boneco
@@ -68,6 +65,10 @@ public class Player extends JPanel implements KeyListener {
     private infoPlayerDto playerInfo;
     private int lastX;
     private int lastY;
+    
+    private String sprite = "";
+    
+    private BufferedImage personagemOn1 = personagemDireita1;
 
     public Player(String nome, int modelo, Mapa mapaInicial, infoPlayerDto playerInfo) { // Construtor com parâmetros
     	this.playerInfo = playerInfo;
@@ -84,7 +85,6 @@ public class Player extends JPanel implements KeyListener {
         this.setLayout(null);
         
         PlayerService PS = new PlayerService();
-        PlayerCoordenadasService service = new PlayerCoordenadasService();
 
         //Variaveis da classe Player
         this.nomePersonagem = nome; // Atribuir o nome do personagem
@@ -103,16 +103,9 @@ public class Player extends JPanel implements KeyListener {
                 moverPersonagem();
                 repaint();
                 
-                System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem);
-                PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, 1);
-                
-                PlayerCoordenadasService service = new PlayerCoordenadasService();
-
-                // Busca e atualiza o cache dos jogadores online
-                service.buscarEAtualizarJogadoresOnline(playerInfo.getIdPlayer()); // O ID do jogador atual é 10
-
-                // Obtém os jogadores online do cache
-                List<PlayerCoordenadasDto> jogadores = JogadoresOnlineCache.getJogadoresOnline();
+                System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem 
+                		+" Sprite: "+sprite);
+                PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
             }
         });
 
@@ -151,12 +144,16 @@ public class Player extends JPanel implements KeyListener {
     private void trocarImagem() {
         if (movendoCima) {
             personagemAtual = (personagemAtual == personagemCima1) ? personagemCima2 : personagemCima1;
+            sprite = "imagens/player/modelo1d/modeloCosta1.png";
         } else if (movendoBaixo) {
             personagemAtual = (personagemAtual == personagemBaixo1) ? personagemBaixo2 : personagemBaixo1;
+            sprite = "imagens/player/modelo1d/modeloFrente1.png";
         } else if (movendoEsquerda) {
             personagemAtual = (personagemAtual == personagemEsquerda1) ? personagemEsquerda2 : personagemEsquerda1;
+            sprite = "imagens/player/modelo1d/modeloDireito1.png";
         } else if (movendoDireita) {
             personagemAtual = (personagemAtual == personagemDireita1) ? personagemDireita2 : personagemDireita1;
+            sprite = "imagens/player/modelo1d/modeloEsquerdo1.png";
         }
     }
 
@@ -269,58 +266,42 @@ public class Player extends JPanel implements KeyListener {
 
     // Função para imprimir as coisas na tela (Essencial para o jogo Funcionar corretamente)
     @Override
-    public void paintComponent(Graphics g) {
-        if (mapaAtual.musicam1.contains(xPersonagem, yPersonagem) && tutorial == true) {
-            g.drawImage(imgTutorial, 0, 0, 1280, 768, null); 
-        }
-        
-        super.paintComponent(g);
-        mapaAtual.desenhar(g); // Chama o mapa para desenhar o fundo
-        // Desenhar a imagem do persoangem em cima do fundo
-        int larguraPersonagem = 30; // largura do personagem
-        int alturaPersonagem = 50; // altura do persoangem
-        if (mapaAtual.getNumeroMapa() == 4) { // caso estiver nesse mapa
-            trilhaSonoraMapa2.pararSom();
-            trilhaSonoraMapa4.tocarSomEmLoop("Sons/mapaCombate.wav");
-        }else{    // Caso for mapa 4, no caso mapa de combate ele não irá desenhar o personagem.
-            g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
-        }
+public void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    mapaAtual.desenhar(g); // Desenha o fundo do mapa
 
-        // Desenhar o nome do personagem abaixo da moeda
-        g.setFont(new Font("Arial", Font.BOLD, 16)); // Define a fonte e tamanho do nome
-        g.setColor(Color.WHITE); // Define a cor do nome
-        g.drawString("Personagem: " + nomePersonagem, 10, 20); // Desenha o nome
+    int larguraPersonagem = 30;
+    int alturaPersonagem = 50;
 
-        //Desenhar nivel do personagem
-        g.setFont(new Font("Arial", Font.BOLD, 20));
-        g.setColor(Color.WHITE);
-        String Nivel = ("Nivel: " + nivel);
-        g.drawString(Nivel, 300, 105);
+    //Desenhando boneco
+    g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
+    
+    
+  
 
-        // Desenhar a barra de vida
-        if (vida > 0) {
-            g.setColor(Color.RED); // Define a cor da barra de vida
-            int xVida = 10; // Posição inicial da barra de vida
-            int yVida = 27; // Posição inicial da barra de vida
-            int larguraVida = (int) (vida * 2); // Calcula a largura da barra de vida proporcional à vida
-            int alturaVida = 15; // Define a altura da barra de vida
-            g.fillRect(xVida, yVida, larguraVida, alturaVida); // Desenhar a barra de vida
-        }
+    // Nome do jogador
+    g.setFont(new Font("Arial", Font.BOLD, 16));
+    g.setColor(Color.WHITE);
+    g.drawString("Personagem: " + nomePersonagem, 10, 20);
 
-        // Desenhar a barra de XP
-        g.setColor(xpBgColor); // Define a cor de fundo da barra de XP
-        int xXp = 10; // Posição inicial da barra de XP
-        int yXp = 45; // Posição inicial da barra de XP
-        int larguraXp = 400; // Largura total da barra de XP
-        int alturaXp = 10; // Altura da barra de XP
-        g.fillRect(xXp, yXp, larguraXp, alturaXp); // Desenha o fundo da barra de XP
+    // Nível do jogador
+    g.setFont(new Font("Arial", Font.BOLD, 20));
+    g.setColor(Color.WHITE);
+    g.drawString("Nivel: " + nivel, 300, 105);
 
-        // Calcula a largura da barra de XP proporcional ao XP atual
-        int larguraXpPreenchida = (int) (((double) xp / xpMax) * larguraXp);
-
-        g.setColor(xpColor); // Define a cor da barra de XP
-        g.fillRect(xXp, yXp, larguraXpPreenchida, alturaXp); // Desenha a barra de XP preenchida
+    // Barra de vida
+    if (vida > 0) {
+        g.setColor(Color.RED);
+        g.fillRect(10, 27, (int) (vida * 2), 15);
     }
+
+    // Barra de XP
+    g.setColor(xpBgColor);
+    g.fillRect(10, 45, 400, 10);
+    g.setColor(xpColor);
+    g.fillRect(10, 45, (int) (((double) xp / xpMax) * 400), 10);
+}
+
     
     public void pararSons() {
     	trilhaSonoraMapa1.pararSom();

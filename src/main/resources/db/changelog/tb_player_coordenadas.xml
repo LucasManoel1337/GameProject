@@ -18,7 +18,7 @@
         <column name="y" type="INT">
             <constraints nullable="false"/>
         </column>
-        <column name="sprite" type="INT">
+        <column name="sprite" type="varchar(255)">
             <constraints nullable="false"/>
         </column>
         <column name="online" type="boolean">

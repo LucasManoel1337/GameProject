@@ -7,7 +7,7 @@ import game.gameproject.bdd.DatabaseConfig;
 
 public class PlayerService {
 
-    public void salvarCoordenadas(int idPlayer, int coordenadaX, int coordenadaY, int sprite) {
+    public void salvarCoordenadas(int idPlayer, int coordenadaX, int coordenadaY, String sprite) {
         String sql = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online) " +
                      "VALUES (?, ?, ?, ?, true) " +
                      "ON DUPLICATE KEY UPDATE x = VALUES(x), y = VALUES(y), sprite = VALUES(sprite), online = true";
@@ -18,7 +18,7 @@ public class PlayerService {
             stmt.setInt(1, idPlayer);
             stmt.setInt(2, coordenadaX);
             stmt.setInt(3, coordenadaY);
-            stmt.setInt(4, sprite);
+            stmt.setString(4, sprite);
             stmt.executeUpdate();
             
         } catch (SQLException e) {
