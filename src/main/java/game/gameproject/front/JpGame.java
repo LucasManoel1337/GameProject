@@ -2,6 +2,7 @@ package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
 import game.gameproject.front.game.*;
+import game.gameproject.services.PlayerService;
 import game.gameproject.dto.infoPlayerDto;
 
 import java.awt.*;
@@ -34,6 +35,9 @@ public class JpGame extends JPanel {
         setupKeyBindings(); // Configura os KeyBindings
 
         player.requestFocusInWindow();
+        
+        PlayerService PS = new PlayerService();
+        PS.setOnline(playerInfo.getIdPlayer());
     }
 
     private void bindEscapeKey() {

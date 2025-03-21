@@ -7,7 +7,11 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import javax.swing.border.EmptyBorder;
 
+import game.gameproject.cache.JogadoresOnlineCache;
+import game.gameproject.dto.PlayerCoordenadasDto;
 import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.services.PlayerCoordenadasService;
+import game.gameproject.services.PlayerService;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,6 +82,9 @@ public class Player extends JPanel implements KeyListener {
         trilhaSonoraMapa3.carregarSom("Sons/mapa3.wav");
         //Tira o layout padrao
         this.setLayout(null);
+        
+        PlayerService PS = new PlayerService();
+        PlayerCoordenadasService service = new PlayerCoordenadasService();
 
         //Variaveis da classe Player
         this.nomePersonagem = nome; // Atribuir o nome do personagem
@@ -95,6 +102,17 @@ public class Player extends JPanel implements KeyListener {
                 trocarImagem();
                 moverPersonagem();
                 repaint();
+                
+                System.out.println("Enviando coordenadas: ID: "+playerInfo.getIdPlayer()+" X:"+xPersonagem+" Y: "+yPersonagem);
+                PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, 1);
+                
+                PlayerCoordenadasService service = new PlayerCoordenadasService();
+
+                // Busca e atualiza o cache dos jogadores online
+                service.buscarEAtualizarJogadoresOnline(playerInfo.getIdPlayer()); // O ID do jogador atual é 10
+
+                // Obtém os jogadores online do cache
+                List<PlayerCoordenadasDto> jogadores = JogadoresOnlineCache.getJogadoresOnline();
             }
         });
 
@@ -110,41 +128,6 @@ public class Player extends JPanel implements KeyListener {
         
         setFocusable(true);
         requestFocusInWindow();
-    }
-    //Funcao para adicionar estilos para certos botoes
-    public void estiloBotoesComBorder(JButton botao) {
-        botao.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Muda o cursor para o estilo "hand"
-                botao.setBorder(BorderFactory.createLineBorder(Color.BLUE)); // Adiciona borda azul ao entrar
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                botao.setCursor(Cursor.getDefaultCursor()); // Retorna o cursor ao padrão
-                botao.setBorder(BorderFactory.createEmptyBorder()); // Remove a borda ao sair
-            }
-        });
-    }
-    //Funcao para adicionar estilos para certos botoes
-    public void estiloBotoes(JButton botao) {
-        botao.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                botao.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // Muda o cursor para o estilo "hand"
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                botao.setCursor(Cursor.getDefaultCursor()); // Retorna o cursor ao padrão
-            }
-        });
-    }
-
-    //Metodo para ganhar experiencia
-    private void ganharExperiencia(int quantidadeXp) {
-        this.xp += quantidadeXp; // Adiciona o xp do mosntro ao player
     }
 
     // Metodo para carregar imagens do jogo
@@ -185,24 +168,16 @@ public class Player extends JPanel implements KeyListener {
 
         // Verificar se pode mover nas direções e ATUALIZAR as coordenadas
         if (movendoCima && yPersonagem > 0) {
-            if (mapaAtual.podeMover(xPersonagem, yPersonagem - velocidade)) {
                 yPersonagem -= velocidade; // Atualiza a coordenada yPersonagem
-            }
         }
         if (movendoBaixo && yPersonagem < alturaTela - 70) {
-            if (mapaAtual.podeMover(xPersonagem, yPersonagem + velocidade)) {
                 yPersonagem += velocidade; // Atualiza a coordenada yPersonagem
-            }
         }
         if (movendoEsquerda && xPersonagem > 0) {
-            if (mapaAtual.podeMover(xPersonagem - velocidade, yPersonagem)) {
                 xPersonagem -= velocidade; // Atualiza a coordenada xPersonagem
-            }
         }
         if (movendoDireita && xPersonagem < larguraTela - 40) {
-            if (mapaAtual.podeMover(xPersonagem + velocidade, yPersonagem)) {
                 xPersonagem += velocidade; // Atualiza a coordenada xPersonagem
-            }
         }
 
         // Sistema para o personagem spawnar no local certo após mudar de mapa.
@@ -311,14 +286,6 @@ public class Player extends JPanel implements KeyListener {
             g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         }
 
-        mapaAtual.desenharIlusao(g); // Chama o mapa para desenhar a ilusão
-        // Desenhar a vida do monstro
-        //Desenhar Poção
-        g.setFont(new Font("Arial", Font.BOLD, 15));
-        g.setColor(Color.WHITE);
-        //Desenhar arma atual
-
-
         // Desenhar o nome do personagem abaixo da moeda
         g.setFont(new Font("Arial", Font.BOLD, 16)); // Define a fonte e tamanho do nome
         g.setColor(Color.WHITE); // Define a cor do nome
@@ -353,11 +320,6 @@ public class Player extends JPanel implements KeyListener {
 
         g.setColor(xpColor); // Define a cor da barra de XP
         g.fillRect(xXp, yXp, larguraXpPreenchida, alturaXp); // Desenha a barra de XP preenchida
-        
-        if (mapaAtual.getNumeroMapa() == 1 && mapaAtual.musicam1.contains(xPersonagem, yPersonagem) && tutorial == true) {
-            g.drawImage(imgTutorial, 1, 1, 1280, 720, this); // Ajuste as coordenadas da imagem da placa
-        }
-        //Estilo do log
     }
     
     public void pararSons() {
