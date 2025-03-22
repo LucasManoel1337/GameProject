@@ -7,6 +7,8 @@ import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.AutenticacaoService;
 import game.gameproject.services.LoginService;
 import game.gameproject.services.RegistrarService;
+import game.gameproject.support.TimerAvisosLabelsSupport;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -24,6 +26,11 @@ public class JpLogin extends JPanel {
     private Color corLaranja = new Color(255, 140, 0);
 
     private LauncherFrame LF;
+    
+    public JLabel lNaoEncontrado = new JLabel("Usuário ou Senha estão errado!");
+    public JLabel lCamposVazios = new JLabel("Não é possivel se logar com algum campo vazio!");
+    
+    TimerAvisosLabelsSupport LabelSupportT = new TimerAvisosLabelsSupport();
 
     public JpLogin(LauncherFrame launcherFrame) {
         this.LF = launcherFrame; // Agora LF não será mais null
@@ -73,6 +80,18 @@ public class JpLogin extends JPanel {
         lSenha.setBounds(30, 220, 350, 40);
         lSenha.setForeground(Color.BLACK);
         add(lSenha);
+        
+        lNaoEncontrado.setFont(new Font("Arial", Font.BOLD, 14));
+        lNaoEncontrado.setBounds(80, 420, 350, 40);
+        lNaoEncontrado.setForeground(Color.RED);
+        lNaoEncontrado.setVisible(false);
+        add(lNaoEncontrado);
+        
+        lCamposVazios.setFont(new Font("Arial", Font.BOLD, 14));
+        lCamposVazios.setBounds(20, 420, 350, 40);
+        lCamposVazios.setForeground(Color.RED);
+        lCamposVazios.setVisible(false);
+        add(lCamposVazios);
 
         // Campo Senha
         cSenha = new JPasswordField();
@@ -102,31 +121,34 @@ public class JpLogin extends JPanel {
         btnEntrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Logando na conta...");
+                
+                lNaoEncontrado.setVisible(false);
+                lCamposVazios.setVisible(false);
+                
+                if(cUsuario.getText().isEmpty() || cSenha.getText().isEmpty()) {
+            		LabelSupportT.exibirAvisoTemporario(lCamposVazios);
+            	} else {
+            		// Pegando os dados de login (usuário e senha) do formulário
+                    String usuario = cUsuario.getText(); // Supondo que txtUsuario seja o campo do usuário
+                    String senha = new String(cSenha.getPassword()); // Supondo que txtSenha seja o campo da senha
 
-                // Pegando os dados de login (usuário e senha) do formulário
-                String usuario = cUsuario.getText(); // Supondo que txtUsuario seja o campo do usuário
-                String senha = new String(cSenha.getPassword()); // Supondo que txtSenha seja o campo da senha
+                    // Criando uma instância do LoginService para verificar o login
+                    LoginService loginService = new LoginService();
+                    int resultado = loginService.login(usuario, senha); // Tentando logar com o usuário e senha
 
-                // Criando uma instância do LoginService para verificar o login
-                LoginService loginService = new LoginService();
-                int resultado = loginService.login(usuario, senha); // Tentando logar com o usuário e senha
-
-                // Verificando o resultado do login
-                if (resultado == 0) {
-                    // Login bem-sucedido, inicia o jogo
-                    System.out.println("Login bem-sucedido! Iniciando o jogo...");
-                    
-                    AutenticacaoService autenticacaoService = new AutenticacaoService();
-                    infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
-                    
-                    GameFrame gameFrame = new GameFrame();
-                    launcherFrame.dispose();
-                } else {
-                    // Login falhou, exibe mensagem de erro
-                    System.out.println("Erro: Usuário ou senha incorretos.");
-                    JOptionPane.showMessageDialog(null, "Usuário ou senha incorretos.", "Erro de Login", JOptionPane.ERROR_MESSAGE);
-                }
+                    // Verificando o resultado do login
+                    if (resultado == 0) {
+                        // Login bem-sucedido, inicia o jogo
+                        AutenticacaoService autenticacaoService = new AutenticacaoService();
+                        infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
+                        
+                        GameFrame gameFrame = new GameFrame();
+                        launcherFrame.dispose();
+                    } else {      			
+                        LabelSupportT.exibirAvisoTemporario(lNaoEncontrado);
+                        cSenha.setText("");
+                    }
+            	}    
             }
         });
 
@@ -143,9 +165,12 @@ public class JpLogin extends JPanel {
         lblNaoTenhoCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                System.out.println("Abrir tela de cadastro...");
                 cUsuario.setText("");
                 cSenha.setText("");
+                
+                lNaoEncontrado.setVisible(false);
+                lCamposVazios.setVisible(false);
+                
                 LF.switchToRegisterPanel(); // Chama a troca de tela
             }
 

@@ -3,6 +3,8 @@ package game.gameproject.front.Autenticacao;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.services.RegistrarService;
+import game.gameproject.support.TimerAvisosLabelsSupport;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,13 @@ public class JpRegistrar extends JPanel {
 
     private LauncherFrame LF;  // Referência do LauncherFrame
 
-    // Construtor modificado para aceitar o RegistrarService
+    public JLabel lCadastradoS = new JLabel("Conta cadastrada com sucesso!");
+    public JLabel lCadastradoErroIgual = new JLabel("Já existe uma conta com esse usuário!");
+    public JLabel lErroInesperado = new JLabel("Ocorreu um erro inesperado! Tente novamente");
+    public JLabel lCamposVazios = new JLabel("Não é possivel cadastrar com algum campo vazio!");
+    
+    TimerAvisosLabelsSupport LabelSupportT = new TimerAvisosLabelsSupport();
+    
     public JpRegistrar(LauncherFrame launcherFrame) {
         this.LF = launcherFrame;  // Inicializa o LauncherFrame
         setLayout(null);
@@ -71,6 +79,30 @@ public class JpRegistrar extends JPanel {
         lSenha.setBounds(30, 220, 350, 40);
         lSenha.setForeground(Color.BLACK);
         add(lSenha);
+        
+        lCadastradoS.setFont(new Font("Arial", Font.BOLD, 14));
+        lCadastradoS.setBounds(75, 420, 350, 40);
+        lCadastradoS.setForeground(Color.GREEN);
+        lCadastradoS.setVisible(false);
+        add(lCadastradoS);
+        
+        lCadastradoErroIgual.setFont(new Font("Arial", Font.BOLD, 14));
+        lCadastradoErroIgual.setBounds(60, 420, 350, 40);
+        lCadastradoErroIgual.setForeground(Color.RED);
+        lCadastradoErroIgual.setVisible(false);
+        add(lCadastradoErroIgual);
+        
+        lErroInesperado.setFont(new Font("Arial", Font.BOLD, 14));
+        lErroInesperado.setBounds(30, 420, 350, 40);
+        lErroInesperado.setForeground(Color.RED);
+        lErroInesperado.setVisible(false);
+        add(lErroInesperado);
+        
+        lCamposVazios.setFont(new Font("Arial", Font.BOLD, 14));
+        lCamposVazios.setBounds(20, 420, 350, 40);
+        lCamposVazios.setForeground(Color.RED);
+        lCamposVazios.setVisible(false);
+        add(lCamposVazios);
 
         // Campo Senha
         cSenha = new JPasswordField();
@@ -100,29 +132,36 @@ public class JpRegistrar extends JPanel {
         btnRegistrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Registrando conta...");
+            	
+            	lErroInesperado.setVisible(false);
+                lCadastradoS.setVisible(false);
+                lCadastradoErroIgual.setVisible(false);
+                lCamposVazios.setVisible(false);
+            	
+            	if(cUsuario.getText().isEmpty() || cSenha.getText().isEmpty()) {
+            		LabelSupportT.exibirAvisoTemporario(lCamposVazios);
+            	} else {
+            		char[] senhaArray = cSenha.getPassword();
+                    String senha = new String(senhaArray);
 
-                char[] senhaArray = cSenha.getPassword();
-                String senha = new String(senhaArray);
+                    // Chama o método registrarUsuario e obtém o resultado
+                    RegistrarService RS = new RegistrarService();
+                    int resultado = RS.registrarUsuario(cUsuario.getText(), senha);
 
-                // Chama o método registrarUsuario e obtém o resultado
-                RegistrarService RS = new RegistrarService();
-                int resultado = RS.registrarUsuario(cUsuario.getText(), senha);
-
-                // Verifica o resultado e exibe a mensagem apropriada
-                if (resultado == 0) {
-                    // Usuário já existe
-                    JOptionPane.showMessageDialog(JpRegistrar.this, "Usuário já existe.");
-                } else if (resultado == 1) {
-                    // Registro bem-sucedido
-                    JOptionPane.showMessageDialog(JpRegistrar.this, "Cadastro realizado com sucesso!");
-                    cUsuario.setText("");
-                    cSenha.setText("");
-                    // Pode adicionar um redirecionamento para o login ou outra ação aqui
-                } else if (resultado == 2) {
-                    // Ocorreu um erro inesperado
-                    JOptionPane.showMessageDialog(JpRegistrar.this, "Ocorreu um erro inesperado. Tente novamente.");
-                }
+                    // Verifica o resultado e exibe a mensagem apropriada
+                    if (resultado == 0) {
+                        LabelSupportT.exibirAvisoTemporario(lCadastradoErroIgual);
+                        cSenha.setText("");
+                    } else if (resultado == 1) {
+                        // Registro bem-sucedido
+                    	LabelSupportT.exibirAvisoTemporario(lCadastradoS);
+                        cUsuario.setText("");
+                        cSenha.setText("");
+                    } else if (resultado == 2) {
+                        // Ocorreu um erro inesperado
+                    	LabelSupportT.exibirAvisoTemporario(lErroInesperado);
+                    }
+            	}
             }
         });
         add(btnRegistrar);
@@ -140,6 +179,12 @@ public class JpRegistrar extends JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cUsuario.setText("");
                 cSenha.setText("");
+                
+                lErroInesperado.setVisible(false);
+                lCadastradoS.setVisible(false);
+                lCadastradoErroIgual.setVisible(false);
+                lCamposVazios.setVisible(false);
+                
                 LF.switchToLoginPanel(); // Chama a troca de tela
             }
 
