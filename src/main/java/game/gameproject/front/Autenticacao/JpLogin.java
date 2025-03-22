@@ -48,7 +48,7 @@ public class JpLogin extends JPanel {
         
         JLabel lVersao = new JLabel(versoesDto.getVersaoLauncher());
         lVersao.setFont(new Font("Arial", Font.BOLD, 12));
-        lVersao.setBounds(0, 685, 350, 40);
+        lVersao.setBounds(1, 703, 350, 40);
         lVersao.setForeground(Color.BLACK);
         add(lVersao);
 

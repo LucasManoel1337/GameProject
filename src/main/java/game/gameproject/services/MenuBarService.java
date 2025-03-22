@@ -28,7 +28,7 @@ public class MenuBarService {
     JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo);
     JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo);
     JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo);
-    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.BLUE, gameFrame, playerInfo);
+    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.WHITE, gameFrame, playerInfo);
     JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo);
     JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo);
 
@@ -67,7 +67,7 @@ public class MenuBarService {
 }
 
     private static JLabel createMenuButton(String text, int xPosition, JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
-        return createMenuButton(text, xPosition, panel, Color.GRAY, gameFrame, playerInfo);
+        return createMenuButton(text, xPosition, panel, Color.YELLOW, gameFrame, playerInfo);
     }
 
     private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame, infoPlayerDto playerInfo) {
@@ -92,7 +92,7 @@ public class MenuBarService {
         } else if (text.equals("Configurações")) {
         	label.setBounds(510, 10, 110, 30);
         } else if (text.equals("JOGAR")) {
-            label.setBounds(720, 15, 70, 30);
+            label.setBounds(720, 10, 70, 30);
         } else if (text.equals("Sair")) {
             label.setBounds(1010, 10, 50, 30);
         }
