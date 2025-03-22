@@ -28,11 +28,15 @@ public class JpStatus extends JPanel {
     public JLabel lVida = new JLabel("");
     public JLabel lStamina = new JLabel("");
     public JLabel lForca = new JLabel("");
+    public JLabel lMana = new JLabel("");
+    public JLabel lForcaMana = new JLabel("");
     public JLabel lDinheiro = new JLabel("");
 
     public JButton btnAddVida;
     public JButton btnAddStamina;
     public JButton btnAddForca;
+    public JButton btnAddMana;
+    public JButton btnAddForcaMana;
 
     public StatusService playerService = new StatusService();
 
@@ -100,11 +104,25 @@ public class JpStatus extends JPanel {
         lForca.setBounds(10, 230 + 15, 700, 30);
         lForca.setVisible(true);
         add(lForca);
+        
+        lMana = new JLabel("SPI: " + playerInfo.getMana());
+        lMana.setFont(new Font("Arial", Font.BOLD, 14));
+        lMana.setForeground(Color.BLACK);
+        lMana.setBounds(10, 240 + 20, 700, 30);
+        lMana.setVisible(true);
+        add(lMana);
+        
+        lForcaMana = new JLabel("WIL: " + playerInfo.getForcaMana());
+        lForcaMana.setFont(new Font("Arial", Font.BOLD, 14));
+        lForcaMana.setForeground(Color.BLACK);
+        lForcaMana.setBounds(10, 250 + 25, 700, 30);
+        lForcaMana.setVisible(true);
+        add(lForcaMana);
 
         lDinheiro = new JLabel("Dinheiro: " + playerInfo.getDinheiro());
         lDinheiro.setFont(new Font("Arial", Font.BOLD, 14));
         lDinheiro.setForeground(Color.BLACK);
-        lDinheiro.setBounds(10, 240 + 20, 700, 30);
+        lDinheiro.setBounds(10, 260 + 30, 700, 30);
         lDinheiro.setVisible(true);
         add(lDinheiro);
 
@@ -150,6 +168,34 @@ public class JpStatus extends JPanel {
         });
         add(btnAddForca);
         
+        btnAddMana = new JButton("");
+        btnAddMana.setBackground(Color.YELLOW);
+        btnAddMana.setBounds(100, 210 + 60, 10, 10);
+        btnAddMana.setBorderPainted(false);
+        btnAddMana.setVisible(playerInfo.getPontos() > 0);
+        btnAddMana.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aumentarMana();
+                atualizarLabelsEAtualizar();
+            }
+        });
+        add(btnAddMana);
+        
+        btnAddForcaMana = new JButton("");
+        btnAddForcaMana.setBackground(Color.YELLOW);
+        btnAddForcaMana.setBounds(100, 210 + 75, 10, 10);
+        btnAddForcaMana.setBorderPainted(false);
+        btnAddForcaMana.setVisible(playerInfo.getPontos() > 0);
+        btnAddForcaMana.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                aumentarForcaMana();
+                atualizarLabelsEAtualizar();
+            }
+        });
+        add(btnAddForcaMana);
+        
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
     }
@@ -172,6 +218,8 @@ public class JpStatus extends JPanel {
         lPontos.setText("Pontos disponíveis: " + playerInfo.getPontos());
         lStamina.setText("DEX: " + playerInfo.getStamina());
         lForca.setText("STR: " + playerInfo.getForca());
+        lMana.setText("SPI: " + playerInfo.getMana());
+        lForcaMana.setText("WIL: " + playerInfo.getForcaMana());
         lDinheiro.setText("Dinheiro: " + playerInfo.getDinheiro());
 
         // Verifica se o valor de pontos chegou a zero, e desabilita o botão ou o torna invisível
@@ -179,6 +227,8 @@ public class JpStatus extends JPanel {
             btnAddVida.setVisible(false); // Desabilita o botão
             btnAddStamina.setVisible(false); // Desabilita o botão
             btnAddForca.setVisible(false); // Desabilita o botão
+            btnAddMana.setVisible(false); // Desabilita o botão
+            btnAddForcaMana.setVisible(false); // Desabilita o botão
         }
         revalidate();
         repaint();
@@ -189,7 +239,7 @@ public class JpStatus extends JPanel {
         playerInfo.setVida(playerInfo.getVida() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getDinheiro());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro());
     }
 
     public void aumentarStamina() {
@@ -197,7 +247,7 @@ public class JpStatus extends JPanel {
         playerInfo.setStamina(playerInfo.getStamina() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getDinheiro());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro());
     }
 
     public void aumentarForca() {
@@ -205,6 +255,22 @@ public class JpStatus extends JPanel {
         playerInfo.setForca(playerInfo.getForca() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getDinheiro());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro());
+    }
+    
+    public void aumentarMana() {
+        playerInfo.setPontos(playerInfo.getPontos() - 1);
+        playerInfo.setMana(playerInfo.getMana() + 1);
+        playerInfo.setNivel(playerInfo.getNivel() + 1);
+
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro());
+    }
+    
+    public void aumentarForcaMana() {
+        playerInfo.setPontos(playerInfo.getPontos() - 1);
+        playerInfo.setForcaMana(playerInfo.getForcaMana() + 1);
+        playerInfo.setNivel(playerInfo.getNivel() + 1);
+
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro());
     }
 }

@@ -111,6 +111,40 @@ public class StatusService {
         return 0; // Retorno padrão se não encontrar o nível
     }
     
+    public int getPlayerMana(int id) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            String query = "SELECT mana FROM tb_player_status WHERE id_player_status = ?"; // Pode estar errada!
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    return resultSet.getInt("mana");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Retorno padrão se não encontrar o nível
+    }
+    
+    public int getPlayerForcaMana(int id) {
+        try (Connection connection = DatabaseConfig.getConnection()) {
+            String query = "SELECT forcaMana FROM tb_player_status WHERE id_player_status = ?"; // Pode estar errada!
+            try (PreparedStatement statement = connection.prepareStatement(query)) {
+                statement.setInt(1, id);
+                ResultSet resultSet = statement.executeQuery();
+
+                if (resultSet.next()) {
+                    return resultSet.getInt("forcaMana");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0; // Retorno padrão se não encontrar o nível
+    }
+    
     public int getPlayerOp(int id) {
         String query = "SELECT op FROM tb_player_status WHERE id_player_status = ?";
 
@@ -130,9 +164,9 @@ public class StatusService {
         return 0; // Retorno padrão caso não encontre o usuário ou ocorra erro
     }
 
-    public boolean atualizarStatusBanco(int id, int nivel, int pontos, int vida, int stamina, int forca, int dinheiro) {
+    public boolean atualizarStatusBanco(int id, int nivel, int pontos, int vida, int stamina, int forca, int mana, int forcaMana, int dinheiro) {
         // SQL para atualizar os valores
-        String query = "UPDATE tb_player_status SET nivel = ?, pontos = ?, vida = ?, stamina = ?, forca = ?, dinheiro = ? WHERE id_player_status = ?";
+        String query = "UPDATE tb_player_status SET nivel = ?, pontos = ?, vida = ?, stamina = ?, forca = ?, mana = ?, forcaMana = ?, dinheiro = ? WHERE id_player_status = ?";
 
         try (Connection connection = DatabaseConfig.getConnection()) {
             try (PreparedStatement statement = connection.prepareStatement(query)) {
@@ -142,8 +176,10 @@ public class StatusService {
                 statement.setInt(3, vida);     // Atualiza o campo 'vida'
                 statement.setInt(4, stamina);  // Atualiza o campo 'stamina'
                 statement.setInt(5, forca);    // Atualiza o campo 'forca'
-                statement.setInt(6, dinheiro); // Atualiza o campo 'dinheiro'
-                statement.setInt(7, id);       // Define o ID do jogador para atualização
+                statement.setInt(6, mana);    // Atualiza o campo 'forca'
+                statement.setInt(7, forcaMana);    // Atualiza o campo 'forca'
+                statement.setInt(8, dinheiro); // Atualiza o campo 'dinheiro'
+                statement.setInt(9, id);       // Define o ID do jogador para atualização
 
                 // Executa a query
                 int rowsAffected = statement.executeUpdate();

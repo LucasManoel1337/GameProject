@@ -12,6 +12,8 @@ public class infoPlayerDto {
     private static int vida = -1;
     private static int stamina = -1;
     private static int forca = -1;
+    private static int mana = -1;
+    private static int forcaMana = -1;
     private static int dinheiro = -1;
 
     public int getIdPlayer() {
@@ -68,6 +70,22 @@ public class infoPlayerDto {
 
     public void setForca(int forca) {
         infoPlayerDto.forca = forca;
+    }
+    
+    public int getMana() {
+        return mana;
+    }
+
+    public void setMana(int mana) {
+        infoPlayerDto.mana = mana;
+    }
+    
+    public int getForcaMana() {
+        return forcaMana;
+    }
+
+    public void setForcaMana(int forcaMana) {
+        infoPlayerDto.forcaMana = forcaMana;
     }
 
     public int getDinheiro() {

@@ -27,6 +27,12 @@
         <column name="forca" type="INT">
             <constraints nullable="false"/>
         </column>
+        <column name="mana" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="forcaMana" type="INT">
+            <constraints nullable="false"/>
+        </column>
         
         <column name="dinheiro" type="INT">
             <constraints nullable="false"/>
