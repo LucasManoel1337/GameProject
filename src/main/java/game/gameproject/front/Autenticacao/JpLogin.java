@@ -38,7 +38,7 @@ public class JpLogin extends JPanel {
         setBackground(Color.WHITE);
 
         try {
-            imgFundo = ImageIO.read(new File("imagens/login/fundo.png"));
+            imgFundo = ImageIO.read(new File("imagens/login/fundolaucher.png"));
             logo = ImageIO.read(new File("imagens/login/logoEmpresa.png"));
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,7 +199,7 @@ public class JpLogin extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(imgFundo, 390, 0, 600, 720, this);
+        g.drawImage(imgFundo, 390, 0, 890, 768, this);
         g.drawImage(logo, 140, 0, 100, 100, this);
     }
 

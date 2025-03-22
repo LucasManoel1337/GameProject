@@ -66,63 +66,63 @@ public class JpStatus extends JPanel {
         lJogador = new JLabel("Nick: " + playerInfo.getNickPlayer());
         lJogador.setFont(new Font("Arial", Font.BOLD, 16));
         lJogador.setForeground(Color.BLACK);
-        lJogador.setBounds(10, 150, 700, 30);
+        lJogador.setBounds(500, 150, 700, 30);
         lJogador.setVisible(true);
         add(lJogador);
 
-        lNivel = new JLabel("Nivel: " + playerInfo.getNivel());
+        lNivel = new JLabel(""+playerInfo.getNivel());
         lNivel.setFont(new Font("Arial", Font.BOLD, 14));
         lNivel.setForeground(Color.BLACK);
-        lNivel.setBounds(10, 170, 700, 30);
+        lNivel.setBounds(210, 170, 700, 30);
         lNivel.setVisible(true);
         add(lNivel);
 
         lPontos = new JLabel("Pontos disponiveis: " + playerInfo.getPontos());
         lPontos.setFont(new Font("Arial", Font.BOLD, 14));
         lPontos.setForeground(Color.BLACK);
-        lPontos.setBounds(10, 190, 700, 30);
+        lPontos.setBounds(500, 190, 700, 30);
         lPontos.setVisible(true);
         add(lPontos);
 
         lVida = new JLabel("CON: " + playerInfo.getVida());
         lVida.setFont(new Font("Arial", Font.BOLD, 14));
         lVida.setForeground(Color.BLACK);
-        lVida.setBounds(10, 210 + 5, 700, 30);
+        lVida.setBounds(500, 210 + 5, 700, 30);
         lVida.setVisible(true);
         add(lVida);
 
         lStamina = new JLabel("DEX: " + playerInfo.getStamina());
         lStamina.setFont(new Font("Arial", Font.BOLD, 14));
         lStamina.setForeground(Color.BLACK);
-        lStamina.setBounds(10, 220 + 10, 700, 30);
+        lStamina.setBounds(500, 220 + 10, 700, 30);
         lStamina.setVisible(true);
         add(lStamina);
 
         lForca = new JLabel("STR: " + playerInfo.getForca());
         lForca.setFont(new Font("Arial", Font.BOLD, 14));
         lForca.setForeground(Color.BLACK);
-        lForca.setBounds(10, 230 + 15, 700, 30);
+        lForca.setBounds(500, 230 + 15, 700, 30);
         lForca.setVisible(true);
         add(lForca);
         
         lMana = new JLabel("SPI: " + playerInfo.getMana());
         lMana.setFont(new Font("Arial", Font.BOLD, 14));
         lMana.setForeground(Color.BLACK);
-        lMana.setBounds(10, 240 + 20, 700, 30);
+        lMana.setBounds(500, 240 + 20, 700, 30);
         lMana.setVisible(true);
         add(lMana);
         
         lForcaMana = new JLabel("WIL: " + playerInfo.getForcaMana());
         lForcaMana.setFont(new Font("Arial", Font.BOLD, 14));
         lForcaMana.setForeground(Color.BLACK);
-        lForcaMana.setBounds(10, 250 + 25, 700, 30);
+        lForcaMana.setBounds(500, 250 + 25, 700, 30);
         lForcaMana.setVisible(true);
         add(lForcaMana);
 
         lDinheiro = new JLabel("Dinheiro: " + playerInfo.getDinheiro());
         lDinheiro.setFont(new Font("Arial", Font.BOLD, 14));
         lDinheiro.setForeground(Color.BLACK);
-        lDinheiro.setBounds(10, 260 + 30, 700, 30);
+        lDinheiro.setBounds(500, 260 + 30, 700, 30);
         lDinheiro.setVisible(true);
         add(lDinheiro);
 
@@ -195,6 +195,14 @@ public class JpStatus extends JPanel {
             }
         });
         add(btnAddForcaMana);
+        
+        ImageIcon logoIconS = new ImageIcon("imagens/Menu/status/status.png");
+        Image imgS = logoIconS.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        logoIconS = new ImageIcon(imgS);
+
+        JLabel logoLabelS = new JLabel(logoIconS);
+        logoLabelS.setBounds(10, 70, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabelS);
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();

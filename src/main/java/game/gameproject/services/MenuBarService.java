@@ -54,7 +54,15 @@ public class MenuBarService {
         System.out.println("Erro: Nenhum componente foi adicionado ao painel.");
     }
 
-    // Revalidando e repintando o painel para refletir a mudança
+ // Criar a imagem
+    ImageIcon logoIcon = new ImageIcon("imagens/Menu/backgroundmenu.png");
+    Image img = logoIcon.getImage().getScaledInstance(1280, 768, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+    logoIcon = new ImageIcon(img);
+
+    JLabel logoLabel = new JLabel(logoIcon);
+    logoLabel.setBounds(0, 0, 1280, 768);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+    panel.add(logoLabel);
+    
     panel.revalidate();
     panel.repaint();
 }

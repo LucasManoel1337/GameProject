@@ -12,7 +12,7 @@ public class LauncherFrame extends JFrame {
 
     public LauncherFrame() {
         setTitle("Room 5 Studios - Launcher");
-        setSize(1000, 750);
+        setSize(1280, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
