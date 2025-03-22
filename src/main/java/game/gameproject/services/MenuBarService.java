@@ -28,7 +28,7 @@ public class MenuBarService {
     JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo);
     JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo);
     JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo);
-    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.RED, gameFrame, playerInfo);
+    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.BLUE, gameFrame, playerInfo);
     JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo);
     JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo);
 
@@ -53,8 +53,7 @@ public class MenuBarService {
     } else {
         System.out.println("Erro: Nenhum componente foi adicionado ao painel.");
     }
-
- // Criar a imagem
+    
     ImageIcon logoIcon = new ImageIcon("imagens/Menu/backgroundmenu.png");
     Image img = logoIcon.getImage().getScaledInstance(1280, 768, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
     logoIcon = new ImageIcon(img);

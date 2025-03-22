@@ -4,8 +4,11 @@ import game.gameproject.controller.GameFrame;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.MenuBarService;
 import game.gameproject.services.StatusService;
+
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.FontMetrics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
+import javax.swing.SwingConstants;
 
 public class JpStatus extends JPanel {
 
@@ -24,6 +28,7 @@ public class JpStatus extends JPanel {
 
     public JLabel lJogador = new JLabel("Nick: ");
     public JLabel lNivel = new JLabel("");
+    public JLabel lClasse = new JLabel("");
     public JLabel lPontos = new JLabel("");
     public JLabel lVida = new JLabel("");
     public JLabel lStamina = new JLabel("");
@@ -37,6 +42,14 @@ public class JpStatus extends JPanel {
     public JButton btnAddForca;
     public JButton btnAddMana;
     public JButton btnAddForcaMana;
+    
+    public int xVida = 0;
+    public int xStamina = 0;
+    public int xForca = 0;
+    public int xMana = 0;
+    public int xForcaMana = 0;
+    
+    public int xDinheiro = 0;
 
     public StatusService playerService = new StatusService();
 
@@ -45,14 +58,6 @@ public class JpStatus extends JPanel {
         this.playerInfo = playerInfo;  // Atribui o playerInfo passado no construtor
         setLayout(null);
         setBackground(Color.WHITE);
-
-        // Criar o título
-        JLabel lTituloTela = new JLabel("Status");
-        lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
-        lTituloTela.setForeground(Color.BLACK);
-        lTituloTela.setBounds(55, 90, 700, 30);  // Coloquei a posição mais alta para que o título fique acima
-        lTituloTela.setVisible(true);
-        add(lTituloTela);
 
         // Criar a imagem
         ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
@@ -63,72 +68,131 @@ public class JpStatus extends JPanel {
         logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
         add(logoLabel);
 
-        lJogador = new JLabel("Nick: " + playerInfo.getNickPlayer());
+        lJogador = new JLabel(playerInfo.getNickPlayer(), SwingConstants.CENTER);
         lJogador.setFont(new Font("Arial", Font.BOLD, 16));
         lJogador.setForeground(Color.BLACK);
-        lJogador.setBounds(500, 150, 700, 30);
+
+        FontMetrics fm = lJogador.getFontMetrics(lJogador.getFont());
+        int textWidth = fm.stringWidth(playerInfo.getNickPlayer());
+        lJogador.setPreferredSize(new Dimension(textWidth, 30));
+        int areaLargura = 10+getWidth();
+        int x = 626 + (areaLargura - textWidth) / 2;
+        lJogador.setBounds(x, 202, textWidth, 30);
         lJogador.setVisible(true);
         add(lJogador);
-
-        lNivel = new JLabel(""+playerInfo.getNivel());
+        
+        lNivel = new JLabel(""+1);
         lNivel.setFont(new Font("Arial", Font.BOLD, 14));
         lNivel.setForeground(Color.BLACK);
-        lNivel.setBounds(210, 170, 700, 30);
+        
+        FontMetrics fmNivel = lNivel.getFontMetrics(lNivel.getFont());
+        int textWidthNivel = fmNivel.stringWidth(""+playerInfo.getNivel());
+        lNivel.setPreferredSize(new Dimension(textWidthNivel, 30));
+        int areaLarguraNivel = 10+getWidth();
+        int xNivel = 626 + (areaLarguraNivel - textWidthNivel) / 2;
+        lNivel.setBounds(xNivel, 220, textWidthNivel, 30);
         lNivel.setVisible(true);
         add(lNivel);
+        
+        lClasse = new JLabel("Classe: " + playerInfo.getPontos());
+        lClasse.setFont(new Font("Arial", Font.BOLD, 14));
+        lClasse.setForeground(Color.BLACK);
+        FontMetrics fmClasse = lClasse.getFontMetrics(lClasse.getFont());
+        int textWidthClasse = fmClasse.stringWidth("Classe: " + playerInfo.getPontos());
+        lClasse.setPreferredSize(new Dimension(textWidthClasse, 30));
+        int areaLarguraClasse = 10+getWidth();
+        int xClasse = 626 + (areaLarguraClasse - textWidthClasse) / 2;
+        lClasse.setBounds(xClasse, 260, textWidthClasse, 30);
+        lClasse.setVisible(true);
+        add(lClasse);
 
         lPontos = new JLabel("Pontos disponiveis: " + playerInfo.getPontos());
         lPontos.setFont(new Font("Arial", Font.BOLD, 14));
         lPontos.setForeground(Color.BLACK);
-        lPontos.setBounds(500, 190, 700, 30);
+        FontMetrics fmPontos = lPontos.getFontMetrics(lPontos.getFont());
+        int textWidthPontos = fmPontos.stringWidth("Pontos disponiveis: " + playerInfo.getPontos());
+        lPontos.setPreferredSize(new Dimension(textWidthPontos, 30));
+        int areaLarguraPontos = 10+getWidth();
+        int xPontos = 626 + (areaLarguraPontos - textWidthPontos) / 2;
+        lPontos.setBounds(xPontos, 280, textWidthPontos, 30);
         lPontos.setVisible(true);
         add(lPontos);
 
         lVida = new JLabel("CON: " + playerInfo.getVida());
         lVida.setFont(new Font("Arial", Font.BOLD, 14));
         lVida.setForeground(Color.BLACK);
-        lVida.setBounds(500, 210 + 5, 700, 30);
+        FontMetrics fmVida = lVida.getFontMetrics(lVida.getFont());
+        int textWidthVida = fmVida.stringWidth("CON: " + playerInfo.getPontos());
+        lVida.setPreferredSize(new Dimension(textWidthVida, 30));
+        int areaLarguraVida = 10+getWidth();
+        xVida = 626 + (areaLarguraVida - textWidthVida) / 2;
+        lVida.setBounds(xVida - 30, 315, textWidthVida, 30);
         lVida.setVisible(true);
         add(lVida);
 
         lStamina = new JLabel("DEX: " + playerInfo.getStamina());
         lStamina.setFont(new Font("Arial", Font.BOLD, 14));
         lStamina.setForeground(Color.BLACK);
-        lStamina.setBounds(500, 220 + 10, 700, 30);
+        FontMetrics fmStamina = lStamina.getFontMetrics(lStamina.getFont());
+        int textWidthStamina = fmStamina.stringWidth("DEX: " + playerInfo.getStamina());
+        lStamina.setPreferredSize(new Dimension(textWidthStamina, 30));
+        int areaLarguraStamina = 10+getWidth();
+        xStamina = 626 + (areaLarguraStamina - textWidthStamina) / 2;
+        lStamina.setBounds(xStamina - 30, 330, textWidthStamina, 30);
         lStamina.setVisible(true);
         add(lStamina);
 
         lForca = new JLabel("STR: " + playerInfo.getForca());
         lForca.setFont(new Font("Arial", Font.BOLD, 14));
         lForca.setForeground(Color.BLACK);
-        lForca.setBounds(500, 230 + 15, 700, 30);
+        FontMetrics fmForca = lForca.getFontMetrics(lForca.getFont());
+        int textWidthForca = fmForca.stringWidth("STR: " + playerInfo.getForca());
+        lForca.setPreferredSize(new Dimension(textWidthForca, 30));
+        int areaLarguraForca = 10+getWidth();
+        xForca = 626 + (areaLarguraForca - textWidthForca) / 2;
+        lForca.setBounds(xForca - 30, 325 + 20, textWidthForca, 30);
         lForca.setVisible(true);
         add(lForca);
         
         lMana = new JLabel("SPI: " + playerInfo.getMana());
         lMana.setFont(new Font("Arial", Font.BOLD, 14));
         lMana.setForeground(Color.BLACK);
-        lMana.setBounds(500, 240 + 20, 700, 30);
+        FontMetrics fmMana = lMana.getFontMetrics(lMana.getFont());
+        int textWidthMana = fmMana.stringWidth("SPI: " + playerInfo.getMana());
+        lMana.setPreferredSize(new Dimension(textWidthMana, 30));
+        int areaLarguraMana = 10+getWidth();
+        xMana = 626 + (areaLarguraMana - textWidthMana) / 2;
+        lMana.setBounds(xMana - 30, 240 + 20 + 100, textWidthMana, 30);
         lMana.setVisible(true);
         add(lMana);
         
         lForcaMana = new JLabel("WIL: " + playerInfo.getForcaMana());
         lForcaMana.setFont(new Font("Arial", Font.BOLD, 14));
         lForcaMana.setForeground(Color.BLACK);
-        lForcaMana.setBounds(500, 250 + 25, 700, 30);
+        FontMetrics fmForcaMana = lForcaMana.getFontMetrics(lForcaMana.getFont());
+        int textWidthForcaMana = fmForcaMana.stringWidth("WIL: " + playerInfo.getForcaMana());
+        lForcaMana.setPreferredSize(new Dimension(textWidthForcaMana, 30));
+        int areaLarguraForcaMana = 10+getWidth();
+        xForcaMana = 626 + (areaLarguraForcaMana - textWidthForcaMana) / 2;
+        lForcaMana.setBounds(xMana - 30, 250 + 25 + 100, textWidthForcaMana, 30);
         lForcaMana.setVisible(true);
         add(lForcaMana);
 
         lDinheiro = new JLabel("Dinheiro: " + playerInfo.getDinheiro());
         lDinheiro.setFont(new Font("Arial", Font.BOLD, 14));
         lDinheiro.setForeground(Color.BLACK);
-        lDinheiro.setBounds(500, 260 + 30, 700, 30);
+        FontMetrics fmDinheiro = lDinheiro.getFontMetrics(lDinheiro.getFont());
+        int textWidthDinheiro = fmDinheiro.stringWidth("Dinheiro: " + playerInfo.getDinheiro());
+        lDinheiro.setPreferredSize(new Dimension(textWidthDinheiro, 30));
+        int areaLarguraDinheiro = 10+getWidth();
+        xDinheiro = 626 + (areaLarguraDinheiro - textWidthDinheiro) / 2;
+        lDinheiro.setBounds(xMana - 30, 250 + 25 + 130, textWidthDinheiro, 30);
         lDinheiro.setVisible(true);
         add(lDinheiro);
 
         btnAddVida = new JButton("");
         btnAddVida.setBackground(Color.YELLOW);
-        btnAddVida.setBounds(100, 210 + 15, 10, 10);
+        btnAddVida.setBounds(xVida + 50, 210 + 15 + 100, 10, 10);
         btnAddVida.setBorderPainted(false);
         btnAddVida.setVisible(playerInfo.getPontos() > 0);
         btnAddVida.addActionListener(new ActionListener() {
@@ -142,7 +206,7 @@ public class JpStatus extends JPanel {
 
         btnAddStamina = new JButton("");
         btnAddStamina.setBackground(Color.YELLOW);
-        btnAddStamina.setBounds(100, 210 + 30, 10, 10);
+        btnAddStamina.setBounds(xVida + 50, 210 + 30 + 100, 10, 10);
         btnAddStamina.setBorderPainted(false);
         btnAddStamina.setVisible(playerInfo.getPontos() > 0);
         btnAddStamina.addActionListener(new ActionListener() {
@@ -156,7 +220,7 @@ public class JpStatus extends JPanel {
 
         btnAddForca = new JButton("");
         btnAddForca.setBackground(Color.YELLOW);
-        btnAddForca.setBounds(100, 210 + 45, 10, 10);
+        btnAddForca.setBounds(xVida + 50, 210 + 45 + 100, 10, 10);
         btnAddForca.setBorderPainted(false);
         btnAddForca.setVisible(playerInfo.getPontos() > 0);
         btnAddForca.addActionListener(new ActionListener() {
@@ -170,7 +234,7 @@ public class JpStatus extends JPanel {
         
         btnAddMana = new JButton("");
         btnAddMana.setBackground(Color.YELLOW);
-        btnAddMana.setBounds(100, 210 + 60, 10, 10);
+        btnAddMana.setBounds(xVida + 50, 210 + 60 + 100, 10, 10);
         btnAddMana.setBorderPainted(false);
         btnAddMana.setVisible(playerInfo.getPontos() > 0);
         btnAddMana.addActionListener(new ActionListener() {
@@ -184,7 +248,7 @@ public class JpStatus extends JPanel {
         
         btnAddForcaMana = new JButton("");
         btnAddForcaMana.setBackground(Color.YELLOW);
-        btnAddForcaMana.setBounds(100, 210 + 75, 10, 10);
+        btnAddForcaMana.setBounds(xVida + 50, 210 + 75 + 100, 10, 10);
         btnAddForcaMana.setBorderPainted(false);
         btnAddForcaMana.setVisible(playerInfo.getPontos() > 0);
         btnAddForcaMana.addActionListener(new ActionListener() {
@@ -201,8 +265,12 @@ public class JpStatus extends JPanel {
         logoIconS = new ImageIcon(imgS);
 
         JLabel logoLabelS = new JLabel(logoIconS);
-        logoLabelS.setBounds(10, 70, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        logoLabelS.setBounds(420, 70, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
         add(logoLabelS);
+        
+        JLabel logoLabelE = new JLabel(logoIconS);
+        logoLabelE.setBounds(420+410, 70, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabelE);
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
