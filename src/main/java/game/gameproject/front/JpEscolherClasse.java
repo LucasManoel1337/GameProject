@@ -81,11 +81,96 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Buff: +WIL, +SPI", 1010, 610, 12, Color.BLACK);
         addLabel("Debuff: -STR, -CON", 1010, 620, 12, Color.BLACK);
         
+        ImageIcon logoIconM = new ImageIcon("imagens/player/Guerreiros/Tank/M/modeloFrente1.png");
+        Image imgM = logoIconM.getImage().getScaledInstance(38, 50, Image.SCALE_SMOOTH);
+        logoIconM = new ImageIcon(imgM);
         
+        JLabel logoLabelG1M = new JLabel(logoIconM);
+        logoLabelG1M.setBounds(155, 220, 38, 50);
+        add(logoLabelG1M);
+        
+        JLabel logoLabelG1F = new JLabel(logoIconM);
+        logoLabelG1F.setBounds(215, 220, 38, 50);
+        add(logoLabelG1F);
+        
+        JLabel logoLabelG2M = new JLabel(logoIconM);
+        logoLabelG2M.setBounds(370, 220, 38, 50);
+        add(logoLabelG2M);
+        
+        JLabel logoLabelG2F = new JLabel(logoIconM);
+        logoLabelG2F.setBounds(430, 220, 38, 50);
+        add(logoLabelG2F);
+        
+        JLabel logoLabelG3M = new JLabel(logoIconM);
+        logoLabelG3M.setBounds(585, 220, 38, 50);
+        add(logoLabelG3M);
+        
+        JLabel logoLabelG3F = new JLabel(logoIconM);
+        logoLabelG3F.setBounds(585 + 60, 220, 38, 50);
+        add(logoLabelG3F);
+        
+        JLabel logoLabelG4M = new JLabel(logoIconM);
+        logoLabelG4M.setBounds(800, 220, 38, 50);
+        add(logoLabelG4M);
+        
+        JLabel logoLabelG4F = new JLabel(logoIconM);
+        logoLabelG4F.setBounds(860, 220, 38, 50);
+        add(logoLabelG4F);
+        
+        JLabel logoLabelG5M = new JLabel(logoIconM);
+        logoLabelG5M.setBounds(1015, 220, 38, 50);
+        add(logoLabelG5M);
+        
+        JLabel logoLabelG5F = new JLabel(logoIconM);
+        logoLabelG5F.setBounds(1075, 220, 38, 50);
+        add(logoLabelG5F);
+        
+        //Mago
+        JLabel logoLabelM1M = new JLabel(logoIconM);
+        logoLabelM1M.setBounds(155, 540, 38, 50);
+        add(logoLabelM1M);
+        
+        JLabel logoLabelM1F = new JLabel(logoIconM);
+        logoLabelM1F.setBounds(215, 540, 38, 50);
+        add(logoLabelM1F);
+        
+        JLabel logoLabelM2M = new JLabel(logoIconM);
+        logoLabelM2M.setBounds(370, 540, 38, 50);
+        add(logoLabelM2M);
+        
+        JLabel logoLabelM2F = new JLabel(logoIconM);
+        logoLabelM2F.setBounds(430, 540, 38, 50);
+        add(logoLabelM2F);
+        
+        JLabel logoLabelM3M = new JLabel(logoIconM);
+        logoLabelM3M.setBounds(585, 540, 38, 50);
+        add(logoLabelM3M);
+        
+        JLabel logoLabelM3F = new JLabel(logoIconM);
+        logoLabelM3F.setBounds(585 + 60, 540, 38, 50);
+        add(logoLabelM3F);
+        
+        JLabel logoLabelM4M = new JLabel(logoIconM);
+        logoLabelM4M.setBounds(800, 540, 38, 50);
+        add(logoLabelM4M);
+        
+        JLabel logoLabelM4F = new JLabel(logoIconM);
+        logoLabelM4F.setBounds(860, 540, 38, 50);
+        add(logoLabelM4F);
+        
+        JLabel logoLabelM5M = new JLabel(logoIconM);
+        logoLabelM5M.setBounds(1015, 540, 38, 50);
+        add(logoLabelM5M);
+        
+        JLabel logoLabelM5F = new JLabel(logoIconM);
+        logoLabelM5F.setBounds(1075, 540, 38, 50);
+        add(logoLabelM5F);
         
         JButton EscolherG1 = new JButton("Escolher");
         EscolherG1.setVisible(true);
         EscolherG1.setFocusable(false);
+        EscolherG1.setBorderPainted(false);
+        EscolherG1.setBackground(Color.YELLOW);
         EscolherG1.setBounds(155, 328, 100, 20);
         add(EscolherG1);
         EscolherG1.addActionListener(e -> {
@@ -98,6 +183,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherG2 = new JButton("Escolher");
         EscolherG2.setVisible(true);
         EscolherG2.setFocusable(false);
+        EscolherG2.setBorderPainted(false);
+        EscolherG2.setBackground(Color.YELLOW);
         EscolherG2.setBounds(370, 328, 100, 20);
         add(EscolherG2);
         EscolherG2.addActionListener(e -> {
@@ -110,6 +197,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherG3 = new JButton("Escolher");
         EscolherG3.setVisible(true);
         EscolherG3.setFocusable(false);
+        EscolherG3.setBorderPainted(false);
+        EscolherG3.setBackground(Color.YELLOW);
         EscolherG3.setBounds(585, 328, 100, 20);
         add(EscolherG3);
         EscolherG3.addActionListener(e -> {
@@ -122,6 +211,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherG4 = new JButton("Escolher");
         EscolherG4.setVisible(true);
         EscolherG4.setFocusable(false);
+        EscolherG4.setBorderPainted(false);
+        EscolherG4.setBackground(Color.YELLOW);
         EscolherG4.setBounds(800, 328, 100, 20);
         add(EscolherG4);
         EscolherG4.addActionListener(e -> {
@@ -134,6 +225,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherG5 = new JButton("Escolher");
         EscolherG5.setVisible(true);
         EscolherG5.setFocusable(false);
+        EscolherG5.setBorderPainted(false);
+        EscolherG5.setBackground(Color.YELLOW);
         EscolherG5.setBounds(1015, 328, 100, 20);
         add(EscolherG5);
         EscolherG5.addActionListener(e -> {
@@ -148,6 +241,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherM1 = new JButton("Escolher");
         EscolherM1.setVisible(true);
         EscolherM1.setFocusable(false);
+        EscolherM1.setBorderPainted(false);
+        EscolherM1.setBackground(Color.YELLOW);
         EscolherM1.setBounds(155, 648, 100, 20);
         add(EscolherM1);
         EscolherM1.addActionListener(e -> {
@@ -160,6 +255,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherM2 = new JButton("Escolher");
         EscolherM2.setVisible(true);
         EscolherM2.setFocusable(false);
+        EscolherM2.setBorderPainted(false);
+        EscolherM2.setBackground(Color.YELLOW);
         EscolherM2.setBounds(370, 648, 100, 20);
         add(EscolherM2);
         EscolherM2.addActionListener(e -> {
@@ -172,6 +269,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherM3 = new JButton("Escolher");
         EscolherM3.setVisible(true);
         EscolherM3.setFocusable(false);
+        EscolherM3.setBorderPainted(false);
+        EscolherM3.setBackground(Color.YELLOW);
         EscolherM3.setBounds(585, 648, 100, 20);
         add(EscolherM3);
         EscolherM3.addActionListener(e -> {
@@ -184,6 +283,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherM4 = new JButton("Escolher");
         EscolherM4.setVisible(true);
         EscolherM4.setFocusable(false);
+        EscolherM4.setBorderPainted(false);
+        EscolherM4.setBackground(Color.YELLOW);
         EscolherM4.setBounds(800, 648, 100, 20);
         add(EscolherM4);
         EscolherM4.addActionListener(e -> {
@@ -196,6 +297,8 @@ public class JpEscolherClasse extends JPanel {
         JButton EscolherM5 = new JButton("Escolher");
         EscolherM5.setVisible(true);
         EscolherM5.setFocusable(false);
+        EscolherM5.setBorderPainted(false);
+        EscolherM5.setBackground(Color.YELLOW);
         EscolherM5.setBounds(1015, 648, 100, 20);
         add(EscolherM5);
         EscolherM5.addActionListener(e -> {
