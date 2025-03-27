@@ -131,22 +131,36 @@ public class RegistrarService {
 
     // Salva as coordenadas iniciais na tabela tb_player_coordenadas
     private void salvarCoordenadasPlayer(int id) {
-        try (Connection connection = DatabaseConfig.getConnection()) {
-            // Vamos supor que o jogador começa em (0, 0) e com o sprite inicial '1'
-            String query = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online) VALUES (?, ?, ?, ?, ?)";
-            try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, id);  // ID do player (da tabela tb_login)
-                statement.setInt(2, 0);    // Coordenada X inicial
-                statement.setInt(3, 0);    // Coordenada Y inicial
-                statement.setInt(4, 1);    // Sprite inicial
-                statement.setBoolean(5, false);  // Inicialmente offline
-                statement.executeUpdate();
-                System.out.println("Coordenadas do jogador inseridas com sucesso!");
+    try (Connection connection = DatabaseConfig.getConnection()) {
+        // Verificar se o id_player já existe
+        String checkQuery = "SELECT COUNT(*) FROM tb_player_coordenadas WHERE id_player = ?";
+        try (PreparedStatement checkStmt = connection.prepareStatement(checkQuery)) {
+            checkStmt.setInt(1, id);
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            
+            if (rs.getInt(1) > 0) {
+                // Se o ID já existe, você pode optar por atualizar ou não fazer nada
+                System.out.println("ID do jogador já existe na tabela de coordenadas.");
+                return;  // Não insere novamente
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
+
+        // Inserir coordenadas caso o ID não exista
+        String query = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement statement = connection.prepareStatement(query)) {
+            statement.setInt(1, id);  // ID do player
+            statement.setInt(2, 0);    // Coordenada X inicial
+            statement.setInt(3, 0);    // Coordenada Y inicial
+            statement.setInt(4, 1);    // Sprite inicial
+            statement.setBoolean(5, false);  // Inicialmente offline
+            statement.executeUpdate();
+            System.out.println("Coordenadas do jogador inseridas com sucesso!");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+}
 
     // Cria o arquivo config.json com o token
     private void criarConfigJson(String token) {

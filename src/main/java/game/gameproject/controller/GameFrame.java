@@ -46,13 +46,13 @@ public class GameFrame extends JFrame {
         setResizable(false);
 
         // Agora, o playerInfo está inicializado corretamente
-        //telaMenu = new JpMenu(this, playerInfo);
-        //currentPanel = telaMenu;
-        //add(currentPanel);
-        
-        telaEscolherClasse = new JpEscolherClasse(this, playerInfo);
-        currentPanel = telaEscolherClasse;
+        telaMenu = new JpMenu(this, playerInfo);
+        currentPanel = telaMenu;
         add(currentPanel);
+        
+        //telaEscolherClasse = new JpEscolherClasse(this, playerInfo);
+        //currentPanel = telaEscolherClasse;
+        //add(currentPanel);
         
         setVisible(true);
         
