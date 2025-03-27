@@ -147,22 +147,19 @@ public class StatusService {
     
     public String getPlayerClasse(int id) {
         try (Connection connection = DatabaseConfig.getConnection()) {
-            // Verifique se a coluna realmente se chama 'id_player' ou outro nome
-            String query = "SELECT classe FROM tb_player_status WHERE id_player_status = ?";  // Verifique o nome correto da coluna
-            
+            String query = "SELECT classe FROM tb_player_status WHERE id_player_status = ?"; // Verifique se essa tabela e coluna estão corretas!
             try (PreparedStatement statement = connection.prepareStatement(query)) {
-                statement.setInt(1, id);  // Defina o id na consulta
+                statement.setInt(1, id);
                 ResultSet resultSet = statement.executeQuery();
 
                 if (resultSet.next()) {
-                    return resultSet.getString("classe");  // Retorna a classe do jogador
+                    return resultSet.getString("classe");
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        
-        return null;  // Retorno padrão em caso de erro ou não encontrar a classe (deve ser 'null' já que é String)
+        return "Sem classe definida"; // Retorno padrão caso não encontre
     }
     
     public int getPlayerOp(int id) {

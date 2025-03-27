@@ -58,25 +58,24 @@ public class JpStatus extends JPanel {
     public StatusService playerService = new StatusService();
 
     public JpStatus(GameFrame gameFrame, infoPlayerDto playerInfo) {
-        this.gameFrame = gameFrame;  // Agora gameFrame não será mais null
-        this.playerInfo = playerInfo;  // Atribui o playerInfo passado no construtor
+        this.gameFrame = gameFrame;
+        this.playerInfo = playerInfo;
         setLayout(null);
         setBackground(Color.WHITE);
         
         JLabel lTituloTela = new JLabel("Status");
         lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
         lTituloTela.setForeground(Color.BLACK);
-        lTituloTela.setBounds(53, 90, 700, 30);  // Coloquei a posição mais alta para que o título fique acima
+        lTituloTela.setBounds(53, 90, 700, 30);
         lTituloTela.setVisible(true);
         add(lTituloTela);
 
-        // Criar a imagem
         ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
-        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);
         logoIcon = new ImageIcon(img);
 
         JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        logoLabel.setBounds(0, 50, 200, 100);
         add(logoLabel);
 
         lJogador = new JLabel(playerInfo.getNickPlayer(), SwingConstants.CENTER);
@@ -185,7 +184,7 @@ public class JpStatus extends JPanel {
         lForcaMana.setPreferredSize(new Dimension(textWidthForcaMana, 30));
         int areaLarguraForcaMana = 10+getWidth();
         xForcaMana = 626 + (areaLarguraForcaMana - textWidthForcaMana) / 2;
-        lForcaMana.setBounds(xMana-50, 250 + 25 + 100 + 50, textWidthForcaMana+100, 30);
+        lForcaMana.setBounds(xForcaMana-50, 250 + 25 + 100 + 50, textWidthForcaMana+100, 30);
         lForcaMana.setVisible(true);
         add(lForcaMana);
 
@@ -269,7 +268,110 @@ public class JpStatus extends JPanel {
                 atualizarLabelsEAtualizar();
             }
         });
-        add(btnAddForcaMana);
+        add(btnAddForcaMana); 
+        
+        JLabel lbuffCON = new JLabel("Buffado");
+        lbuffCON.setFont(new Font("Arial", Font.BOLD, 16));
+        lbuffCON.setForeground(Color.GREEN);
+        lbuffCON.setBounds(674, 315 + 50, 150, 30);
+        
+        JLabel lnerfCON = new JLabel("Nerfado");
+        lnerfCON.setFont(new Font("Arial", Font.BOLD, 16));
+        lnerfCON.setForeground(Color.RED);
+        lnerfCON.setBounds(674, 315 + 50, 150, 30);
+        
+        JLabel lbuffDEX = new JLabel("Buffado");
+        lbuffDEX.setFont(new Font("Arial", Font.BOLD, 16));
+        lbuffDEX.setForeground(Color.GREEN);
+        lbuffDEX.setBounds(674, 330 + 50, 150, 30);
+        
+        JLabel lnerfDEX = new JLabel("Nerfado");
+        lnerfDEX.setFont(new Font("Arial", Font.BOLD, 16));
+        lnerfDEX.setForeground(Color.RED);
+        lnerfDEX.setBounds(674, 330 + 50, 150, 30);
+        
+        JLabel lbuffSTR = new JLabel("Buffado");
+        lbuffSTR.setFont(new Font("Arial", Font.BOLD, 16));
+        lbuffSTR.setForeground(Color.GREEN);
+        lbuffSTR.setBounds(674, 325 + 20 + 50, 150, 30);
+        
+        JLabel lnerfSTR = new JLabel("Nerfado");
+        lnerfSTR.setFont(new Font("Arial", Font.BOLD, 16));
+        lnerfSTR.setForeground(Color.RED);
+        lnerfSTR.setBounds(674, 325 + 20 + 50, 150, 30);
+        
+        JLabel lbuffSPI = new JLabel("Buffado");
+        lbuffSPI.setFont(new Font("Arial", Font.BOLD, 16));
+        lbuffSPI.setForeground(Color.GREEN);
+        lbuffSPI.setBounds(674, 240 + 20 + 100 + 50, 150, 30);
+        
+        JLabel lnerfSPI = new JLabel("Nerfado");
+        lnerfSPI.setFont(new Font("Arial", Font.BOLD, 16));
+        lnerfSPI.setForeground(Color.RED);
+        lnerfSPI.setBounds(674, 240 + 20 + 100 + 50, 150, 30);
+        
+        JLabel lbuffWIL = new JLabel("Buffado");
+        lbuffWIL.setFont(new Font("Arial", Font.BOLD, 16));
+        lbuffWIL.setForeground(Color.GREEN);
+        lbuffWIL.setBounds(674, 250 + 25 + 100 + 50, 150, 30);
+        
+        JLabel lnerfWIL = new JLabel("Nerfado");
+        lnerfWIL.setFont(new Font("Arial", Font.BOLD, 16));
+        lnerfWIL.setForeground(Color.RED);
+        lnerfWIL.setBounds(674, 250 + 25 + 100 + 50, 150, 30);
+        
+        if (playerInfo.getClasse().equals("Paladino")) {
+        	add(lbuffSTR);
+        	add(lbuffWIL);
+        	add(lnerfDEX);
+        	add(lnerfSPI);
+        } if (playerInfo.getClasse().equals("Berserker")) {
+        	add(lbuffSTR);
+        	add(lbuffCON);
+        	add(lnerfDEX);
+        	add(lnerfSPI);
+        } if (playerInfo.getClasse().equals("Tank")) {
+        	add(lbuffDEX);
+        	add(lbuffCON);
+        	add(lnerfSTR);
+        	add(lnerfWIL);
+        } if (playerInfo.getClasse().equals("Gladiador")) {
+        	add(lbuffSTR);
+        	add(lbuffDEX);
+        	add(lnerfWIL);
+        	add(lnerfSPI);
+        } if (playerInfo.getClasse().equals("Cavaleiro Sombrio")) {
+        	add(lbuffSTR);
+        	add(lbuffWIL);
+        	add(lbuffSPI);
+        	add(lnerfDEX);
+        	add(lnerfCON);
+        } if (playerInfo.getClasse().equals("Elementalista")) {
+        	add(lbuffWIL);
+        	add(lbuffSPI);
+        	add(lnerfDEX);
+        	add(lnerfCON);
+        } if (playerInfo.getClasse().equals("Feiticeiro")) {
+        	add(lbuffWIL);
+        	add(lbuffDEX);
+        	add(lnerfSTR);
+        	add(lnerfCON);
+        } if (playerInfo.getClasse().equals("Necromante")) {
+        	add(lbuffWIL);
+        	add(lbuffCON);
+        	add(lnerfDEX);
+        	add(lnerfSPI);
+        } if (playerInfo.getClasse().equals("Batalhamago")) {
+        	add(lbuffSTR);
+        	add(lbuffWIL);
+        	add(lnerfDEX);
+        	add(lnerfSPI);
+        } if (playerInfo.getClasse().equals("Batalhamago")) {
+        	add(lbuffSPI);
+        	add(lbuffWIL);
+        	add(lnerfSTR);
+        	add(lnerfCON);
+        }
         
         ImageIcon logoIconS = new ImageIcon("imagens/Menu/status/status.png");
         Image imgS = logoIconS.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
@@ -296,8 +398,6 @@ public class JpStatus extends JPanel {
         getActionMap().put("exitAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ESC pressionado!");
-                
                 gameFrame.switchToGamePanel();
             }
         });
@@ -305,7 +405,7 @@ public class JpStatus extends JPanel {
 
     public void atualizarLabelsEAtualizar() {
         lNivel.setText(""+playerInfo.getNivel());
-        lClasse.setText("Classe: "+playerInfo.getNickPlayer());
+        lClasse.setText("Classe: "+playerInfo.getClasse());
         lVida.setText("CON: " + playerInfo.getVida());
         lPontos.setText("Pontos disponíveis: " + playerInfo.getPontos());
         lStamina.setText("DEX: " + playerInfo.getStamina());
@@ -314,7 +414,6 @@ public class JpStatus extends JPanel {
         lForcaMana.setText("WIL: " + playerInfo.getForcaMana());
         lDinheiro.setText("Dinheiro: " + playerInfo.getDinheiro());
 
-        // Verifica se o valor de pontos chegou a zero, e desabilita o botão ou o torna invisível
         if (playerInfo.getPontos() <= 0) {
             btnAddVida.setVisible(false); // Desabilita o botão
             btnAddStamina.setVisible(false); // Desabilita o botão
