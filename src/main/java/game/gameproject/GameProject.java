@@ -16,10 +16,6 @@ public class GameProject {
         infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
 
         if (playerInfo != null) {
-            // Usuário autenticado, você pode acessar playerInfo.getNickPlayer() e playerInfo.getIdPlayer()
-            System.out.println("ID: " +playerInfo.getIdPlayer());
-            System.out.println("Nick: " +playerInfo.getNickPlayer());
-            
             GameFrame GF = new GameFrame();
         } else {
             // Token inválido ou erro na autenticação

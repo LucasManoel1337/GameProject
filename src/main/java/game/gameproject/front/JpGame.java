@@ -8,6 +8,9 @@ import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class JpGame extends JPanel {
 
@@ -20,11 +23,27 @@ public class JpGame extends JPanel {
         this.gameFrame = gameFrame;
         this.playerInfo = playerInfo;
         setLayout(null);
+        
+        PlayerService PS = new PlayerService();
 
         // Criando o Player
         player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
         player.setBounds(0, 0, 1280, 768); // Posição inicial e tamanho
         add(player);
+        
+     // Cria o ScheduledExecutorService
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        
+        // Executa o método atualizar a cada 16,67 milissegundos (60 FPS)
+        scheduler.scheduleAtFixedRate(() -> {
+            player.trocarImagem();;
+            player.moverPersonagem();
+            
+            PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
+            player.jogadores = PS.buscarJogadores();
+            
+            repaint();
+        }, 0, 1000 / 24, TimeUnit.MILLISECONDS);
 
         // Garante que o Player receba foco corretamente
         SwingUtilities.invokeLater(() -> player.requestFocusInWindow());
@@ -39,7 +58,7 @@ public class JpGame extends JPanel {
         keyController.bindEscapeKey(this, gameFrame);
 
         // Marca o jogador como online
-        PlayerService PS = new PlayerService();
+        
         PS.setOnline(playerInfo.getIdPlayer());
     }
 

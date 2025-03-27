@@ -31,6 +31,15 @@ public class JpAmigos extends JPanel {
         lTituloTela.setBounds(45, 90, 700, 30);  // Coloquei a posição mais alta para que o título fique acima
         lTituloTela.setVisible(true);
         add(lTituloTela);
+        
+     // Criar a imagem
+        ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
+        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        logoIcon = new ImageIcon(img);
+
+        JLabel logoLabel = new JLabel(logoIcon);
+        logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabel);
 
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();

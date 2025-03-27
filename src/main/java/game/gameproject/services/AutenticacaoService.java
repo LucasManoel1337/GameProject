@@ -69,8 +69,8 @@ public class AutenticacaoService {
 
                     // Preenche o infoPlayerDto com os dados do usuário
                     infoPlayerDto IPDto = new infoPlayerDto("playerNickname");
-                    IPDto.setIdPlayer(resultSet.getInt("id"));
-                    IPDto.setNickPlayer(resultSet.getString("usuario"));
+                    infoPlayerDto.setIdPlayer(resultSet.getInt("id"));
+                    infoPlayerDto.setNickPlayer(resultSet.getString("usuario"));
                     
                     IPDto.setNivel(playerService.getPlayerNivel(resultSet.getInt("id")));
                     IPDto.setPontos(playerService.getPlayerPontos(resultSet.getInt("id")));

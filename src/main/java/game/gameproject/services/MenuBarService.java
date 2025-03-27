@@ -2,14 +2,22 @@ package game.gameproject.services;
 
 import game.gameproject.controller.GameFrame;
 import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.front.JpStatus;
+import game.gameproject.support.FontLoaderSupport;
+
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -20,17 +28,25 @@ public class MenuBarService {
     
     public static void addMenu(JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
     	
+    	Font customFont = null;
+        try {
+            // Carregando a fonte personalizada
+            customFont = FontLoaderSupport.loadCustomFont("fonts/MedievalSharp-Regular.ttf", 14);  // Substitua o caminho para sua fonte
+        } catch (IOException | FontFormatException e) {
+            e.printStackTrace(); // Caso tenha algum erro, imprime no console
+        }
+    	
     // Criando os botões de navegação (JLabel)
-    JLabel lBtnStatus = createMenuButton("Status", 30, panel, gameFrame, playerInfo);
-    JLabel lBtnInventario = createMenuButton("Inventário", 100, panel, gameFrame, playerInfo);
-    JLabel lBtnMapa = createMenuButton("Mapa", 200, panel, gameFrame, playerInfo);
-    JLabel lBtnMissões = createMenuButton("Missões", 270, panel, gameFrame, playerInfo);
-    JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo);
-    JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo);
-    JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo);
-    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.WHITE, gameFrame, playerInfo);
-    JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo);
-    JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo);
+    JLabel lBtnStatus = createMenuButton("Status", 30, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnInventario = createMenuButton("Inventário", 100, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnMapa = createMenuButton("Mapa", 200, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnMissões = createMenuButton("Missões", 270, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.WHITE, gameFrame, playerInfo, customFont);
+    JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo, customFont);
 
     // Adicionando os itens de menu ao painel
     panel.add(lBtnStatus);
@@ -66,11 +82,11 @@ public class MenuBarService {
     panel.repaint();
 }
 
-    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
-        return createMenuButton(text, xPosition, panel, Color.YELLOW, gameFrame, playerInfo);
+    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo, Font customFont) {
+        return createMenuButton(text, xPosition, panel, Color.YELLOW, gameFrame, playerInfo, customFont);
     }
 
-    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame, infoPlayerDto playerInfo) {
+    private static JLabel createMenuButton(String text, int xPosition, JPanel panel, Color textColor, GameFrame gameFrame, infoPlayerDto playerInfo, Font customFont) {
     	PlayerService PS = new PlayerService();
 
         JLabel label = new JLabel(text);
@@ -96,6 +112,7 @@ public class MenuBarService {
         } else if (text.equals("Sair")) {
             label.setBounds(1010, 10, 50, 30);
         }
+        label.setFont(customFont);
         label.setForeground(textColor);
         label.setCursor(new Cursor(Cursor.HAND_CURSOR));
         label.addMouseListener(new MouseAdapter() {

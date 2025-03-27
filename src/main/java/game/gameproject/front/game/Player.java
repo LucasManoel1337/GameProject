@@ -32,19 +32,18 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage personagemAtual;
     private BufferedImage hotbar;
     private BufferedImage fundoTest;
-    private int xPersonagem;
-    private int yPersonagem;
-    private int velocidade = 9;
-    private Timer timerAnimacao;
+    public int xPersonagem;
+    public int yPersonagem;
+    private int velocidade = 8;
     private boolean movendoCima = false;
     private boolean movendoBaixo = false;
     private boolean movendoEsquerda = false;
     private boolean movendoDireita = false;
     private Mapa mapaAtual;
     private infoPlayerDto playerInfo;
-    private String sprite = "";
+    public String sprite = "";
     
-    private List<Jogador> jogadores = new ArrayList<>();
+    public List<Jogador> jogadores = new ArrayList<>();
     
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
@@ -53,30 +52,18 @@ public class Player extends JPanel implements KeyListener {
     public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
-
         this.mapaAtual = mapaInicial;
+        
+        setDoubleBuffered(true); // Garante o double buffering
         carregarImagens();
         personagemAtual = personagemBaixo1;
         setFocusable(true);
         xPersonagem = mapaAtual.getXSpawn();
         yPersonagem = mapaAtual.getYSpawn();
-        timerAnimacao = new Timer(60, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) { 
-                trocarImagem();
-                moverPersonagem();
-                repaint();
-
-                PS.salvarCoordenadas(playerInfo.getIdPlayer(), xPersonagem, yPersonagem, sprite);
-
-                jogadores = PS.buscarJogadores();
-            }
-        });
-        
-        timerAnimacao.start();
         
         setFocusable(true);
         requestFocusInWindow();
+        
     }
 
     private void carregarImagens() {
@@ -97,7 +84,7 @@ public class Player extends JPanel implements KeyListener {
         }
     }
 
-    private void trocarImagem() {
+    public void trocarImagem() {
         int numeroImagem = 1;
 
         if (movendoCima) {
@@ -119,7 +106,7 @@ public class Player extends JPanel implements KeyListener {
         }
     }
 
-    private void moverPersonagem() {
+    public void moverPersonagem() {
         int larguraTela = getWidth();
         int alturaTela = 760;
 
@@ -135,11 +122,6 @@ public class Player extends JPanel implements KeyListener {
         if (movendoDireita && xPersonagem < larguraTela - 40) {
                 xPersonagem += velocidade;
         }
-    }
-
-    public void atualizar() {
-        repaint();
-        trocarImagem();
     }
 
     @Override
@@ -161,9 +143,6 @@ public class Player extends JPanel implements KeyListener {
             case KeyEvent.VK_SHIFT:
                 velocidade = 13;
                 break;
-        }
-        if (!timerAnimacao.isRunning()) {
-            timerAnimacao.start();
         }
     }
     
@@ -234,9 +213,6 @@ public class Player extends JPanel implements KeyListener {
         movendoBaixo = false;
         movendoEsquerda = false;
         movendoDireita = false;
-        velocidade = 9;
-        if (timerAnimacao.isRunning()) {
-            timerAnimacao.stop();
-        }
+        velocidade = 8;
     }
 }
