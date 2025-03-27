@@ -3,6 +3,7 @@ package game.gameproject.controller;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.front.JpAmigos;
 import game.gameproject.front.JpConfiguracoes;
+import game.gameproject.front.JpEscolherClasse;
 import game.gameproject.front.JpMenu;
 import game.gameproject.front.JpGame;
 import game.gameproject.front.JpGuilda;
@@ -11,7 +12,6 @@ import game.gameproject.front.JpMapa;
 import game.gameproject.front.JpMissoes;
 import game.gameproject.front.JpStatus;
 import game.gameproject.services.PlayerService;
-import game.gameproject.services.StatusService;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -32,6 +32,8 @@ public class GameFrame extends JFrame {
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
     private JpConfiguracoes telaConfiguracoes;
+    
+    private JpEscolherClasse telaEscolherClasse;
 
     private PlayerService PS = new PlayerService();
 
@@ -44,8 +46,12 @@ public class GameFrame extends JFrame {
         setResizable(false);
 
         // Agora, o playerInfo está inicializado corretamente
-        telaMenu = new JpMenu(this, playerInfo);
-        currentPanel = telaMenu;
+        //telaMenu = new JpMenu(this, playerInfo);
+        //currentPanel = telaMenu;
+        //add(currentPanel);
+        
+        telaEscolherClasse = new JpEscolherClasse(this, playerInfo);
+        currentPanel = telaEscolherClasse;
         add(currentPanel);
         
         setVisible(true);

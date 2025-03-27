@@ -1,11 +1,17 @@
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\bdd\DatabaseConfig.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\controller\GameFrame.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\controller\KeyController.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\controller\LauncherFrame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\infoPlayerDto.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\Jogador.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\VersoesDto.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpLogin.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\Autenticacao\JpRegistrar.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\game\Mapa.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\game\Player.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpAmigos.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpConfiguracoes.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpEscolherClasse.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpGame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpGuilda.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpInventario.java
@@ -17,5 +23,9 @@ C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproje
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\AutenticacaoService.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\LoginService.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\MenuBarService.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\PaintComponentService.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\PlayerService.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\RegistrarService.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\services\StatusService.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\support\FontLoaderSupport.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\support\TimerAvisosLabelsSupport.java

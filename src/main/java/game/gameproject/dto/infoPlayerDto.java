@@ -7,6 +7,8 @@ public class infoPlayerDto {
     private static int idPlayer = 0;
     private static String NickPlayer = "";
     
+    private static String classe = "";
+    
     private static int nivel = -1;
     private static int pontos = -1;
     private static int vida = -1;
@@ -94,5 +96,13 @@ public class infoPlayerDto {
 
     public void setDinheiro(int dinheiro) {
         infoPlayerDto.dinheiro = dinheiro;
+    }
+    
+    public String getClasse() {
+        return classe;
+    }
+
+    public void setClasse(String classe) {
+        infoPlayerDto.classe = classe;
     }
 }

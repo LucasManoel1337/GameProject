@@ -16,7 +16,7 @@ public class JpGame extends JPanel {
 
     private GameFrame gameFrame;
     private infoPlayerDto playerInfo;
-    private Player player; // Instância do Player
+    private Player player;
     private KeyController keyController;
 
     public JpGame(GameFrame gameFrame, infoPlayerDto playerInfo) {
