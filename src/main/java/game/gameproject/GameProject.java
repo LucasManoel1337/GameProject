@@ -16,7 +16,13 @@ public class GameProject {
         infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
 
         if (playerInfo != null) {
-            GameFrame GF = new GameFrame();
+        	
+        	if(playerInfo.getClasse() != null) {
+        		GameFrame GF = new GameFrame();
+        	} else {
+        		GameFrame GF = new GameFrame();
+            	GF.switchToEscolherClassePanel();
+        	}
         } else {
             // Token inválido ou erro na autenticação
             System.out.println("Falha na autenticação.");

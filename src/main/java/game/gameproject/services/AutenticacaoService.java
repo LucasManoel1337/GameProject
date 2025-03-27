@@ -80,6 +80,7 @@ public class AutenticacaoService {
                     IPDto.setMana(playerService.getPlayerMana(resultSet.getInt("id")));
                     IPDto.setForcaMana(playerService.getPlayerForcaMana(resultSet.getInt("id")));
                     IPDto.setDinheiro(playerService.getPlayerDinheiro(resultSet.getInt("id")));
+                    IPDto.setClasse(playerService.getPlayerClasse(resultSet.getInt("id")));
 
                     // Retorna o infoPlayerDto preenchido
                     return IPDto;

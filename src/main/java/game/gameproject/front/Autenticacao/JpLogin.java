@@ -142,7 +142,12 @@ public class JpLogin extends JPanel {
                         AutenticacaoService autenticacaoService = new AutenticacaoService();
                         infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();
                         
-                        GameFrame gameFrame = new GameFrame();
+                        if(playerInfo.getClasse() != null) {
+                    		GameFrame GF = new GameFrame();
+                    	} else {
+                    		GameFrame GF = new GameFrame();
+                        	GF.switchToEscolherClassePanel();
+                    	}
                         launcherFrame.dispose();
                     } else {      			
                         LabelSupportT.exibirAvisoTemporario(lNaoEncontrado);

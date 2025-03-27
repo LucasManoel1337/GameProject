@@ -50,10 +50,6 @@ public class GameFrame extends JFrame {
         currentPanel = telaMenu;
         add(currentPanel);
         
-        //telaEscolherClasse = new JpEscolherClasse(this, playerInfo);
-        //currentPanel = telaEscolherClasse;
-        //add(currentPanel);
-        
         setVisible(true);
         
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Impede fechamento imediato
@@ -168,6 +164,17 @@ public class GameFrame extends JFrame {
             telaConfiguracoes = new JpConfiguracoes(this, playerInfo);
         }
         currentPanel = telaConfiguracoes;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToEscolherClassePanel() {
+        remove(currentPanel);
+        if (telaEscolherClasse == null) {
+            telaEscolherClasse = new JpEscolherClasse(this, playerInfo);
+        }
+        currentPanel = telaEscolherClasse;
         add(currentPanel);
         revalidate();
         repaint();

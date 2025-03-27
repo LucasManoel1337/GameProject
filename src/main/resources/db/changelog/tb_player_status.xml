@@ -37,6 +37,9 @@
         <column name="dinheiro" type="INT">
             <constraints nullable="false"/>
         </column>
+        <column name="classe" type="varchar(55)">
+            <constraints nullable="true"/>
+        </column>
     </createTable>
 </changeSet>
 
