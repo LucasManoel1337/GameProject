@@ -40,46 +40,46 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Arcanista", 1034, 484, 14, Color.BLACK);
         
         //Paladino
-        addLabel("Buff: +STR, +WIL", 150, 290, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -SPI", 150, 300, 12, Color.BLACK);
+        addLabel("Buff: +STR, +WIL", 150, 290, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -SPI", 150, 300, 12, Color.RED);
         
         //Berserker
-        addLabel("Buff: +STR, +CON", 365, 290, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -SPI", 365, 300, 12, Color.BLACK);
+        addLabel("Buff: +STR, +CON", 365, 290, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -SPI", 365, 300, 12, Color.RED);
         
         //Tank
-        addLabel("Buff: +DEX, +CON", 580, 290, 12, Color.BLACK);
-        addLabel("Debuff: -STR, -WIL", 580, 300, 12, Color.BLACK);
+        addLabel("Buff: +DEX, +CON", 580, 290, 12, Color.GREEN);
+        addLabel("Debuff: -STR, -WIL", 580, 300, 12, Color.RED);
         
         //Gladiador
-        addLabel("Buff: +STR, +DEX", 795, 290, 12, Color.BLACK);
-        addLabel("Debuff: -WIL, -SPI", 795, 300, 12, Color.BLACK);
+        addLabel("Buff: +STR, +DEX", 795, 290, 12, Color.GREEN);
+        addLabel("Debuff: -WIL, -SPI", 795, 300, 12, Color.RED);
         
         //Cavaleiro sombrio
-        addLabel("Buff: +STR, +WIL, +SPI", 1010, 290, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -CON", 1010, 300, 12, Color.BLACK);
+        addLabel("Buff: +STR, +WIL, +SPI", 1010, 290, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -CON", 1010, 300, 12, Color.RED);
         
         
         
         //Elementalista
-        addLabel("Buff: +WIL, +SPI", 150, 610, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -CON", 150, 620, 12, Color.BLACK);
+        addLabel("Buff: +WIL, +SPI", 150, 610, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -CON", 150, 620, 12, Color.RED);
         
         //Feiticeiro
-        addLabel("Buff: +WIL, +DEX", 365, 610, 12, Color.BLACK);
-        addLabel("Debuff: -STR, -CON", 365, 620, 12, Color.BLACK);
+        addLabel("Buff: +WIL, +DEX", 365, 610, 12, Color.GREEN);
+        addLabel("Debuff: -STR, -CON", 365, 620, 12, Color.RED);
         
         //Necromante
-        addLabel("Buff: +WIL, +CON", 580, 610, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -SPI", 580, 620, 12, Color.BLACK);
+        addLabel("Buff: +WIL, +CON", 580, 610, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -SPI", 580, 620, 12, Color.RED);
         
         //Batalhamago
-        addLabel("Buff: +STR, +WIL", 795, 610, 12, Color.BLACK);
-        addLabel("Debuff: -DEX, -SPI", 795, 620, 12, Color.BLACK);
+        addLabel("Buff: +STR, +WIL", 795, 610, 12, Color.GREEN);
+        addLabel("Debuff: -DEX, -SPI", 795, 620, 12, Color.RED);
         
         //Arcanista
-        addLabel("Buff: +WIL, +SPI", 1010, 610, 12, Color.BLACK);
-        addLabel("Debuff: -STR, -CON", 1010, 620, 12, Color.BLACK);
+        addLabel("Buff: +WIL, +SPI", 1010, 610, 12, Color.GREEN);
+        addLabel("Debuff: -STR, -CON", 1010, 620, 12, Color.RED);
         
         ImageIcon logoIconM = new ImageIcon("imagens/player/Guerreiros/Tank/M/modeloFrente1.png");
         Image imgM = logoIconM.getImage().getScaledInstance(38, 50, Image.SCALE_SMOOTH);
@@ -168,6 +168,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherG1 = new JButton("Escolher");
         EscolherG1.setVisible(true);
+        EscolherG1.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherG1.setFocusable(false);
         EscolherG1.setBorderPainted(false);
         EscolherG1.setBackground(Color.YELLOW);
@@ -182,6 +183,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherG2 = new JButton("Escolher");
         EscolherG2.setVisible(true);
+        EscolherG2.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherG2.setFocusable(false);
         EscolherG2.setBorderPainted(false);
         EscolherG2.setBackground(Color.YELLOW);
@@ -196,6 +198,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherG3 = new JButton("Escolher");
         EscolherG3.setVisible(true);
+        EscolherG3.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherG3.setFocusable(false);
         EscolherG3.setBorderPainted(false);
         EscolherG3.setBackground(Color.YELLOW);
@@ -210,6 +213,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherG4 = new JButton("Escolher");
         EscolherG4.setVisible(true);
+        EscolherG4.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherG4.setFocusable(false);
         EscolherG4.setBorderPainted(false);
         EscolherG4.setBackground(Color.YELLOW);
@@ -224,6 +228,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherG5 = new JButton("Escolher");
         EscolherG5.setVisible(true);
+        EscolherG5.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherG5.setFocusable(false);
         EscolherG5.setBorderPainted(false);
         EscolherG5.setBackground(Color.YELLOW);
@@ -240,6 +245,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherM1 = new JButton("Escolher");
         EscolherM1.setVisible(true);
+        EscolherM1.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherM1.setFocusable(false);
         EscolherM1.setBorderPainted(false);
         EscolherM1.setBackground(Color.YELLOW);
@@ -254,6 +260,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherM2 = new JButton("Escolher");
         EscolherM2.setVisible(true);
+        EscolherM2.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherM2.setFocusable(false);
         EscolherM2.setBorderPainted(false);
         EscolherM2.setBackground(Color.YELLOW);
@@ -268,6 +275,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherM3 = new JButton("Escolher");
         EscolherM3.setVisible(true);
+        EscolherM3.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherM3.setFocusable(false);
         EscolherM3.setBorderPainted(false);
         EscolherM3.setBackground(Color.YELLOW);
@@ -282,6 +290,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherM4 = new JButton("Escolher");
         EscolherM4.setVisible(true);
+        EscolherM4.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherM4.setFocusable(false);
         EscolherM4.setBorderPainted(false);
         EscolherM4.setBackground(Color.YELLOW);
@@ -296,6 +305,7 @@ public class JpEscolherClasse extends JPanel {
         
         JButton EscolherM5 = new JButton("Escolher");
         EscolherM5.setVisible(true);
+        EscolherM5.setFont(new Font("Arial", Font.BOLD, 15));
         EscolherM5.setFocusable(false);
         EscolherM5.setBorderPainted(false);
         EscolherM5.setBackground(Color.YELLOW);

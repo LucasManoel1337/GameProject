@@ -36,14 +36,17 @@ public class JpGame extends JPanel {
         
         // Executa o método atualizar a cada 16,67 milissegundos (60 FPS)
         scheduler.scheduleAtFixedRate(() -> {
-            player.trocarImagem();;
+        	repaint();
+        	
+            player.trocarImagem();
             player.moverPersonagem();
             
             PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
             player.jogadores = PS.buscarJogadores();
             
             repaint();
-        }, 0, 1000 / 24, TimeUnit.MILLISECONDS);
+            
+        }, 0, 1000 / 30, TimeUnit.MILLISECONDS);
 
         // Garante que o Player receba foco corretamente
         SwingUtilities.invokeLater(() -> player.requestFocusInWindow());
