@@ -65,7 +65,7 @@ public class MenuBarService {
 
     // Verificando se o painel foi atualizado corretamente
     if (panel.getComponentCount() > 0) {
-        System.out.println("Componentes do painel: " + panel.getComponentCount());
+        //System.out.println("Componentes do painel: " + panel.getComponentCount());
     } else {
         System.out.println("Erro: Nenhum componente foi adicionado ao painel.");
     }

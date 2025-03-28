@@ -17,24 +17,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Player extends JPanel implements KeyListener {
 
-    private int modeloSelecionado = 1; 
-    private BufferedImage personagemCima1;
-    private BufferedImage personagemCima2;
-    private BufferedImage personagemBaixo1;
-    private BufferedImage personagemBaixo2;
-    private BufferedImage personagemEsquerda1;
-    private BufferedImage personagemEsquerda2;
-    private BufferedImage personagemDireita1;
-    private BufferedImage personagemDireita2;
+    private BufferedImage personagemCima1, personagemCima2;
+    private BufferedImage personagemBaixo1, personagemBaixo2;
+    private BufferedImage personagemEsquerda1, personagemEsquerda2;
+    private BufferedImage personagemDireita1, personagemDireita2;
     private BufferedImage personagemAtual;
     private BufferedImage hotbar;
     private BufferedImage fundoTest;
     public int xPersonagem;
     public int yPersonagem;
-    private int velocidade = 8;
+    private int velocidade = 5;
     private boolean movendoCima = false;
     private boolean movendoBaixo = false;
     private boolean movendoEsquerda = false;
@@ -68,14 +62,14 @@ public class Player extends JPanel implements KeyListener {
 
     private void carregarImagens() {
         try {
-            personagemCima1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloCosta1.png", modeloSelecionado)));
-            personagemCima2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloCosta2.png", modeloSelecionado)));
-            personagemBaixo1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloFrente1.png", modeloSelecionado)));
-            personagemBaixo2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloFrente2.png", modeloSelecionado)));
-            personagemEsquerda1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito1.png", modeloSelecionado)));
-            personagemEsquerda2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito2.png", modeloSelecionado)));
-            personagemDireita1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo1.png", modeloSelecionado)));
-            personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo2.png", modeloSelecionado)));
+            personagemCima1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloCosta1.png")));
+            personagemCima2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloCosta2.png")));
+            personagemBaixo1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloFrente1.png")));
+            personagemBaixo2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloFrente2.png")));
+            personagemEsquerda1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito1.png")));
+            personagemEsquerda2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito2.png")));
+            personagemDireita1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo1.png")));
+            personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo2.png")));
             hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
             fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
         } catch (IOException e) {
@@ -140,9 +134,6 @@ public class Player extends JPanel implements KeyListener {
             case KeyEvent.VK_D:
                 movendoDireita = true;
                 break;
-            case KeyEvent.VK_SHIFT:
-                velocidade = 13;
-                break;
         }
     }
     
@@ -162,9 +153,6 @@ public class Player extends JPanel implements KeyListener {
             case KeyEvent.VK_D:
                 movendoDireita = false;
                 break;
-            case KeyEvent.VK_SHIFT:
-                velocidade = 9;
-                break;
         }
     }
 
@@ -176,7 +164,7 @@ public class Player extends JPanel implements KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        mapaAtual.desenhar(g); // Desenha o fundo do mapa
+        mapaAtual.desenhar(g);
 
         int larguraPersonagem = 30;
         int alturaPersonagem = 50;
@@ -213,6 +201,6 @@ public class Player extends JPanel implements KeyListener {
         movendoBaixo = false;
         movendoEsquerda = false;
         movendoDireita = false;
-        velocidade = 8;
+        velocidade = 5;
     }
 }

@@ -39,6 +39,7 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Batalhamago", 803, 484, 14, Color.BLACK);
         addLabel("Arcanista", 1034, 484, 14, Color.BLACK);
         
+        // Guerreiros
         //Paladino
         addLabel("Buff: +STR, +WIL", 150, 290, 12, Color.GREEN);
         addLabel("Debuff: -DEX, -SPI", 150, 300, 12, Color.RED);
@@ -59,8 +60,7 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Buff: +STR, +WIL, +SPI", 1010, 290, 12, Color.GREEN);
         addLabel("Debuff: -DEX, -CON", 1010, 300, 12, Color.RED);
         
-        
-        
+        // Magos
         //Elementalista
         addLabel("Buff: +WIL, +SPI", 150, 610, 12, Color.GREEN);
         addLabel("Debuff: -DEX, -CON", 150, 620, 12, Color.RED);
@@ -81,90 +81,25 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Buff: +WIL, +SPI", 1010, 610, 12, Color.GREEN);
         addLabel("Debuff: -STR, -CON", 1010, 620, 12, Color.RED);
         
-        ImageIcon logoIconM = new ImageIcon("imagens/player/Tank/modeloFrente1.png");
-        Image imgM = logoIconM.getImage().getScaledInstance(38, 50, Image.SCALE_SMOOTH);
-        logoIconM = new ImageIcon(imgM);
+     // Array com os nomes das classes
+        String[] classes = {"Paladino", "Berserker", "Tank", "Gladiador", "Cavaleiro Sombrio", 
+                            "Elementalista", "Feiticeiro", "Necromante", "Batalhamago", "Arcanista"};
         
-        JLabel logoLabelG1M = new JLabel(logoIconM);
-        logoLabelG1M.setBounds(155, 220, 38, 50);
-        add(logoLabelG1M);
-        
-        JLabel logoLabelG1F = new JLabel(logoIconM);
-        logoLabelG1F.setBounds(215, 220, 38, 50);
-        add(logoLabelG1F);
-        
-        JLabel logoLabelG2M = new JLabel(logoIconM);
-        logoLabelG2M.setBounds(370, 220, 38, 50);
-        add(logoLabelG2M);
-        
-        JLabel logoLabelG2F = new JLabel(logoIconM);
-        logoLabelG2F.setBounds(430, 220, 38, 50);
-        add(logoLabelG2F);
-        
-        JLabel logoLabelG3M = new JLabel(logoIconM);
-        logoLabelG3M.setBounds(585, 220, 38, 50);
-        add(logoLabelG3M);
-        
-        JLabel logoLabelG3F = new JLabel(logoIconM);
-        logoLabelG3F.setBounds(585 + 60, 220, 38, 50);
-        add(logoLabelG3F);
-        
-        JLabel logoLabelG4M = new JLabel(logoIconM);
-        logoLabelG4M.setBounds(800, 220, 38, 50);
-        add(logoLabelG4M);
-        
-        JLabel logoLabelG4F = new JLabel(logoIconM);
-        logoLabelG4F.setBounds(860, 220, 38, 50);
-        add(logoLabelG4F);
-        
-        JLabel logoLabelG5M = new JLabel(logoIconM);
-        logoLabelG5M.setBounds(1015, 220, 38, 50);
-        add(logoLabelG5M);
-        
-        JLabel logoLabelG5F = new JLabel(logoIconM);
-        logoLabelG5F.setBounds(1075, 220, 38, 50);
-        add(logoLabelG5F);
-        
-        //Mago
-        JLabel logoLabelM1M = new JLabel(logoIconM);
-        logoLabelM1M.setBounds(155, 540, 38, 50);
-        add(logoLabelM1M);
-        
-        JLabel logoLabelM1F = new JLabel(logoIconM);
-        logoLabelM1F.setBounds(215, 540, 38, 50);
-        add(logoLabelM1F);
-        
-        JLabel logoLabelM2M = new JLabel(logoIconM);
-        logoLabelM2M.setBounds(370, 540, 38, 50);
-        add(logoLabelM2M);
-        
-        JLabel logoLabelM2F = new JLabel(logoIconM);
-        logoLabelM2F.setBounds(430, 540, 38, 50);
-        add(logoLabelM2F);
-        
-        JLabel logoLabelM3M = new JLabel(logoIconM);
-        logoLabelM3M.setBounds(585, 540, 38, 50);
-        add(logoLabelM3M);
-        
-        JLabel logoLabelM3F = new JLabel(logoIconM);
-        logoLabelM3F.setBounds(585 + 60, 540, 38, 50);
-        add(logoLabelM3F);
-        
-        JLabel logoLabelM4M = new JLabel(logoIconM);
-        logoLabelM4M.setBounds(800, 540, 38, 50);
-        add(logoLabelM4M);
-        
-        JLabel logoLabelM4F = new JLabel(logoIconM);
-        logoLabelM4F.setBounds(860, 540, 38, 50);
-        add(logoLabelM4F);
-        
-        JLabel logoLabelM5M = new JLabel(logoIconM);
-        logoLabelM5M.setBounds(1015, 540, 38, 50);
-        add(logoLabelM5M);
-        
-        JLabel logoLabelM5F = new JLabel(logoIconM);
-        logoLabelM5F.setBounds(1075, 540, 38, 50);
-        add(logoLabelM5F);
+        // Coordenadas para posicionar as imagens na tela
+        int[][] coordinatesImg = {
+            {155+30, 220}, {370+30, 220}, {585+30, 220}, {800+30, 220}, {1015+30, 220}, // Guerreiros
+            {155+30, 540}, {370+30, 540}, {585+30, 540}, {800+30, 540}, {1015+30, 540}  // Magos
+        };
+
+        // Loop para carregar e adicionar as imagens das classes
+        for (int i = 0; i < classes.length; i++) {
+            String imagePath = "imagens/player/" + classes[i] + "/modeloFrente1.png";
+            ImageIcon icon = new ImageIcon(imagePath);
+            Image img = icon.getImage().getScaledInstance(38, 50, Image.SCALE_SMOOTH);
+            JLabel label = new JLabel(new ImageIcon(img));
+            label.setBounds(coordinatesImg[i][0], coordinatesImg[i][1], 38, 50);
+            add(label);
+        }
         
         JButton EscolherG1 = new JButton("Escolher");
         EscolherG1.setVisible(true);
