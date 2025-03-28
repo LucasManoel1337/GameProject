@@ -42,7 +42,7 @@ public class JpGame extends JPanel {
             player.moverPersonagem();
             
             PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
-            player.jogadores = PS.buscarJogadores();
+            player.jogadores = PS.buscarJogadores(playerInfo.getIdPlayer());
             
             repaint();
             

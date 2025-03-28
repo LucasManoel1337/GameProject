@@ -90,19 +90,19 @@ public class Player extends JPanel implements KeyListener {
         if (movendoCima) {
             personagemAtual = (personagemAtual == personagemCima1) ? personagemCima2 : personagemCima1;
             numeroImagem = (personagemAtual == personagemCima1) ? 1 : 2;
-            sprite = "imagens/player/modelo1d/modeloCosta" + numeroImagem + ".png";
+            sprite = "imagens/player/"+playerInfo.getClasse()+"/modeloCosta" + numeroImagem + ".png";
         } else if (movendoBaixo) {
             personagemAtual = (personagemAtual == personagemBaixo1) ? personagemBaixo2 : personagemBaixo1;
             numeroImagem = (personagemAtual == personagemBaixo1) ? 1 : 2;
-            sprite = "imagens/player/modelo1d/modeloFrente" + numeroImagem + ".png";
+            sprite = "imagens/player/"+playerInfo.getClasse()+"/modeloFrente" + numeroImagem + ".png";
         } else if (movendoEsquerda) {
             personagemAtual = (personagemAtual == personagemEsquerda1) ? personagemEsquerda2 : personagemEsquerda1;
             numeroImagem = (personagemAtual == personagemEsquerda1) ? 1 : 2;
-            sprite = "imagens/player/modelo1d/modeloDireito" + numeroImagem + ".png";
+            sprite = "imagens/player/"+playerInfo.getClasse()+"/modeloDireito" + numeroImagem + ".png";
         } else if (movendoDireita) {
             personagemAtual = (personagemAtual == personagemDireita1) ? personagemDireita2 : personagemDireita1;
             numeroImagem = (personagemAtual == personagemDireita1) ? 1 : 2;
-            sprite = "imagens/player/modelo1d/modeloEsquerdo" + numeroImagem + ".png";
+            sprite = "imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo" + numeroImagem + ".png";
         }
     }
 
