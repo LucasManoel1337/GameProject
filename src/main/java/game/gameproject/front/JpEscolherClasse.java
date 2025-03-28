@@ -81,7 +81,7 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Buff: +WIL, +SPI", 1010, 610, 12, Color.GREEN);
         addLabel("Debuff: -STR, -CON", 1010, 620, 12, Color.RED);
         
-        ImageIcon logoIconM = new ImageIcon("imagens/player/Guerreiros/Tank/M/modeloFrente1.png");
+        ImageIcon logoIconM = new ImageIcon("imagens/player/Tank/modeloFrente1.png");
         Image imgM = logoIconM.getImage().getScaledInstance(38, 50, Image.SCALE_SMOOTH);
         logoIconM = new ImageIcon(imgM);
         
