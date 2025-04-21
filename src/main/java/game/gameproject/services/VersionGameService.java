@@ -35,12 +35,9 @@ public class VersionGameService {
     	        String versaoClient = dto.getVersaoGame();
 
     	        if (emManutencao) {
-    	            JOptionPane.showMessageDialog(
-    	                null,
-    	                "O jogo está em manutenção.",
-    	                "Manutenção",
-    	                JOptionPane.WARNING_MESSAGE
-    	            );
+    	        	LauncherFrame LF = new LauncherFrame();
+    	            LF.switchToManutencaoPanel();
+    	            LF.setVisible(true);
     	            return false;
     	        }
 
