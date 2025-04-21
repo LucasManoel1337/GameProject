@@ -75,7 +75,7 @@ public class JpGame extends JPanel {
 
     private void setupKeyBindings() {
         // Teclas de movimentação e ações
-        String[] keys = {"W", "S", "A", "D", "SHIFT"};
+        String[] keys = {"W", "S", "A", "D"};
 
         for (String key : keys) {
             mapKey(key);
@@ -111,7 +111,6 @@ public class JpGame extends JPanel {
             case "S": return KeyEvent.VK_S;
             case "A": return KeyEvent.VK_A;
             case "D": return KeyEvent.VK_D;
-            case "SHIFT": return KeyEvent.VK_SHIFT;
             default: return -1;
         }
     }

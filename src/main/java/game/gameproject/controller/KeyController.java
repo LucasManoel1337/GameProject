@@ -126,7 +126,6 @@ public class KeyController {
             case "S": return KeyEvent.VK_S;
             case "A": return KeyEvent.VK_A;
             case "D": return KeyEvent.VK_D;
-            case "SHIFT": return KeyEvent.VK_SHIFT;
             default: return -1;
         }
     }

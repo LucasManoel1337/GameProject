@@ -1,5 +1,6 @@
 package game.gameproject.controller;
 
+import game.gameproject.front.Autenticacao.JpAtualizar;
 import game.gameproject.front.Autenticacao.JpLogin;
 import game.gameproject.front.Autenticacao.JpRegistrar;
 
@@ -9,6 +10,7 @@ public class LauncherFrame extends JFrame {
     private JPanel currentPanel;
     private JpLogin telaLogin;
     private JpRegistrar telaRegistrar;
+    private JpAtualizar telaAtualizar;
 
     public LauncherFrame() {
         setTitle("Room 5 Studios - Launcher");
@@ -22,8 +24,6 @@ public class LauncherFrame extends JFrame {
         telaLogin = new JpLogin(this);
         currentPanel = telaLogin;
         add(currentPanel);
-
-        setVisible(true);
     }
 
     public void switchToRegisterPanel() {
@@ -43,6 +43,17 @@ public class LauncherFrame extends JFrame {
             telaLogin = new JpLogin(this);
         }
         currentPanel = telaLogin;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToAtualizarPanel() {
+        remove(currentPanel);
+        if (telaAtualizar == null) {
+            telaAtualizar = new JpAtualizar(this);
+        }
+        currentPanel = telaAtualizar;
         add(currentPanel);
         revalidate();
         repaint();
