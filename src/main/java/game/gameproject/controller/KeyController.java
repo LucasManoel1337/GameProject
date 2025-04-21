@@ -41,6 +41,11 @@ public class KeyController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ESC pressionado!");
+
+                // Chama o método resetarMovimento para interromper o movimento
+                player.resetarMovimento();
+
+                // Se necessário, você pode alternar para o menu ou executar outras ações
                 gameFrame.switchToMenuPanel();
             }
         });
