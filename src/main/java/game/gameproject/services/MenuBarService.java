@@ -1,5 +1,6 @@
 package game.gameproject.services;
 
+import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.controller.GameFrame;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.front.JpStatus;
@@ -20,6 +21,7 @@ import java.io.InputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MenuBarService {
@@ -135,33 +137,42 @@ public class MenuBarService {
                 } else if (text.equals("JOGAR")) {
                     gameFrame.switchToGamePanel(); // Chama a troca de tela
                 } else if (text.equals("Sair")) {
-                	if(PS.setOffline(playerInfo.getIdPlayer()) == 1) {
-                		System.out.println("Player desconectado com sucesso!");
-                		System.exit(1);
-                	} else {
-                		System.out.println("Ocorreu um problema para deixar o player offline!");
-                	}
+                	PS.setOffline(playerInfo.getIdPlayer());
+                		DatabaseConfig.close();
+                		System.exit(0);
                 } else if (text.equals("Desconectar e Sair")) {
-                	if (PS.setOffline(playerInfo.getIdPlayer()) == 1) {
-                		System.out.println("Player desconectado com sucesso!");
-                		
-                		File configFile = new File("config.json");
+                    boolean desconectadoComSucesso = (PS.setOffline(playerInfo.getIdPlayer()) == 1);
+
+                    if (desconectadoComSucesso) {
+                        System.out.println("✔️ Player desconectado com sucesso!");
+
+                        File configFile = new File("config.json");
 
                         if (configFile.exists()) {
                             if (configFile.delete()) {
-                                System.out.println("Arquivo config.json deletado com sucesso.");
+                                System.out.println("✔️ Arquivo config.json deletado com sucesso.");
                             } else {
-                                System.err.println("Falha ao deletar o arquivo config.json.");
+                                System.err.println("❌ Falha ao deletar o arquivo config.json.");
                             }
                         } else {
-                            System.err.println("Arquivo config.json não encontrado.");
+                            System.out.println("ℹ️ Arquivo config.json não encontrado.");
                         }
 
+                        PS.setOffline(playerInfo.getIdPlayer());
+                        
+                        DatabaseConfig.close();
                         System.exit(1);
-                	} else {
-                		System.out.println("Ocorreu um problema para deixar o player offline!");
-                	}
+                    } else {
+                        System.err.println("❌ Ocorreu um problema ao deixar o player offline.");
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Erro ao desconectar. Tente novamente.",
+                            "Erro",
+                            JOptionPane.ERROR_MESSAGE
+                        );
+                    }
                 }
+
             }
         });
         return label;

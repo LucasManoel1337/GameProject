@@ -52,44 +52,29 @@ public class PlayerService {
 
     
     public int setOffline(int idPlayer) {
-        String checkOnlineSql = "SELECT online FROM tb_player_coordenadas WHERE id_player = ?";
-        String updateOfflineSql = "UPDATE tb_player_coordenadas SET online = false WHERE id_player = ?";
-        
+        String sql = "UPDATE tb_player_coordenadas SET online = ? WHERE id_player = ?";
+
         try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement checkStmt = conn.prepareStatement(checkOnlineSql)) {
-            
-            checkStmt.setInt(1, idPlayer);
-            ResultSet rs = checkStmt.executeQuery();
-            
-            if (rs.next()) {
-                boolean isOnline = rs.getBoolean("online");
-                if (isOnline) {
-                    try (PreparedStatement updateStmt = conn.prepareStatement(updateOfflineSql)) {
-                        updateStmt.setInt(1, idPlayer);
-                        int rowsAffected = updateStmt.executeUpdate();
-                        
-                        if (rowsAffected > 0) {
-                            System.out.println("Jogador " + idPlayer + " agora está offline.");
-                            return 1;
-                        } else {
-                            System.err.println("Falha ao atualizar status do jogador.");
-                            return 0;
-                        }
-                    }
-                } else {
-                    System.out.println("Jogador já está offline.");
-                    return 1;
-                }
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setBoolean(1, false);  // Força o valor de 'online' para false (0)
+            stmt.setInt(2, idPlayer);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("✔️ Jogador " + idPlayer + " foi forçado a ficar offline.");
+                return 1;
             } else {
-                System.err.println("Jogador não encontrado no banco de dados.");
+                System.err.println("❌ Nenhuma linha foi atualizada. ID do jogador pode estar incorreto.");
                 return 0;
             }
+
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.err.println("❌ Erro ao forçar jogador offline: " + e.getMessage());
             return 0;
         }
     }
-
 
     public static int getPlayersOnline() {
         String sql = "SELECT COUNT(*) FROM tb_player_coordenadas WHERE online = TRUE";

@@ -1,5 +1,6 @@
 package game.gameproject.controller;
 
+import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.front.JpAmigos;
 import game.gameproject.front.JpConfiguracoes;
@@ -62,7 +63,9 @@ public class GameFrame extends JFrame {
                 } else {
                     System.err.println("Falha ao atualizar status do jogador.");
                 }
-                System.exit(1); // Mata completamente o jogo
+                
+                DatabaseConfig.close();
+                System.exit(0); // Mata completamente o jogo
             }
         });
 
