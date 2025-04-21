@@ -7,6 +7,8 @@ import game.gameproject.services.PlayerService;
 import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
+
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -59,6 +61,12 @@ public class JpGame extends JPanel {
 
         // Configura o mapeamento da tecla ESC para sair
         keyController.bindEscapeKey(this, gameFrame);
+        keyController.bindEKey(this, gameFrame);
+        keyController.bindQKey(this, gameFrame);
+        keyController.bindFKey(this, gameFrame);
+        keyController.bindGKey(this, gameFrame);
+        keyController.bindMKey(this, gameFrame);
+        keyController.bindVKey(this, gameFrame);
 
         // Marca o jogador como online
         
@@ -66,8 +74,9 @@ public class JpGame extends JPanel {
     }
 
     private void setupKeyBindings() {
-        // Definir as teclas a serem mapeadas
-        String[] keys = {"W", "S", "A", "D", "SHIFT", "'"};
+        // Teclas de movimentação e ações
+        String[] keys = {"W", "S", "A", "D", "SHIFT"};
+
         for (String key : keys) {
             mapKey(key);
         }
@@ -86,6 +95,16 @@ public class JpGame extends JPanel {
         getActionMap().put(keyReleased, keyController.getKeyAction(key, false));
     }
 
+    private void bindTelaAtalho(String tecla, Runnable acao) {
+        getInputMap(WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(tecla), "abrir" + tecla);
+        getActionMap().put("abrir" + tecla, new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                acao.run();
+            }
+        });
+    }
+
     private int getKeyCode(String key) {
         switch (key) {
             case "W": return KeyEvent.VK_W;
@@ -93,7 +112,6 @@ public class JpGame extends JPanel {
             case "A": return KeyEvent.VK_A;
             case "D": return KeyEvent.VK_D;
             case "SHIFT": return KeyEvent.VK_SHIFT;
-            case "'": return KeyEvent.VK_QUOTE;  // Código para a tecla de aspa simples
             default: return -1;
         }
     }

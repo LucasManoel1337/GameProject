@@ -36,17 +36,85 @@ public class KeyController {
 
     // Método para mapear a tecla de escape para ação de sair
     public void bindEscapeKey(JPanel panel, GameFrame gameFrame) {
-        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "exitAction");
-        panel.getActionMap().put("exitAction", new AbstractAction() {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "menuAction");
+        panel.getActionMap().put("menuAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("ESC pressionado!");
-
-                // Chama o método resetarMovimento para interromper o movimento
                 player.resetarMovimento();
-
-                // Se necessário, você pode alternar para o menu ou executar outras ações
                 gameFrame.switchToMenuPanel();
+            }
+        });
+    }
+    
+    public void bindQKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_Q, 0), "missaoAction");
+        panel.getActionMap().put("missaoAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Q pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToMissoesPanel();
+            }
+        });
+    }
+    
+    public void bindEKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_E, 0), "inventarioAction");
+        panel.getActionMap().put("inventarioAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("E pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToInventarioPanel();
+            }
+        });
+    }
+    
+    public void bindFKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_F, 0), "amigosAction");
+        panel.getActionMap().put("amigosAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("F pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToAmigosPanel();
+            }
+        });
+    }
+    
+    public void bindGKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_G, 0), "guildaAction");
+        panel.getActionMap().put("guildaAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("G pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToGuildaPanel();
+            }
+        });
+    }
+    
+    public void bindMKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_M, 0), "mapaAction");
+        panel.getActionMap().put("mapaAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("M pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToMapaPanel();
+            }
+        });
+    }
+    
+    public void bindVKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_V, 0), "statusAction");
+        panel.getActionMap().put("statusAction", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("V pressionado!");
+                player.resetarMovimento();
+                gameFrame.switchToStatusPanel();
             }
         });
     }
