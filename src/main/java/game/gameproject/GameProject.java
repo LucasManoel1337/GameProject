@@ -5,12 +5,16 @@ import game.gameproject.controller.GameFrame;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.AutenticacaoService;
+import game.gameproject.services.VersionGameService.VersaoService;
+
 import java.sql.SQLException;
 
 public class GameProject {
 
     public static void main(String[] args) throws SQLException {
         DatabaseConfig.configureDatabase();
+        
+        VersaoService.validarVersaoEManutencao();
         
         AutenticacaoService autenticacaoService = new AutenticacaoService();
         infoPlayerDto playerInfo = autenticacaoService.autenticarUsuario();

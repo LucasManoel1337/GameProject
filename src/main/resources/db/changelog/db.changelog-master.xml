@@ -8,5 +8,6 @@
     <include file="db/changelog/tb_login.xml"/>
     <include file="db/changelog/tb_player_status.xml"/>
     <include file="db/changelog/tb_player_coordenadas.xml"/>
+    <include file="db/changelog/tb_versao.xml"/>
 
 </databaseChangeLog>

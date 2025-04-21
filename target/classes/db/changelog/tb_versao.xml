@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="lucas" id="094521042025">
+    
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="tb_versao"/>
+            </not>
+        </preConditions>
+
+        <createTable tableName="tb_versao">
+            <column name="versao" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="manutencao" type="BOOLEAN">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+
+</databaseChangeLog>

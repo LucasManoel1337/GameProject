@@ -16,6 +16,7 @@ public class LauncherFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
+        setResizable(false);
 
         // Passa a referência correta do LauncherFrame para JpLogin
         telaLogin = new JpLogin(this);
