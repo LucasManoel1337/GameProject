@@ -89,6 +89,80 @@ public class JpAtualizar extends JPanel {
         btnAtualizar.setBounds(130, 240, 120, 50);
         		btnAtualizar.addActionListener(e -> AGS.atualizarJogoViaGit());
         add(btnAtualizar);
+        
+        JLabel ltext5 = new JLabel("Obs: Ao clicar no botão ele irá atualizar");
+        ltext5.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext5.setBounds(50, 300, 350, 40);
+        ltext5.setForeground(Color.RED);
+        add(ltext5);
+        
+        JLabel ltext6 = new JLabel("via github, por conta disso irá abrir o cmd,");
+        ltext6.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext6.setBounds(40, 316, 350, 40);
+        ltext6.setForeground(Color.RED);
+        add(ltext6);
+        
+        JLabel ltext7= new JLabel("e irá aparecer algumas coisas baixando,");
+        ltext7.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext7.setBounds(45, 332, 350, 40);
+        ltext7.setForeground(Color.RED);
+        add(ltext7);
+        
+        JLabel ltext8= new JLabel("que no caso é atualização, as vezes pode");
+        ltext8.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext8.setBounds(41, 348, 350, 40);
+        ltext8.setForeground(Color.RED);
+        add(ltext8);
+        
+        JLabel ltext9= new JLabel("dar algum problema. Caso ocorrer um");
+        ltext9.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext9.setBounds(50, 364, 350, 40);
+        ltext9.setForeground(Color.RED);
+        add(ltext9);
+        
+        JLabel ltext10= new JLabel("problema, recomendo que delete a pasta");
+        ltext10.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext10.setBounds(40, 380, 350, 40);
+        ltext10.setForeground(Color.RED);
+        add(ltext10);
+        
+        JLabel ltext11= new JLabel("do jogo e clone o jogo novamente,");
+        ltext11.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext11.setBounds(58, 396, 350, 40);
+        ltext11.setForeground(Color.RED);
+        add(ltext11);
+        
+        JLabel ltext12= new JLabel("assim estará atualizado e pronto");
+        ltext12.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext12.setBounds(66, 412, 350, 40);
+        ltext12.setForeground(Color.RED);
+        add(ltext12);
+        
+        JLabel ltext13= new JLabel("para jogar!");
+        ltext13.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext13.setBounds(148, 428, 350, 40);
+        ltext13.setForeground(Color.RED);
+        add(ltext13);
+        
+        
+        
+        JLabel ltext14= new JLabel("Obs: Esse sistema foi testado somente");
+        ltext14.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext14.setBounds(50, 460, 350, 40);
+        ltext14.setForeground(Color.RED);
+        add(ltext14);
+        
+        JLabel ltext15= new JLabel("em Windows, mas foi feito para Linux e");
+        ltext15.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext15.setBounds(50, 476, 350, 40);
+        ltext15.setForeground(Color.RED);
+        add(ltext15);
+        
+        JLabel ltext16= new JLabel("Mac também, porém não foi testado!");
+        ltext16.setFont(new Font("Arial", Font.BOLD, 14));
+        ltext16.setBounds(58, 492, 350, 40);
+        ltext16.setForeground(Color.RED);
+        add(ltext16);
     }
 
     @Override
