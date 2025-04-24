@@ -4,6 +4,8 @@ import game.gameproject.front.Autenticacao.JpManutencao;
 import game.gameproject.front.Autenticacao.JpAtualizar;
 import game.gameproject.front.Autenticacao.JpLogin;
 import game.gameproject.front.Autenticacao.JpRegistrar;
+import game.gameproject.front.Autenticacao.JpSemInternet;
+import game.gameproject.front.Autenticacao.JpErroBanco;
 import game.gameproject.support.ImagemDiretorios;
 
 import javax.swing.*;
@@ -14,6 +16,8 @@ public class LauncherFrame extends JFrame {
     private JpRegistrar telaRegistrar;
     private JpAtualizar telaAtualizar;
     private JpManutencao telaManutencao;
+    private JpSemInternet telaSemInternet;
+    private JpErroBanco telaErroBanco;
 
     public LauncherFrame() {
     	ImagemDiretorios ImgD = new ImagemDiretorios();
@@ -70,6 +74,28 @@ public class LauncherFrame extends JFrame {
             telaManutencao = new JpManutencao(this);
         }
         currentPanel = telaManutencao;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToSemInternetPanel() {
+        remove(currentPanel);
+        if (telaSemInternet == null) {
+            telaSemInternet = new JpSemInternet(this);
+        }
+        currentPanel = telaSemInternet;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToErroBancoPanel() {
+        remove(currentPanel);
+        if (telaErroBanco == null) {
+            telaErroBanco = new JpErroBanco(this);
+        }
+        currentPanel = telaErroBanco;
         add(currentPanel);
         revalidate();
         repaint();
