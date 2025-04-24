@@ -4,6 +4,7 @@ import game.gameproject.front.Autenticacao.JpManutencao;
 import game.gameproject.front.Autenticacao.JpAtualizar;
 import game.gameproject.front.Autenticacao.JpLogin;
 import game.gameproject.front.Autenticacao.JpRegistrar;
+import game.gameproject.support.ImagemDiretorios;
 
 import javax.swing.*;
 
@@ -15,11 +16,13 @@ public class LauncherFrame extends JFrame {
     private JpManutencao telaManutencao;
 
     public LauncherFrame() {
+    	ImagemDiretorios ImgD = new ImagemDiretorios();
+    	
         setTitle("Room 5 Studios - Launcher");
         setSize(1280, 768);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
+        setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
         setResizable(false);
 
         // Passa a referência correta do LauncherFrame para JpLogin

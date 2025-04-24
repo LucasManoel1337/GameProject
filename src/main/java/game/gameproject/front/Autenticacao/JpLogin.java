@@ -6,6 +6,7 @@ import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.AutenticacaoService;
 import game.gameproject.services.LoginService;
+import game.gameproject.support.ImagemDiretorios;
 import game.gameproject.support.TimerAvisosLabelsSupport;
 
 import javax.imageio.ImageIO;
@@ -36,9 +37,11 @@ public class JpLogin extends JPanel {
         setLayout(null);
         setBackground(Color.WHITE);
 
+        ImagemDiretorios ImgD = new ImagemDiretorios();
+
         try {
-            imgFundo = ImageIO.read(new File("imagens/login/fundolaucher.png"));
-            logo = ImageIO.read(new File("imagens/login/logoEmpresa.png"));
+            imgFundo = ImageIO.read(new File(ImgD.getFundoLaucher()));
+            logo = ImageIO.read(new File(ImgD.getEmpresaIcon()));
         } catch (IOException e) {
             e.printStackTrace();
         }

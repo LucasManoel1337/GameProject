@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.services.AtualizarGameService;
+import game.gameproject.support.ImagemDiretorios;
 
 public class JpManutencao extends JPanel {
 
@@ -29,9 +30,11 @@ public class JpManutencao extends JPanel {
         
         AtualizarGameService AGS = new AtualizarGameService();
 
+        ImagemDiretorios ImgD = new ImagemDiretorios();
+
         try {
-            imgFundo = ImageIO.read(new File("imagens/login/fundolaucher.png"));
-            logo = ImageIO.read(new File("imagens/login/logoEmpresa.png"));
+            imgFundo = ImageIO.read(new File(ImgD.getFundoLaucher()));
+            logo = ImageIO.read(new File(ImgD.getEmpresaIcon()));
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -3,6 +3,7 @@ package game.gameproject.front.Autenticacao;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.services.RegistrarService;
+import game.gameproject.support.ImagemDiretorios;
 import game.gameproject.support.TimerAvisosLabelsSupport;
 
 import javax.imageio.ImageIO;
@@ -35,10 +36,12 @@ public class JpRegistrar extends JPanel {
         this.LF = launcherFrame;  // Inicializa o LauncherFrame
         setLayout(null);
         setBackground(Color.WHITE);
+        
+        ImagemDiretorios ImgD = new ImagemDiretorios();
 
         try {
-            imgFundo = ImageIO.read(new File("imagens/login/fundolaucher.png"));
-            logo = ImageIO.read(new File("imagens/login/logoEmpresa.png"));
+            imgFundo = ImageIO.read(new File(ImgD.getFundoLaucher()));
+            logo = ImageIO.read(new File(ImgD.getEmpresaIcon()));
         } catch (IOException e) {
             e.printStackTrace();
         }

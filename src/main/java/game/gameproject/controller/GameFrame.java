@@ -13,6 +13,7 @@ import game.gameproject.front.JpMapa;
 import game.gameproject.front.JpMissoes;
 import game.gameproject.front.JpStatus;
 import game.gameproject.services.PlayerService;
+import game.gameproject.support.ImagemDiretorios;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -39,11 +40,13 @@ public class GameFrame extends JFrame {
     private PlayerService PS = new PlayerService();
 
     public GameFrame() {
+    	ImagemDiretorios ImgD = new ImagemDiretorios();
+    	
         setTitle("Room 5 Studios - Game");
         setSize(1280, 768);  // Tamanho do jogo
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        setIconImage(new ImageIcon("imagens/login/logoEmpresa.png").getImage());
+        setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
         setResizable(false);
 
         // Agora, o playerInfo está inicializado corretamente
