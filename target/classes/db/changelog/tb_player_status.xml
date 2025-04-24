@@ -40,6 +40,12 @@
         <column name="classe" type="varchar(55)">
             <constraints nullable="true"/>
         </column>
+        <column name="xpAtual" type="INT">
+            <constraints nullable="false"/>
+        </column>
+        <column name="xpMaxima" type="INT">
+            <constraints nullable="false"/>
+        </column>
     </createTable>
 </changeSet>
 

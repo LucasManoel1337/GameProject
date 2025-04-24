@@ -112,7 +112,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherG1.addActionListener(e -> {
             playerInfo.setClasse("Paladino");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -127,7 +127,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherG2.addActionListener(e -> {
             playerInfo.setClasse("Beserker");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -142,7 +142,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherG3.addActionListener(e -> {
             playerInfo.setClasse("Tank");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -157,7 +157,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherG4.addActionListener(e -> {
             playerInfo.setClasse("Gladiador");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -172,7 +172,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherG5.addActionListener(e -> {
             playerInfo.setClasse("Cavaleiro Sombrio");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -189,7 +189,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherM1.addActionListener(e -> {
             playerInfo.setClasse("Elementalista");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -204,7 +204,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherM2.addActionListener(e -> {
             playerInfo.setClasse("Feiticeiro");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -219,7 +219,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherM3.addActionListener(e -> {
             playerInfo.setClasse("Necromante");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -234,7 +234,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherM4.addActionListener(e -> {
             playerInfo.setClasse("Batalhamago");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         
@@ -249,7 +249,7 @@ public class JpEscolherClasse extends JPanel {
         EscolherM5.addActionListener(e -> {
             playerInfo.setClasse("Arcanista");
             System.out.println(playerInfo.getClasse());
-            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+            SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
             gameFrame.switchToMenuPanel();  
         });
         

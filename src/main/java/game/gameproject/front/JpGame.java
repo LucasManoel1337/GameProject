@@ -61,6 +61,7 @@ public class JpGame extends JPanel {
 
         // Configura o mapeamento da tecla ESC para sair
         keyController.bindEscapeKey(this, gameFrame);
+        
         keyController.bindEKey(this, gameFrame);
         keyController.bindQKey(this, gameFrame);
         keyController.bindFKey(this, gameFrame);

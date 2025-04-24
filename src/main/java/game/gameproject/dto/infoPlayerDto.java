@@ -6,15 +6,24 @@ public class infoPlayerDto {
     }
     private static int idPlayer = 0;
     private static String NickPlayer = "";
-    
     private static String classe = "";
-    
     private static int nivel = -1;
     private static int pontos = -1;
-    private static int vida = -1;
-    private static int stamina = -1;
+    
+    private static int xpMaxima = -1;
+    private static int xpAtual = -1;
+    
+    private static int vidaMaxima = -1;
+    private static int vidaAtual = -1;
+    
+    private static int staminaMaxima = -1;
+    private static int staminaAtual = -1;
+    
     private static int forca = -1;
-    private static int mana = -1;
+    
+    private static int manaMaxima = -1;
+    private static int manaAtual = -1;
+    
     private static int forcaMana = -1;
     private static int dinheiro = -1;
 
@@ -50,20 +59,20 @@ public class infoPlayerDto {
         infoPlayerDto.pontos = pontos;
     }
 
-    public int getVida() {
-        return vida;
+    public int getVidaMaxima() {
+        return vidaMaxima;
     }
 
-    public void setVida(int vida) {
-        infoPlayerDto.vida = vida;
+    public void setVidaMaxima(int vida) {
+        infoPlayerDto.vidaMaxima = vida;
     }
 
-    public int getStamina() {
-        return stamina;
+    public int getStaminaMaxima() {
+        return staminaMaxima;
     }
 
-    public void setStamina(int stamina) {
-        infoPlayerDto.stamina = stamina;
+    public void setStaminaMaxima(int stamina) {
+        infoPlayerDto.staminaMaxima = stamina;
     }
 
     public int getForca() {
@@ -74,12 +83,12 @@ public class infoPlayerDto {
         infoPlayerDto.forca = forca;
     }
     
-    public int getMana() {
-        return mana;
+    public int getManaMaxima() {
+        return manaMaxima;
     }
 
-    public void setMana(int mana) {
-        infoPlayerDto.mana = mana;
+    public void setManaMaxima(int mana) {
+        infoPlayerDto.manaMaxima = mana;
     }
     
     public int getForcaMana() {
@@ -105,4 +114,46 @@ public class infoPlayerDto {
     public void setClasse(String classe) {
         infoPlayerDto.classe = classe;
     }
+    
+    
+    public int getVidaAtual() {
+        return vidaAtual;
+    }
+
+    public void setVidaAtual(int vidaAtual) {
+        infoPlayerDto.vidaAtual = vidaAtual;
+    }
+    
+    public int getManaAtual() {
+        return manaAtual;
+    }
+
+    public void setManaAtual(int manaAtual) {
+        infoPlayerDto.manaAtual = manaAtual;
+    }
+    
+    public int getStaminaAtual() {
+        return staminaAtual;
+    }
+
+    public void setStaminaAtual(int staminaAtual) {
+        infoPlayerDto.staminaAtual = staminaAtual;
+    }
+    
+    public int getXpAtual() {
+        return xpAtual;
+    }
+
+    public void setXpAtual(int xpAtual) {
+        infoPlayerDto.xpAtual = xpAtual;
+    }
+    
+    public int getXpMaxima() {
+        return xpMaxima;
+    }
+
+    public void setXpMaxima(int xpMaxima) {
+        infoPlayerDto.xpMaxima = xpMaxima;
+    }
+    
 }

@@ -124,7 +124,7 @@ public class JpStatus extends JPanel {
         lPontos.setVisible(true);
         add(lPontos);
 
-        lVida = new JLabel("CON: " + playerInfo.getVida());
+        lVida = new JLabel("CON: " + playerInfo.getVidaMaxima());
         lVida.setFont(new Font("Arial", Font.BOLD, 16));
         lVida.setForeground(Color.BLACK);
         FontMetrics fmVida = lVida.getFontMetrics(lVida.getFont());
@@ -136,11 +136,11 @@ public class JpStatus extends JPanel {
         lVida.setVisible(true);
         add(lVida);
 
-        lStamina = new JLabel("DEX: " + playerInfo.getStamina());
+        lStamina = new JLabel("DEX: " + playerInfo.getStaminaMaxima());
         lStamina.setFont(new Font("Arial", Font.BOLD, 16));
         lStamina.setForeground(Color.BLACK);
         FontMetrics fmStamina = lStamina.getFontMetrics(lStamina.getFont());
-        int textWidthStamina = fmStamina.stringWidth("DEX: " + playerInfo.getStamina());
+        int textWidthStamina = fmStamina.stringWidth("DEX: " + playerInfo.getStaminaMaxima());
         lStamina.setPreferredSize(new Dimension(textWidthStamina, 30));
         int areaLarguraStamina = 10+getWidth();
         xStamina = 626 + (areaLarguraStamina - textWidthStamina) / 2;
@@ -160,11 +160,11 @@ public class JpStatus extends JPanel {
         lForca.setVisible(true);
         add(lForca);
         
-        lMana = new JLabel("SPI: " + playerInfo.getMana());
+        lMana = new JLabel("SPI: " + playerInfo.getManaMaxima());
         lMana.setFont(new Font("Arial", Font.BOLD, 16));
         lMana.setForeground(Color.BLACK);
         FontMetrics fmMana = lMana.getFontMetrics(lMana.getFont());
-        int textWidthMana = fmMana.stringWidth("SPI: " + playerInfo.getMana());
+        int textWidthMana = fmMana.stringWidth("SPI: " + playerInfo.getManaMaxima());
         lMana.setPreferredSize(new Dimension(textWidthMana, 30));
         int areaLarguraMana = 10+getWidth();
         xMana = 626 + (areaLarguraMana - textWidthMana) / 2;
@@ -402,11 +402,11 @@ public class JpStatus extends JPanel {
     public void atualizarLabelsEAtualizar() {
         lNivel.setText(""+playerInfo.getNivel());
         lClasse.setText("Classe: "+playerInfo.getClasse());
-        lVida.setText("CON: " + playerInfo.getVida());
+        lVida.setText("CON: " + playerInfo.getVidaMaxima());
         lPontos.setText("Pontos disponíveis: " + playerInfo.getPontos());
-        lStamina.setText("DEX: " + playerInfo.getStamina());
+        lStamina.setText("DEX: " + playerInfo.getStaminaMaxima());
         lForca.setText("STR: " + playerInfo.getForca());
-        lMana.setText("SPI: " + playerInfo.getMana());
+        lMana.setText("SPI: " + playerInfo.getManaMaxima());
         lForcaMana.setText("WIL: " + playerInfo.getForcaMana());
         lDinheiro.setText("Dinheiro: " + playerInfo.getDinheiro());
 
@@ -423,18 +423,18 @@ public class JpStatus extends JPanel {
 
     public void aumentarVida() {
         playerInfo.setPontos(playerInfo.getPontos() - 1);
-        playerInfo.setVida(playerInfo.getVida() + 1);
+        playerInfo.setVidaMaxima(playerInfo.getVidaMaxima() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
     }
 
     public void aumentarStamina() {
         playerInfo.setPontos(playerInfo.getPontos() - 1);
-        playerInfo.setStamina(playerInfo.getStamina() + 1);
+        playerInfo.setStaminaMaxima(playerInfo.getStaminaMaxima() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
     }
 
     public void aumentarForca() {
@@ -442,15 +442,15 @@ public class JpStatus extends JPanel {
         playerInfo.setForca(playerInfo.getForca() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
     }
     
     public void aumentarMana() {
         playerInfo.setPontos(playerInfo.getPontos() - 1);
-        playerInfo.setMana(playerInfo.getMana() + 1);
+        playerInfo.setManaMaxima(playerInfo.getManaMaxima() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
     }
     
     public void aumentarForcaMana() {
@@ -458,6 +458,6 @@ public class JpStatus extends JPanel {
         playerInfo.setForcaMana(playerInfo.getForcaMana() + 1);
         playerInfo.setNivel(playerInfo.getNivel() + 1);
 
-        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVida(), playerInfo.getStamina(), playerInfo.getForca(), playerInfo.getMana(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse());
+        playerService.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
     }
 }

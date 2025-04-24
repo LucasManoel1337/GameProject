@@ -188,6 +188,23 @@ public class Player extends JPanel implements KeyListener {
         g.drawImage(hotbar, 385, 678, 500, 50, this);
         
         PCS.desenharInformacoes(g);
+        
+        JTextField JTFChat = new JTextField();
+        JTFChat.setBounds(5, 695, 300, 30);
+        JTFChat.setBackground(Color.LIGHT_GRAY);
+        JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        this.add(JTFChat);
+        
+        JButton bChatEnviar = new JButton("Enviar");
+        bChatEnviar.setBounds(310, 695, 70, 30);
+        bChatEnviar.setBackground(new Color(32, 3, 3));
+        bChatEnviar.setForeground(Color.WHITE);
+        bChatEnviar.setFocusPainted(false);
+        bChatEnviar.setOpaque(true);
+        bChatEnviar.setContentAreaFilled(true);
+        bChatEnviar.setBorderPainted(false);
+        bChatEnviar.setVisible(true);
+        this.add(bChatEnviar);
     }
 
     public void mudarMapa(Mapa novoMapa) {

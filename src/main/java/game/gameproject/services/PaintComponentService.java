@@ -88,5 +88,5 @@ public class PaintComponentService {
         g.setColor(Color.BLACK);
         g.drawString(nomeRestante, xTexto, yTexto);
     }
-	
+    
 }

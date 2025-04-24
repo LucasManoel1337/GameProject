@@ -74,13 +74,20 @@ public class AutenticacaoService {
                     
                     IPDto.setNivel(playerService.getPlayerNivel(resultSet.getInt("id")));
                     IPDto.setPontos(playerService.getPlayerPontos(resultSet.getInt("id")));
-                    IPDto.setVida(playerService.getPlayerVida(resultSet.getInt("id")));
-                    IPDto.setStamina(playerService.getPlayerStamina(resultSet.getInt("id")));
+                    IPDto.setVidaMaxima(playerService.getPlayerVida(resultSet.getInt("id")));
+                    IPDto.setStaminaMaxima(playerService.getPlayerStamina(resultSet.getInt("id")));
                     IPDto.setForca(playerService.getPlayerVida(resultSet.getInt("id")));
-                    IPDto.setMana(playerService.getPlayerMana(resultSet.getInt("id")));
+                    IPDto.setManaMaxima(playerService.getPlayerMana(resultSet.getInt("id")));
                     IPDto.setForcaMana(playerService.getPlayerForcaMana(resultSet.getInt("id")));
                     IPDto.setDinheiro(playerService.getPlayerDinheiro(resultSet.getInt("id")));
                     IPDto.setClasse(playerService.getPlayerClasse(resultSet.getInt("id")));
+                    
+                    IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
+                    IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
+                    IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
+                    
+                    IPDto.setXpAtual(playerService.getPlayerXpAtual(resultSet.getInt("id")));
+                    IPDto.setXpMaxima(playerService.getPlayerXpMaxima(resultSet.getInt("id")));
 
                     // Retorna o infoPlayerDto preenchido
                     return IPDto;
