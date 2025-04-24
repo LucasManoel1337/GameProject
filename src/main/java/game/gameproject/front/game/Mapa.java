@@ -1,10 +1,7 @@
 package game.gameproject.front.game;
 
-import java.awt.*;
+import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 
 public class Mapa{
     

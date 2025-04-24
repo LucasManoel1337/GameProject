@@ -6,7 +6,6 @@ import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.AutenticacaoService;
 import game.gameproject.services.LoginService;
-import game.gameproject.services.RegistrarService;
 import game.gameproject.support.TimerAvisosLabelsSupport;
 
 import javax.imageio.ImageIO;

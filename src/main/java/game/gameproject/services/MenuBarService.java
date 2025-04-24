@@ -1,28 +1,24 @@
 package game.gameproject.services;
 
-import game.gameproject.bdd.DatabaseConfig;
-import game.gameproject.controller.GameFrame;
-import game.gameproject.dto.infoPlayerDto;
-import game.gameproject.front.JpStatus;
-import game.gameproject.support.FontLoaderSupport;
-
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.FontFormatException;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.MediaTracker;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+
+import game.gameproject.bdd.DatabaseConfig;
+import game.gameproject.controller.GameFrame;
+import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.support.FontLoaderSupport;
 
 public class MenuBarService {
 

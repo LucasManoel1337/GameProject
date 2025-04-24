@@ -1,11 +1,11 @@
 package game.gameproject.services;
 
-import game.gameproject.bdd.DatabaseConfig;
-import game.gameproject.dto.infoPlayerDto;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import game.gameproject.bdd.DatabaseConfig;
 
 public class StatusService {
 

@@ -20,9 +20,9 @@ public class DatabaseConfig {
     public static void configureDatabase() {
         // Configuração do HikariCP
         HikariConfig config = new HikariConfig();
-        config.setJdbcUrl("jdbc:mysql://u941_oQkaYD07bQ:dK.BF.mxozcyE7Cs7FrvX4St@181.215.45.73:3306/s941_gameproject");
-        config.setUsername("u941_oQkaYD07bQ");
-        config.setPassword("dK.BF.mxozcyE7Cs7FrvX4St");
+        config.setJdbcUrl("jdbc:mysql://u941_PYh6qcwt7j:42B8Fy6U2%40z.6N%2BI2VrJ%40E2z@181.215.45.73:3306/s941_DDG_Dev");
+        config.setUsername("u941_PYh6qcwt7j");
+        config.setPassword("42B8Fy6U2@z.6N+I2VrJ@E2z");
         config.setDriverClassName("com.mysql.cj.jdbc.Driver");
         
         // Outras configurações do HikariCP, se necessário

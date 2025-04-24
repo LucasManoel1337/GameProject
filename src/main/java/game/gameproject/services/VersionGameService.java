@@ -5,8 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import javax.swing.JOptionPane;
-
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.controller.LauncherFrame;
 import game.gameproject.dto.VersoesDto;
@@ -35,16 +33,16 @@ public class VersionGameService {
     	        String versaoClient = dto.getVersaoGame();
 
     	        if (emManutencao) {
-    	        	LauncherFrame LF = new LauncherFrame();
-    	            LF.switchToManutencaoPanel();
-    	            LF.setVisible(true);
+    	        	LauncherFrame LF = new LauncherFrame(); //Instancia o laucher/e chama a tela de login
+    	            LF.switchToManutencaoPanel(); //Troca para a tela de manutenção
+    	            LF.setVisible(true); //E deixa visivel
     	            return false;
     	        }
 
     	        if (!versaoBanco.equals(versaoClient)) {
-    	            LauncherFrame LF = new LauncherFrame();
-    	            LF.switchToAtualizarPanel();
-    	            LF.setVisible(true);
+    	            LauncherFrame LF = new LauncherFrame(); //Instancia o laucher/e chama a tela de login
+    	            LF.switchToAtualizarPanel(); //Troca para a tela de atualizar o jogo
+    	            LF.setVisible(true); //E deixa visivel
     	            return false;
     	        }
 
