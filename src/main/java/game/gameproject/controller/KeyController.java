@@ -1,6 +1,7 @@
 package game.gameproject.controller;
 
 import game.gameproject.front.game.Player;
+import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
@@ -8,6 +9,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
 public class KeyController {
+	
+	chatDto CD = new chatDto();
 
     private Player player;
     private infoPlayerDto playerInfo;
@@ -36,13 +39,19 @@ public class KeyController {
 
     // Método para mapear a tecla de escape para ação de sair
     public void bindEscapeKey(JPanel panel, GameFrame gameFrame) {
-        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "menuAction");
-        panel.getActionMap().put("menuAction", new AbstractAction() {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "menuOrCloseChat");
+        panel.getActionMap().put("menuOrCloseChat", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("ESC pressionado!");
-                player.resetarMovimento();
-                gameFrame.switchToMenuPanel();
+                if (CD.isChatAtivo()) {
+                    System.out.println("ESC pressionado - Fechar chat");
+                    CD.setChatAtivo(false);
+                    panel.requestFocusInWindow(); // Devolve foco ao jogo
+                } else {
+                    System.out.println("ESC pressionado - Voltar ao menu");
+                    player.resetarMovimento();
+                    gameFrame.switchToMenuPanel();
+                }
             }
         });
     }
@@ -52,6 +61,7 @@ public class KeyController {
         panel.getActionMap().put("missaoAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("Q pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToMissoesPanel();
@@ -64,6 +74,7 @@ public class KeyController {
         panel.getActionMap().put("inventarioAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("E pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToInventarioPanel();
@@ -76,6 +87,7 @@ public class KeyController {
         panel.getActionMap().put("amigosAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("F pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToAmigosPanel();
@@ -88,6 +100,7 @@ public class KeyController {
         panel.getActionMap().put("guildaAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("G pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToGuildaPanel();
@@ -100,6 +113,7 @@ public class KeyController {
         panel.getActionMap().put("mapaAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("M pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToMapaPanel();
@@ -112,15 +126,33 @@ public class KeyController {
         panel.getActionMap().put("statusAction", new AbstractAction() {
             @Override
             public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
                 System.out.println("V pressionado!");
                 player.resetarMovimento();
                 gameFrame.switchToStatusPanel();
             }
         });
     }
+    
+    public void bindTKey(JPanel panel, GameFrame gameFrame) {
+        panel.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(KeyEvent.VK_T, 0), "abrirChat");
+        panel.getActionMap().put("abrirChat", new AbstractAction() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            	if (CD.isChatAtivo()) return;
+                System.out.println("T pressionado - Chat ativado");
+                CD.setChatAtivo(true);
+            }
+        });
+    }
 
     // Converter a String da tecla para o código de tecla correspondente
     private int getKeyCode(String key) {
+        if (CD.isChatAtivo()) {
+        	player.resetarMovimento();
+        	return -1;
+        }
+
         switch (key) {
             case "W": return KeyEvent.VK_W;
             case "S": return KeyEvent.VK_S;
@@ -129,4 +161,5 @@ public class KeyController {
             default: return -1;
         }
     }
+
 }

@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.Jogador;
+import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.PaintComponentService;
 import game.gameproject.services.PlayerService;
@@ -37,7 +38,14 @@ public class Player extends JPanel implements KeyListener {
     private infoPlayerDto playerInfo;
     public String sprite = "";
     
+    chatDto CD = new chatDto();
+    
+    public boolean chatAtivo = CD.isChatAtivo();
+    
     public List<Jogador> jogadores = new ArrayList<>();
+    
+    private JTextField JTFChat = new JTextField();
+    private JButton bChatEnviar = new JButton("Enviar");
     
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
@@ -48,7 +56,7 @@ public class Player extends JPanel implements KeyListener {
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
         
-        setDoubleBuffered(true); // Garante o double buffering
+        setDoubleBuffered(true);
         carregarImagens();
         personagemAtual = personagemBaixo1;
         setFocusable(true);
@@ -58,6 +66,21 @@ public class Player extends JPanel implements KeyListener {
         setFocusable(true);
         requestFocusInWindow();
         
+        	JTFChat.setBounds(5, 695, 300, 30);
+            JTFChat.setBackground(Color.LIGHT_GRAY);
+            JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+            JTFChat.setVisible(false);
+            this.add(JTFChat);
+            
+            bChatEnviar.setBounds(310, 695, 70, 30);
+            bChatEnviar.setBackground(new Color(32, 3, 3));
+            bChatEnviar.setForeground(Color.WHITE);
+            bChatEnviar.setFocusPainted(false);
+            bChatEnviar.setOpaque(true);
+            bChatEnviar.setContentAreaFilled(true);
+            bChatEnviar.setBorderPainted(false);
+        	bChatEnviar.setVisible(false);
+            this.add(bChatEnviar);
     }
 
     private void carregarImagens() {
@@ -189,22 +212,14 @@ public class Player extends JPanel implements KeyListener {
         
         PCS.desenharInformacoes(g);
         
-        JTextField JTFChat = new JTextField();
-        JTFChat.setBounds(5, 695, 300, 30);
-        JTFChat.setBackground(Color.LIGHT_GRAY);
-        JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        this.add(JTFChat);
-        
-        JButton bChatEnviar = new JButton("Enviar");
-        bChatEnviar.setBounds(310, 695, 70, 30);
-        bChatEnviar.setBackground(new Color(32, 3, 3));
-        bChatEnviar.setForeground(Color.WHITE);
-        bChatEnviar.setFocusPainted(false);
-        bChatEnviar.setOpaque(true);
-        bChatEnviar.setContentAreaFilled(true);
-        bChatEnviar.setBorderPainted(false);
-        bChatEnviar.setVisible(true);
-        this.add(bChatEnviar);
+        if(CD.isChatAtivo()) {
+        	JTFChat.setVisible(true);
+        	bChatEnviar.setVisible(true);
+        } else {
+        	JTFChat.setText("");
+        	JTFChat.setVisible(false);
+        	bChatEnviar.setVisible(false);
+        }
     }
 
     public void mudarMapa(Mapa novoMapa) {

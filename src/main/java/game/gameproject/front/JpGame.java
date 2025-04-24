@@ -4,10 +4,12 @@ import game.gameproject.controller.GameFrame;
 import game.gameproject.controller.KeyController;
 import game.gameproject.front.game.*;
 import game.gameproject.services.PlayerService;
+import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
@@ -27,11 +29,14 @@ public class JpGame extends JPanel {
         setLayout(null);
         
         PlayerService PS = new PlayerService();
+        chatDto CD = new chatDto();
 
         // Criando o Player
         player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
         player.setBounds(0, 0, 1280, 768); // Posição inicial e tamanho
         add(player);
+        
+        
         
      // Cria o ScheduledExecutorService
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -45,7 +50,7 @@ public class JpGame extends JPanel {
             
             PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
             player.jogadores = PS.buscarJogadores(playerInfo.getIdPlayer());
-            
+
             repaint();
             
         }, 0, 1000 / 30, TimeUnit.MILLISECONDS);
@@ -68,6 +73,7 @@ public class JpGame extends JPanel {
         keyController.bindGKey(this, gameFrame);
         keyController.bindMKey(this, gameFrame);
         keyController.bindVKey(this, gameFrame);
+        keyController.bindTKey(this, gameFrame);
 
         // Marca o jogador como online
         
