@@ -48,6 +48,9 @@ public class Player extends JPanel implements KeyListener {
     private JTextField JTFChat = new JTextField();
     private JButton bChatEnviar = new JButton("Enviar");
     
+    private JTextArea chatArea = new JTextArea();  // Área de texto para mostrar as mensagens do chat
+    private JScrollPane chatScrollPane = new JScrollPane(chatArea); // Painel de rolagem
+    
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
     PaintComponentService PCS = new PaintComponentService();
@@ -68,25 +71,55 @@ public class Player extends JPanel implements KeyListener {
         setFocusable(true);
         requestFocusInWindow();
         
-        	JTFChat.setBounds(5, 695, 300, 30);
-            JTFChat.setBackground(Color.LIGHT_GRAY);
-            JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-            JTFChat.setVisible(false);
-            this.add(JTFChat);
-            
-            bChatEnviar.setBounds(310, 695, 70, 30);
-            bChatEnviar.setBackground(new Color(32, 3, 3));
-            bChatEnviar.setForeground(Color.WHITE);
-            bChatEnviar.setFocusPainted(false);
-            bChatEnviar.setOpaque(true);
-            bChatEnviar.setContentAreaFilled(true);
-            bChatEnviar.setBorderPainted(false);
-        	bChatEnviar.setVisible(false);
-        	bChatEnviar.addActionListener(e -> {
-        	    CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText());
-        	    JTFChat.setText("");
-        	});
-            this.add(bChatEnviar);
+        JTFChat.setBounds(5, 695, 300, 30);
+        JTFChat.setBackground(new Color(211, 211, 211, 150));
+        JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
+        JTFChat.setVisible(false);
+        JTFChat.addActionListener(e -> bChatEnviar.doClick());
+        this.add(JTFChat);
+
+        // Botão de envio
+        bChatEnviar.setBounds(310, 695, 70, 30);
+        bChatEnviar.setBackground(new Color(32, 3, 3));
+        bChatEnviar.setForeground(Color.WHITE);
+        bChatEnviar.setFocusPainted(false);
+        bChatEnviar.setOpaque(true);
+        bChatEnviar.setContentAreaFilled(true);
+        bChatEnviar.setBorderPainted(false);
+        bChatEnviar.setVisible(false);
+        bChatEnviar.addActionListener(e -> {
+            CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText());
+            JTFChat.setText("");
+            carregarMensagens();
+        });
+        this.add(bChatEnviar);
+
+        chatArea.setEditable(false);
+        chatArea.setBackground(new Color(255, 255, 255, 150));
+        chatArea.setForeground(Color.BLACK);
+        chatArea.setRows(20);
+        chatArea.setColumns(30);
+        chatArea.setLineWrap(true);
+        chatArea.setWrapStyleWord(true);
+        chatArea.setFocusable(false);
+        chatArea.setBorder(null);
+        chatArea.setVisible(false);
+
+        chatScrollPane.setBounds(5, 410, 375, 280);
+        chatScrollPane.setVisible(false);
+        chatScrollPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
+
+        chatScrollPane.getVerticalScrollBar().setOpaque(false);
+        chatScrollPane.getHorizontalScrollBar().setOpaque(false);
+
+        chatScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
+        chatScrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
+        chatScrollPane.setBorder(null);
+
+        this.add(chatScrollPane);
+
+
+        carregarMensagens();
     }
 
     private void carregarImagens() {
@@ -221,10 +254,14 @@ public class Player extends JPanel implements KeyListener {
         if(CD.isChatAtivo()) {
         	JTFChat.setVisible(true);
         	bChatEnviar.setVisible(true);
+        	chatScrollPane.setVisible(true);
+        	chatArea.setVisible(true);
         } else {
         	JTFChat.setText("");
         	JTFChat.setVisible(false);
         	bChatEnviar.setVisible(false);
+        	chatScrollPane.setVisible(false);
+        	chatArea.setVisible(false);
         }
     }
 
@@ -234,6 +271,13 @@ public class Player extends JPanel implements KeyListener {
         yPersonagem = mapaAtual.getYSpawn();
     }
 
+    private void carregarMensagens() {
+        String mensagens = CGS.obterUltimasMensagens();  // Esse método deve retornar as mensagens
+        chatArea.setText(mensagens);  // Atualizar a área de texto com as mensagens
+        // Ou, se você quiser adicionar as mensagens uma a uma:
+        // chatArea.append(mensagem + "\n");
+    }
+    
     public void resetarMovimento() {
         movendoCima = false;
         movendoBaixo = false;
