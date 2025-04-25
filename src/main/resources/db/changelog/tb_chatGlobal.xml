@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet author="lucas" id="094125042025">
+    
+        <createTable tableName="tb_chatGlobal">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="idPlayer" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="dataEHora" type="DATETIME" defaultValueComputed="CURRENT_TIMESTAMP">
+    			<constraints nullable="false"/>
+			</column>
+            <column name="nickPlayer" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="mensagem" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+    </changeSet>
+
+</databaseChangeLog>

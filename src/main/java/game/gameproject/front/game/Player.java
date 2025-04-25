@@ -10,6 +10,7 @@ import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.Jogador;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.services.ChatGlobalService;
 import game.gameproject.services.PaintComponentService;
 import game.gameproject.services.PlayerService;
 
@@ -50,6 +51,7 @@ public class Player extends JPanel implements KeyListener {
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
     PaintComponentService PCS = new PaintComponentService();
+    ChatGlobalService CGS = new ChatGlobalService();
 
     public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) {
     	this.playerInfo = playerInfo;
@@ -80,6 +82,10 @@ public class Player extends JPanel implements KeyListener {
             bChatEnviar.setContentAreaFilled(true);
             bChatEnviar.setBorderPainted(false);
         	bChatEnviar.setVisible(false);
+        	bChatEnviar.addActionListener(e -> {
+        	    CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText());
+        	    JTFChat.setText("");
+        	});
             this.add(bChatEnviar);
     }
 
