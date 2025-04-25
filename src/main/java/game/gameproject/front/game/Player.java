@@ -256,6 +256,7 @@ public class Player extends JPanel implements KeyListener {
         	bChatEnviar.setVisible(true);
         	chatScrollPane.setVisible(true);
         	chatArea.setVisible(true);
+        	carregarMensagens();
         } else {
         	JTFChat.setText("");
         	JTFChat.setVisible(false);

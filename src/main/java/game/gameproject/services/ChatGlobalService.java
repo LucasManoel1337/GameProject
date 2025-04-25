@@ -35,34 +35,33 @@ public class ChatGlobalService {
     
     public String obterUltimasMensagens() {
         StringBuilder mensagens = new StringBuilder();
-        String query = "SELECT * FROM tb_chatGlobal ORDER BY dataEHora DESC LIMIT 30"; // Obtém as 30 últimas mensagens
 
-        List<String> mensagensList = new ArrayList<>();
+        // Subquery: pega as 30 últimas mensagens por ordem de envio (mais recentes),
+        // depois ordena ASC para mostrar da mais antiga para a mais recente.
+        String query = """
+            SELECT * FROM (
+                SELECT * FROM tb_chatGlobal ORDER BY id DESC LIMIT 30
+            ) AS ultimas
+            ORDER BY id ASC
+            """;
 
         try (Connection conn = DatabaseConfig.getConnection(); 
              Statement stmt = conn.createStatement(); 
              ResultSet rs = stmt.executeQuery(query)) {
 
             while (rs.next()) {
-                String jogador = rs.getString("nickPlayer");  // Nome do jogador
-                String mensagem = rs.getString("mensagem");   // Mensagem
-                String data = rs.getString("dataEHora");      // Data de envio (não utilizado diretamente)
+                String jogador = rs.getString("nickPlayer");
+                String mensagem = rs.getString("mensagem");
 
-                // Adicionando a mensagem formatada à lista
-                mensagensList.add(jogador + ": " + mensagem);
+                mensagens.append(jogador).append(": ").append(mensagem).append("\n");
             }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        // Agora, invertemos a ordem da lista para exibir as mais recentes por último
-        Collections.reverse(mensagensList);
-
-        // Concatenando as mensagens na ordem correta
-        for (String msg : mensagensList) {
-            mensagens.append(msg).append("\n");
-        }
-
-        return mensagens.toString(); // Retorna todas as mensagens concatenadas
+        return mensagens.toString();
     }
+
+
     }
