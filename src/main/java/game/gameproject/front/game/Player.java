@@ -51,6 +51,12 @@ public class Player extends JPanel implements KeyListener {
     private JTextArea chatArea = new JTextArea();  // Área de texto para mostrar as mensagens do chat
     private JScrollPane chatScrollPane = new JScrollPane(chatArea); // Painel de rolagem
     
+    private JProgressBar jBarXp = new JProgressBar();
+    private JProgressBar jBarVida = new JProgressBar();
+    private JProgressBar jBarMana = new JProgressBar();
+    private JProgressBar jBarStamina = new JProgressBar();
+    
+    
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
     PaintComponentService PCS = new PaintComponentService();
@@ -117,9 +123,57 @@ public class Player extends JPanel implements KeyListener {
         chatScrollPane.setBorder(null);
 
         this.add(chatScrollPane);
-
-
         carregarMensagens();
+        
+        
+        jBarXp.setForeground(new Color(0, 255, 0)); 
+        jBarXp.setMaximum(playerInfo.getXpMaxima());
+        jBarXp.setMinimum(0);
+        jBarXp.setValue(playerInfo.getXpAtual());
+        jBarXp.setBorder(null);
+        jBarXp.setBorderPainted(false);
+        jBarXp.setBounds(5, 5, 300, 12);
+        jBarXp.setStringPainted(true);
+        jBarXp.setString(playerInfo.getXpAtual()+"/"+playerInfo.getXpMaxima());
+        jBarXp.setIndeterminate(false);
+        this.add(jBarXp);
+
+        jBarVida.setForeground(Color.RED);
+        jBarVida.setMaximum(playerInfo.getVidaMaxima());
+        jBarVida.setMinimum(0);
+        jBarVida.setValue(playerInfo.getVidaAtual());
+        jBarVida.setBorder(null);
+        jBarVida.setBorderPainted(false);
+        jBarVida.setBounds(5, 18, 300, 12);
+        jBarVida.setStringPainted(true);
+        jBarVida.setString(playerInfo.getVidaAtual()+"/"+playerInfo.getVidaMaxima());
+        jBarVida.setIndeterminate(false);
+        this.add(jBarVida);
+
+        jBarMana.setForeground(new Color(0, 255, 255));
+        jBarMana.setMaximum(playerInfo.getManaMaxima());
+        jBarMana.setMinimum(0);
+        jBarMana.setValue(playerInfo.getManaAtual());
+        jBarMana.setBorder(null);
+        jBarMana.setBorderPainted(false);
+        jBarMana.setBounds(5, 31, 300, 12);
+        jBarMana.setStringPainted(true);
+        jBarMana.setString(playerInfo.getManaAtual()+"/"+playerInfo.getManaMaxima());
+        jBarMana.setIndeterminate(false);
+        this.add(jBarMana);
+
+        jBarStamina.setForeground(new Color(0, 51, 25));
+        jBarStamina.setMaximum(playerInfo.getStaminaMaxima());
+        jBarStamina.setMinimum(0);
+        jBarStamina.setValue(playerInfo.getStaminaAtual());
+        jBarStamina.setBorder(null);
+        jBarStamina.setBorderPainted(false);
+        jBarStamina.setBounds(5, 44, 300, 12);
+        jBarStamina.setStringPainted(true);
+        jBarStamina.setString(playerInfo.getStaminaAtual()+"/"+playerInfo.getStaminaMaxima());
+        jBarStamina.setIndeterminate(false);
+        this.add(jBarStamina);
+
     }
 
     private void carregarImagens() {
@@ -264,6 +318,8 @@ public class Player extends JPanel implements KeyListener {
         	chatScrollPane.setVisible(false);
         	chatArea.setVisible(false);
         }
+        
+        recarregarStatusHub();
     }
 
     public void mudarMapa(Mapa novoMapa) {
@@ -273,10 +329,15 @@ public class Player extends JPanel implements KeyListener {
     }
 
     private void carregarMensagens() {
-        String mensagens = CGS.obterUltimasMensagens();  // Esse método deve retornar as mensagens
-        chatArea.setText(mensagens);  // Atualizar a área de texto com as mensagens
-        // Ou, se você quiser adicionar as mensagens uma a uma:
-        // chatArea.append(mensagem + "\n");
+        String mensagens = CGS.obterUltimasMensagens();
+        chatArea.setText(mensagens);
+    }
+    
+    private void recarregarStatusHub() {
+    	jBarXp.setValue(playerInfo.getXpAtual());
+    	jBarVida.setValue(playerInfo.getVidaAtual());
+    	jBarMana.setValue(playerInfo.getManaAtual());
+    	jBarStamina.setValue(playerInfo.getStaminaAtual());
     }
     
     public void resetarMovimento() {

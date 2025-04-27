@@ -82,9 +82,9 @@ public class AutenticacaoService {
                     IPDto.setDinheiro(playerService.getPlayerDinheiro(resultSet.getInt("id")));
                     IPDto.setClasse(playerService.getPlayerClasse(resultSet.getInt("id")));
                     
+                    IPDto.setVidaAtual(playerService.getPlayerVida(resultSet.getInt("id")));
                     IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
-                    IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
-                    IPDto.setManaAtual(playerService.getPlayerMana(resultSet.getInt("id")));
+                    IPDto.setStaminaAtual(playerService.getPlayerStamina(resultSet.getInt("id")));
                     
                     IPDto.setXpAtual(playerService.getPlayerXpAtual(resultSet.getInt("id")));
                     IPDto.setXpMaxima(playerService.getPlayerXpMaxima(resultSet.getInt("id")));
