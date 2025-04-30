@@ -8,6 +8,8 @@ import game.gameproject.front.Autenticacao.JpSemInternet;
 import game.gameproject.front.Autenticacao.JpErroBanco;
 import game.gameproject.support.ImagemDiretorios;
 
+import java.awt.GraphicsEnvironment;
+
 import javax.swing.*;
 
 public class LauncherFrame extends JFrame {
@@ -20,19 +22,19 @@ public class LauncherFrame extends JFrame {
     private JpErroBanco telaErroBanco;
 
     public LauncherFrame() {
-    	ImagemDiretorios ImgD = new ImagemDiretorios();
-    	
-        setTitle("Room 5 Studios - Launcher");
-        setSize(1280, 768);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
-        setResizable(false);
+    	 ImagemDiretorios ImgD = new ImagemDiretorios();
 
-        // Passa a referência correta do LauncherFrame para JpLogin
-        telaLogin = new JpLogin(this);
-        currentPanel = telaLogin;
-        add(currentPanel);
+         setTitle("Room 5 Studios - Launcher");
+         setSize(1280, 768);
+         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+         setMaximizedBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
+         setExtendedState(JFrame.MAXIMIZED_BOTH);
+         setLocationRelativeTo(null);
+         setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
+
+         telaLogin = new JpLogin(this);
+         currentPanel = telaLogin;
+         add(currentPanel);
     }
 
     public void switchToRegisterPanel() {
