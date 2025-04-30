@@ -147,4 +147,99 @@ public class PlayerService {
         }
     }
     
+    public int buscarCoordenadaX(int idPlayer) {
+        String sql = "SELECT x FROM tb_player_coordenadas WHERE id_player = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPlayer);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("x");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0; // valor padrão caso não encontre
+    }
+
+    public int buscarCoordenadaY(int idPlayer) {
+        String sql = "SELECT y FROM tb_player_coordenadas WHERE id_player = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPlayer);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("y");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 0; // valor padrão caso não encontre
+    }
+
+    public int buscarMapa(int idPlayer) {
+        String sql = "SELECT mapa FROM tb_player_coordenadas WHERE id_player = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idPlayer);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("mapa");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return 1; // valor padrão caso não encontre
+    }
+
+    public String buscarSprite(int idPlayer) {
+        String sprite = null;
+
+        String sqlSprite = "SELECT sprite FROM tb_player_coordenadas WHERE id_player = ?";
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sqlSprite)) {
+
+            stmt.setInt(1, idPlayer);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                sprite = rs.getString("sprite");
+            }
+
+            // Se sprite estiver vazio ou nulo, buscar a classe do player
+            if (sprite == null || sprite.isEmpty()) {
+                String sqlClasse = "SELECT classe FROM tb_players WHERE id_player = ?";
+                try (PreparedStatement stmtClasse = conn.prepareStatement(sqlClasse)) {
+                    stmtClasse.setInt(1, idPlayer);
+                    ResultSet rsClasse = stmtClasse.executeQuery();
+
+                    if (rsClasse.next()) {
+                        String classe = rsClasse.getString("classe");
+                        sprite = "imagens/player/" + classe + "/modeloCosta1.png";
+                    } else {
+                        sprite = "imagens/player/default/modeloCosta1.png"; // fallback final
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            sprite = "imagens/player/default/modeloCosta1.png"; // fallback em caso de erro
+        }
+
+        return sprite;
+    }
+    
 }

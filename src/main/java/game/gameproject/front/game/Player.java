@@ -40,6 +40,8 @@ public class Player extends JPanel implements KeyListener {
     private infoPlayerDto playerInfo;
     public String sprite = "";
     
+    public int mapa;
+    
     chatDto CD = new chatDto();
     VersoesDto VD = new VersoesDto();
     
@@ -73,8 +75,10 @@ public class Player extends JPanel implements KeyListener {
         carregarImagens();
         personagemAtual = personagemBaixo1;
         setFocusable(true);
-        xPersonagem = mapaAtual.getXSpawn();
-        yPersonagem = mapaAtual.getYSpawn();
+        xPersonagem = PS.buscarCoordenadaX(playerInfo.getIdPlayer());
+        yPersonagem = PS.buscarCoordenadaY(playerInfo.getIdPlayer());
+        sprite = PS.buscarSprite(playerInfo.getIdPlayer());
+        //mapa = PS.buscarMapa(playerInfo.getIdPlayer());
         
         setFocusable(true);
         requestFocusInWindow();
