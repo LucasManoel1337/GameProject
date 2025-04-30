@@ -15,7 +15,6 @@ import game.gameproject.front.JpStatus;
 import game.gameproject.services.PlayerService;
 import game.gameproject.support.ImagemDiretorios;
 
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -45,11 +44,10 @@ public class GameFrame extends JFrame {
     	
         setTitle("Room 5 Studios - Game");
         setSize(1280, 768);  // Tamanho do jogo
-        setMaximizedBounds(GraphicsEnvironment.getLocalGraphicsEnvironment().getMaximumWindowBounds());
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
+        setResizable(false);
 
         // Agora, o playerInfo está inicializado corretamente
         telaMenu = new JpMenu(this, playerInfo);
