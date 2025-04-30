@@ -32,21 +32,21 @@ public class AtualizarGameService {
 
         try {
             if (os.contains("win")) {
-                // Windows: abre cmd e executa git pull
-                String comando = "cmd /c start cmd.exe /K \"cd /d " + diretorio + " && git pull\"";
+                String comando = "cmd /c start cmd.exe /K \"cd /d " + diretorio
+                        + " && git fetch && git reset --hard origin/main && git pull\"";
                 Runtime.getRuntime().exec(comando);
             } else if (os.contains("mac")) {
-                // macOS: abre Terminal.app com AppleScript
                 String[] comando = {
                     "osascript", "-e",
-                    "tell application \"Terminal\" to do script \"cd '" + diretorio + "' && git pull\""
+                    "tell application \"Terminal\" to do script \"cd '" + diretorio
+                        + "' && git fetch && git reset --hard origin/main && git pull\""
                 };
                 Runtime.getRuntime().exec(comando);
             } else if (os.contains("nix") || os.contains("nux")) {
-                // Linux: abre terminal padrão e executa git pull
                 String[] comando = {
                     "/bin/bash", "-c",
-                    "gnome-terminal -- bash -c 'cd \"" + diretorio + "\" && git pull; exec bash'"
+                    "gnome-terminal -- bash -c 'cd \"" + diretorio
+                        + "\" && git fetch && git reset --hard origin/main && git pull; exec bash'"
                 };
                 Runtime.getRuntime().exec(comando);
             } else {
@@ -54,7 +54,7 @@ public class AtualizarGameService {
             }
         } catch (IOException e) {
             e.printStackTrace();
-            System.err.println("Erro ao tentar executar git pull.");
+            System.err.println("Erro ao tentar executar git reset + pull.");
         }
     }
 }

@@ -3,7 +3,7 @@ package game.gameproject.dto;
 public class VersoesDto {
     
     private String versaoLauncher = "v 1.0.0";
-    private String versaoGame = "1.0.15";
+    private String versaoGame = "1.0.15.1";
     private static boolean modoDev = false;
 
     public String getVersaoLauncher() {
