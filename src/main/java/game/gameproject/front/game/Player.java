@@ -8,6 +8,7 @@ import javax.imageio.ImageIO;
 
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.Jogador;
+import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.ChatGlobalService;
@@ -40,6 +41,7 @@ public class Player extends JPanel implements KeyListener {
     public String sprite = "";
     
     chatDto CD = new chatDto();
+    VersoesDto VD = new VersoesDto();
     
     public boolean chatAtivo = CD.isChatAtivo();
     
@@ -288,6 +290,10 @@ public class Player extends JPanel implements KeyListener {
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
         for (Jogador jogador : jogadores) {
+        	if(VD.isModoDev()) {
+        		g.setColor(Color.black);
+            	g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
+        	}
             g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
             
             if (jogador.equals(playerInfo)) {
@@ -296,7 +302,11 @@ public class Player extends JPanel implements KeyListener {
             	PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
             }
         }
-
+        
+        if(VD.isModoDev()) {
+        	g.setColor(Color.RED);
+            g.drawRect(xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem);
+        }
         g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         
         PCS.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);

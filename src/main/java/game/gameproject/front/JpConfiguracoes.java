@@ -1,6 +1,7 @@
 package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
+import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.MenuBarService;
 import java.awt.Color;
@@ -10,6 +11,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
@@ -18,12 +20,14 @@ public class JpConfiguracoes extends JPanel {
 
     private GameFrame gameFrame;  // Alterado para GameFrame
     private infoPlayerDto playerInfo; // Referência ao DTO do jogador
-
+    
     public JpConfiguracoes(GameFrame gameFrame, infoPlayerDto playerInfo) {
         this.gameFrame = gameFrame;  // Agora gameFrame não será mais null
         this.playerInfo = playerInfo;  // Atribui o playerInfo passado no construtor
         setLayout(null);
         setBackground(Color.WHITE);
+        
+        VersoesDto VD = new VersoesDto();
         
         JLabel lTituloTela = new JLabel("Config");
         lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
@@ -40,6 +44,15 @@ public class JpConfiguracoes extends JPanel {
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
         add(logoLabel);
+        
+        JCheckBox devModeCheckBox = new JCheckBox("Modo Desenvolvedor");
+        devModeCheckBox.setBounds(600, 600, 200, 30);
+        devModeCheckBox.setVisible(true);
+
+        devModeCheckBox.addActionListener(e -> {
+	        VD.setModoDev(!VD.isModoDev());
+        });
+        add(devModeCheckBox);
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
