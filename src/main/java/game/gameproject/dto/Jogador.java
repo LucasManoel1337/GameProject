@@ -8,14 +8,15 @@ public class Jogador {
     private int xPlayer;
     private int yPlayer;
     private Image spritePlayer;
-    private boolean digitando;
+    private boolean digitando = false;
 
-    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer) {
+    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer, boolean digitando) {
         this.idPlayer = idPlayer;
         this.nomePlayer = nomePlayer;
         this.xPlayer = xPlayer;
         this.yPlayer = yPlayer;
         this.spritePlayer = spritePlayer;
+        this.digitando = digitando;
     }
 
     // Getters e Setters

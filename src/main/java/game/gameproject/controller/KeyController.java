@@ -1,12 +1,14 @@
 package game.gameproject.controller;
 
 import game.gameproject.front.game.Player;
+import game.gameproject.services.PlayerService;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 
 public class KeyController {
 	
@@ -14,6 +16,7 @@ public class KeyController {
 
     private Player player;
     private infoPlayerDto playerInfo;
+    PlayerService PS = new PlayerService();
 
     public KeyController(Player player, infoPlayerDto playerInfo) {
         this.player = player;
@@ -46,6 +49,11 @@ public class KeyController {
                 if (CD.isChatAtivo()) {
                     System.out.println("ESC pressionado - Fechar chat");
                     CD.setChatAtivo(false);
+                    try {
+    					PS.inverterStatusDigitando(playerInfo.getIdPlayer());
+    				} catch (SQLException e1) {
+    					e1.printStackTrace();
+    				}
                     panel.requestFocusInWindow(); // Devolve foco ao jogo
                 } else {
                     System.out.println("ESC pressionado - Voltar ao menu");
@@ -142,6 +150,11 @@ public class KeyController {
             	if (CD.isChatAtivo()) return;
                 System.out.println("T pressionado - Chat ativado");
                 CD.setChatAtivo(true);
+                try {
+					PS.inverterStatusDigitando(playerInfo.getIdPlayer());
+				} catch (SQLException e1) {
+					e1.printStackTrace();
+				}
             }
         });
     }

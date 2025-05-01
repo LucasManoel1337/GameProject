@@ -14,27 +14,32 @@ import javax.imageio.ImageIO;
 
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.Jogador;
+import game.gameproject.dto.chatDto;
 
 public class PlayerService {
+	
+	chatDto CD = new chatDto();
 
-    public void salvarCoordenadas(int idPlayer, int coordenadaX, int coordenadaY, String sprite) {
-        String sql = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online) " +
-                     "VALUES (?, ?, ?, ?, true) " +
-                     "ON DUPLICATE KEY UPDATE x = VALUES(x), y = VALUES(y), sprite = VALUES(sprite), online = true";
-        
-        try (Connection conn = DatabaseConfig.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
-            stmt.setInt(1, idPlayer);
-            stmt.setInt(2, coordenadaX);
-            stmt.setInt(3, coordenadaY);
-            stmt.setString(4, sprite);
-            stmt.executeUpdate();
-            
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+	public void salvarCoordenadas(int idPlayer, int coordenadaX, int coordenadaY, String sprite) {
+	    String sql = "INSERT INTO tb_player_coordenadas (id_player, x, y, sprite, online, digitando) " +
+	                 "VALUES (?, ?, ?, ?, true, ?) " +
+	                 "ON DUPLICATE KEY UPDATE x = VALUES(x), y = VALUES(y), sprite = VALUES(sprite), online = true";
+
+	    try (Connection conn = DatabaseConfig.getConnection();
+	         PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+	        stmt.setInt(1, idPlayer);
+	        stmt.setInt(2, coordenadaX);
+	        stmt.setInt(3, coordenadaY);
+	        stmt.setString(4, sprite);
+	        stmt.setBoolean(5, CD.isChatAtivo()); // Agora corretamente o 5º parâmetro
+
+	        stmt.executeUpdate();
+
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
     
     public void setOnline(int idPlayer) {
         String sql = "UPDATE tb_player_coordenadas SET online = true WHERE id_player = ?";
@@ -95,18 +100,15 @@ public class PlayerService {
     public List<Jogador> buscarJogadores(int id) {
         List<Jogador> jogadores = new ArrayList<>();
         
-        // Obtém o ID do jogador atual (supondo que 'playerInfo' é uma instância de um objeto que contém os dados do jogador atual)
         int idJogadorAtual = id;
 
-        // Modifica a consulta para excluir o jogador atual
-        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario FROM tb_player_coordenadas p "
-                + "JOIN tb_login l ON p.id_player = l.id "
-                + "WHERE p.online = 1 AND p.id_player != ? ORDER BY p.id_player";
+        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario, p.digitando FROM tb_player_coordenadas p "
+                   + "JOIN tb_login l ON p.id_player = l.id "
+                   + "WHERE p.online = 1 AND p.id_player != ? ORDER BY p.id_player";
 
         try (Connection conn = DatabaseConfig.getConnection(); 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Passa o ID do jogador atual como parâmetro para a consulta
             stmt.setInt(1, idJogadorAtual);
 
             ResultSet rs = stmt.executeQuery();
@@ -117,10 +119,12 @@ public class PlayerService {
                 int xPlayer = rs.getInt("x");
                 int yPlayer = rs.getInt("y");
                 String spritePath = rs.getString("sprite");
+                boolean digitandoBoolean = rs.getBoolean("digitando");
 
                 Image sprite = carregarSprite(spritePath);
 
-                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite);
+                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite, digitandoBoolean);
+
                 jogadores.add(jogador);
             }
 
@@ -130,6 +134,7 @@ public class PlayerService {
 
         return jogadores;
     }
+
 
     public Image carregarSprite(String spritePath) {
         try {
@@ -240,6 +245,45 @@ public class PlayerService {
         }
 
         return sprite;
+    }
+    
+    public boolean inverterStatusDigitando(int idPlayer) throws SQLException {
+        String sqlSelect = "SELECT digitando FROM tb_player_coordenadas WHERE id_player = ?";
+        String sqlUpdate = "UPDATE tb_player_coordenadas SET digitando = ? WHERE id_player = ?";
+        String sqlInsert = "INSERT INTO tb_player_coordenadas (id_player, digitando) VALUES (?, ?)";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmtSelect = conn.prepareStatement(sqlSelect)) {
+
+            // Configura o parâmetro do PreparedStatement
+            stmtSelect.setInt(1, idPlayer);
+
+            try (ResultSet resultSet = stmtSelect.executeQuery()) {
+                if (resultSet.next()) {
+                    // Valor de digitando existe, inverte
+                    boolean digitando = resultSet.getBoolean("digitando");
+                    boolean novoValor = !digitando; // Inverte o valor (0 -> 1 ou 1 -> 0)
+
+                    // Atualiza o valor na tabela
+                    try (PreparedStatement stmtUpdate = conn.prepareStatement(sqlUpdate)) {
+                        stmtUpdate.setBoolean(1, novoValor);
+                        stmtUpdate.setInt(2, idPlayer);
+                        stmtUpdate.executeUpdate();
+                    }
+
+                    return novoValor; // Retorna o novo valor invertido
+                } else {
+                    // Caso não exista, insere um valor padrão (0 ou 1) para o idPlayer
+                    boolean valorInicial = false; // Inserir 0 por padrão
+                    try (PreparedStatement stmtInsert = conn.prepareStatement(sqlInsert)) {
+                        stmtInsert.setInt(1, idPlayer);
+                        stmtInsert.setBoolean(2, valorInicial);
+                        stmtInsert.executeUpdate();
+                    }
+                    return valorInicial; // Retorna o valor inserido (0)
+                }
+            }
+        }
     }
     
 }

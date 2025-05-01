@@ -24,6 +24,9 @@
         <column name="online" type="boolean">
             <constraints nullable="false"/>
         </column>
+        <column name="digitando" type="boolean">
+            <constraints nullable="false"/>
+        </column>
     </createTable>
 </changeSet>
 

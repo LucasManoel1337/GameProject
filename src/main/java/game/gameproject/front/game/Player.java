@@ -326,6 +326,10 @@ public class Player extends JPanel implements KeyListener {
             } else {
             	PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
             }
+            
+            if (jogador.getDigitando()) {
+                g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
+            }
         }
         
         if(VD.isModoDev()) {
