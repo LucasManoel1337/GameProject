@@ -52,8 +52,8 @@ public class Player extends JPanel implements KeyListener {
     private JTextField JTFChat = new JTextField();
     private JButton bChatEnviar = new JButton("Enviar");
     
-    private JTextArea chatArea = new JTextArea();  // Área de texto para mostrar as mensagens do chat
-    private JScrollPane chatScrollPane = new JScrollPane(chatArea); // Painel de rolagem
+    private JTextArea chatArea = new JTextArea();
+    private JScrollPane chatScrollPane = new JScrollPane(chatArea);
     
     private JProgressBar jBarXp = new JProgressBar();
     private JProgressBar jBarVida = new JProgressBar();
@@ -65,6 +65,10 @@ public class Player extends JPanel implements KeyListener {
     DatabaseConfig bdd = new DatabaseConfig();
     PaintComponentService PCS = new PaintComponentService();
     ChatGlobalService CGS = new ChatGlobalService();
+    
+    private int digitarIndex = 0;
+    private Timer timerDigitar;
+    private BufferedImage[] digitar = new BufferedImage[6];
 
     public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) {
     	this.playerInfo = playerInfo;
@@ -131,7 +135,6 @@ public class Player extends JPanel implements KeyListener {
         this.add(chatScrollPane);
         carregarMensagens();
         
-        
         jBarXp.setForeground(new Color(0, 255, 0)); 
         jBarXp.setMaximum(playerInfo.getXpMaxima());
         jBarXp.setMinimum(0);
@@ -179,7 +182,19 @@ public class Player extends JPanel implements KeyListener {
         jBarStamina.setString(playerInfo.getStaminaAtual()+"/"+playerInfo.getStaminaMaxima());
         jBarStamina.setIndeterminate(false);
         this.add(jBarStamina);
+        
+        timerDigitar = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                animarDigitar();
+            }
+        });
+        timerDigitar.start();
 
+    }
+    
+    private void animarDigitar() {
+        digitarIndex = (digitarIndex + 1) % digitar.length;
     }
 
     private void carregarImagens() {
@@ -194,6 +209,12 @@ public class Player extends JPanel implements KeyListener {
             personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo2.png")));
             hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
             fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
+            digitar[0] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando1.png"));
+            digitar[1] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando2.png"));
+            digitar[2] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando3.png"));
+            digitar[3] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando4.png"));
+            digitar[4] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando5.png"));
+            digitar[5] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando6.png"));
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagens na classe Player!" + e.getMessage());
             System.exit(1);
@@ -324,6 +345,7 @@ public class Player extends JPanel implements KeyListener {
         	bChatEnviar.setVisible(true);
         	chatScrollPane.setVisible(true);
         	chatArea.setVisible(true);
+        	g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
         	carregarMensagens();
         } else {
         	JTFChat.setText("");

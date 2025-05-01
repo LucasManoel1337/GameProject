@@ -8,6 +8,7 @@ public class Jogador {
     private int xPlayer;
     private int yPlayer;
     private Image spritePlayer;
+    private boolean digitando;
 
     public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer) {
         this.idPlayer = idPlayer;
@@ -36,5 +37,9 @@ public class Jogador {
 
     public Image getSpritePlayer() {
         return spritePlayer;
+    }
+    
+    public boolean getDigitando() {
+        return digitando;
     }
 }
