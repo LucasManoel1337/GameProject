@@ -13,25 +13,41 @@ import java.util.List;
 import game.gameproject.bdd.DatabaseConfig;
 
 public class ChatGlobalService {
+	
+	PlayerService PS = new PlayerService();
 
-    public void enviarMensagem(int idPlayer, String nickPlayer, String mensagem) {
-        String sql = "INSERT INTO tb_chatGlobal (idPlayer, dataEHora, nickPlayer, mensagem) VALUES (?, ?, ?, ?)";
+	public void enviarMensagem(int idPlayer, String nickPlayer, String mensagem) {
+	    // Verifica se é um comando
+	    if (mensagem.startsWith("//")) {
+	        if (!PS.isOp(idPlayer)) {
+	            System.out.println("Jogador " + nickPlayer + " tentou usar o comando: '" + mensagem + "' sem permissão.");
+	            return;
+	        }
 
-        try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement stmt = connection.prepareStatement(sql)) {
+	        System.out.println("Jogador " + nickPlayer + " com permissão de comandos, repassando comando para o CommandExecutor.");
+	        return;
+	    }
 
-            stmt.setInt(1, idPlayer);
-            stmt.setObject(2, LocalDateTime.now()); // Data e hora atual
-            stmt.setString(3, nickPlayer);
-            stmt.setString(4, mensagem);
+	    // Mensagem normal (não é comando)
+	    String sql = "INSERT INTO tb_chatGlobal (idPlayer, dataEHora, nickPlayer, mensagem) VALUES (?, ?, ?, ?)";
 
-            stmt.executeUpdate();
+	    try (Connection connection = DatabaseConfig.getConnection();
+	         PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-        } catch (SQLException e) {
-            System.err.println("Erro ao enviar mensagem para o chat global:");
-            e.printStackTrace();
-        }
-    }
+	        stmt.setInt(1, idPlayer);
+	        stmt.setObject(2, LocalDateTime.now());
+	        stmt.setString(3, nickPlayer);
+	        stmt.setString(4, mensagem);
+
+	        stmt.executeUpdate();
+	        System.out.println("Mensagem enviada para o chat global: " + mensagem);
+
+	    } catch (SQLException e) {
+	        System.err.println("Erro ao enviar mensagem para o chat global:");
+	        e.printStackTrace();
+	    }
+	}
+
     
     public String obterUltimasMensagens() {
         StringBuilder mensagens = new StringBuilder();
@@ -53,7 +69,7 @@ public class ChatGlobalService {
                 String jogador = rs.getString("nickPlayer");
                 String mensagem = rs.getString("mensagem");
 
-                mensagens.append(jogador).append(": ").append(mensagem).append("\n");
+                mensagens.append("[G] ").append(jogador).append(": ").append(mensagem).append("\n");
             }
 
         } catch (SQLException e) {

@@ -285,5 +285,46 @@ public class PlayerService {
             }
         }
     }
-    
+
+        public static boolean isOp(int idPlayer) {
+            String sql = "SELECT op FROM tb_player_ops WHERE id_player = ?";
+
+            try (Connection connection = DatabaseConfig.getConnection();
+                 PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+                stmt.setInt(1, idPlayer);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getBoolean("op");
+                    }
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Erro ao verificar se o jogador é OP:");
+                e.printStackTrace();
+            }
+
+            // Retorna false (não é OP) se não encontrou ou houve erro
+            return false;
+        }
+        
+        public static boolean isJogadorExistente(String nick) {
+            String sql = "SELECT usuario FROM tb_login WHERE usuario = ?";
+
+            try (Connection connection = DatabaseConfig.getConnection();
+                 PreparedStatement stmt = connection.prepareStatement(sql)) {
+
+                stmt.setString(1, nick);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    return rs.next(); // Se encontrou algum registro
+                }
+
+            } catch (SQLException e) {
+                System.err.println("Erro ao verificar jogador no banco de dados:");
+                e.printStackTrace();
+            }
+
+            return false;
+        }
 }

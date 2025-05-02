@@ -10,6 +10,7 @@
     <include file="db/changelog/tb_player_coordenadas.xml"/>
     <include file="db/changelog/tb_versao.xml"/>
     <include file="db/changelog/tb_chatGlobal.xml"/>
+    <include file="db/changelog/tb_player_ops.xml"/>
     
     <include file="db/changelog/tb_chatGuilda.xml"/>
     <include file="db/changelog/tb_itens.xml"/>
