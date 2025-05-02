@@ -1,6 +1,7 @@
 package game.gameproject.front;
 
 import game.gameproject.controller.GameFrame;
+import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.MenuBarService;
@@ -20,6 +21,8 @@ public class JpConfiguracoes extends JPanel {
 
     private GameFrame gameFrame;  // Alterado para GameFrame
     private infoPlayerDto playerInfo; // Referência ao DTO do jogador
+    
+    ConfiguracoesDto Config = new ConfiguracoesDto();
     
     public JpConfiguracoes(GameFrame gameFrame, infoPlayerDto playerInfo) {
         this.gameFrame = gameFrame;  // Agora gameFrame não será mais null
@@ -46,13 +49,30 @@ public class JpConfiguracoes extends JPanel {
         add(logoLabel);
         
         JCheckBox devModeCheckBox = new JCheckBox("Modo Desenvolvedor");
-        devModeCheckBox.setBounds(600, 600, 200, 30);
+        devModeCheckBox.setBounds(20, 300, 200, 30);
         devModeCheckBox.setVisible(true);
-
         devModeCheckBox.addActionListener(e -> {
-	        VD.setModoDev(!VD.isModoDev());
+	        Config.setModoDev(!Config.isModoDev());
         });
         add(devModeCheckBox);
+        
+        JCheckBox visualizarOutrosJogadores = new JCheckBox("Visualizar outros jogadores");
+        visualizarOutrosJogadores.setSelected(true);
+        visualizarOutrosJogadores.setBounds(20, 335, 200, 30);
+        visualizarOutrosJogadores.setVisible(true);
+        visualizarOutrosJogadores.addActionListener(e -> {
+	        Config.setVisualizarOutrosJogadores(!Config.isVisualizarOutrosJogadores());
+        });
+        add(visualizarOutrosJogadores);
+        
+        JCheckBox visualizarDadosHub = new JCheckBox("Visualizar dados HUB");
+        visualizarDadosHub.setSelected(true);
+        visualizarDadosHub.setBounds(20, 370, 200, 30);
+        visualizarDadosHub.setVisible(true);
+        visualizarDadosHub.addActionListener(e -> {
+	        Config.setVisualizarDadosHub(!Config.isVisualizarDadosHub());
+        });
+        add(visualizarDadosHub);
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();

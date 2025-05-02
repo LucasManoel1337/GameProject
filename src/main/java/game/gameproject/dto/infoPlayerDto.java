@@ -25,6 +25,7 @@ public class infoPlayerDto {
     private static int manaAtual = -1;
     
     private static int forcaMana = -1;
+    
     private static int dinheiro = -1;
 
     public int getIdPlayer() {

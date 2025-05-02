@@ -7,6 +7,7 @@ import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
 import game.gameproject.bdd.DatabaseConfig;
+import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.Jogador;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.chatDto;
@@ -44,6 +45,7 @@ public class Player extends JPanel implements KeyListener {
     
     chatDto CD = new chatDto();
     VersoesDto VD = new VersoesDto();
+    ConfiguracoesDto Config = new ConfiguracoesDto();
     
     public boolean chatAtivo = CD.isChatAtivo();
     
@@ -267,25 +269,27 @@ public class Player extends JPanel implements KeyListener {
 
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
-        for (Jogador jogador : jogadores) {
-        	if(VD.isModoDev()) {
-        		g.setColor(Color.black);
-            	g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
+        if(Config.isVisualizarOutrosJogadores()) {
+        	for (Jogador jogador : jogadores) {
+        		if(Config.isModoDev()) {
+        			g.setColor(Color.black);
+        			g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
+        		}
+        		g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
+            
+        		if (jogador.equals(playerInfo)) {
+        			PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+        		} else {
+        			PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+        		}
+            
+        		if (jogador.getDigitando()) {
+        			g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
+        		}
         	}
-            g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
-            
-            if (jogador.equals(playerInfo)) {
-                PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
-            } else {
-            	PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
-            }
-            
-            if (jogador.getDigitando()) {
-                g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
-            }
         }
         
-        if(VD.isModoDev()) {
+        if(Config.isModoDev()) {
         	g.setColor(Color.RED);
             g.drawRect(xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem);
         }

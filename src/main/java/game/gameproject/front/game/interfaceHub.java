@@ -14,7 +14,11 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
+import game.gameproject.dto.ConfiguracoesDto;
+
 public class interfaceHub {
+	
+	ConfiguracoesDto Config = new ConfiguracoesDto();
 	
 	private BufferedImage fundoHub;
 	
@@ -43,6 +47,7 @@ public class interfaceHub {
     }
 
 	public void desenharHubStats(Graphics g, String nick, int nivel, int dinheiro, JPanel painel) {
+		
 		g.drawImage(fundoHub, 5, 5, 300, 150, null);
 		
 		g.drawImage(moedas[moedaIndex], xMoeda, yMoeda, 26, 26, null);
@@ -66,7 +71,11 @@ public class interfaceHub {
 	    jBarXp.setBorder(null);
 	    jBarXp.setBorderPainted(false);
 	    jBarXp.setBounds(15, 50, 280, 12);
-	    jBarXp.setStringPainted(true);
+	    if(Config.isVisualizarDadosHub()) {
+	    	jBarXp.setStringPainted(true);
+	    } else {
+	    	jBarXp.setStringPainted(false);
+	    }
 	    jBarXp.setString("2 / 100");
 	    jBarXp.setIndeterminate(false);
 	    painel.add(jBarXp);
@@ -78,7 +87,11 @@ public class interfaceHub {
         jBarVida.setBorder(null);
         jBarVida.setBorderPainted(false);
         jBarVida.setBounds(15, 68, 280, 12);
-        jBarVida.setStringPainted(true);
+        if(Config.isVisualizarDadosHub()) {
+        	jBarVida.setStringPainted(true);
+        } else {
+        	jBarVida.setStringPainted(false);
+        }
         jBarVida.setString("80 / 100");
         jBarVida.setIndeterminate(false);
         painel.add(jBarVida);
@@ -90,7 +103,11 @@ public class interfaceHub {
         jBarMana.setBorder(null);
         jBarMana.setBorderPainted(false);
         jBarMana.setBounds(15, 86, 280, 12);
-        jBarMana.setStringPainted(true);
+        if(Config.isVisualizarDadosHub()) {
+        	jBarMana.setStringPainted(true);
+        } else {
+        	jBarMana.setStringPainted(false);
+        }
         jBarMana.setString("60 / 100");
         jBarMana.setIndeterminate(false);
         painel.add(jBarMana);
@@ -102,7 +119,11 @@ public class interfaceHub {
         jBarStamina.setBorder(null);
         jBarStamina.setBorderPainted(false);
         jBarStamina.setBounds(15, 104, 280, 12);
-        jBarStamina.setStringPainted(true);
+        if(Config.isVisualizarDadosHub()) {
+        	jBarStamina.setStringPainted(true);
+        } else {
+        	jBarStamina.setStringPainted(false);
+        }
         jBarStamina.setString("40 / 100");
         jBarStamina.setIndeterminate(false);
         painel.add(jBarStamina);
