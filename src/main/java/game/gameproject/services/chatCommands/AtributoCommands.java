@@ -1,16 +1,16 @@
-package game.gameproject.support;
+package game.gameproject.services.chatCommands;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.StatusService;
 
-public class CommandsChatSupport {
+public class AtributoCommands {
 
     private infoPlayerDto playerInfo;
     public StatusService playerService = new StatusService();
 
-    public CommandsChatSupport(infoPlayerDto playerInfo) {
+    public AtributoCommands(infoPlayerDto playerInfo) {
         this.playerInfo = playerInfo;
     }
     
@@ -35,8 +35,8 @@ public class CommandsChatSupport {
         );
     }
 
-    public void buscarComando(String comando, infoPlayerDto playerInfo) {
-        if (playerInfo == null) {
+    public void buscarComando(String comando) {
+        if (this.playerInfo == null) {
             System.out.println("Erro: playerInfo não foi inicializado.");
             return;
         }
@@ -60,7 +60,7 @@ public class CommandsChatSupport {
             atualizarStatus();
         }
     }
-
+    
     private void atualizarVida(infoPlayerDto player, int valor, String acao) {
         int novaVida = calcularNovoValor(player.getVidaMaxima(), valor, acao);
         player.setVidaMaxima(novaVida);

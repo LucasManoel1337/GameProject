@@ -8,33 +8,28 @@ import java.sql.Statement;
 import java.time.LocalDateTime;
 import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.infoPlayerDto;
-import game.gameproject.support.CommandsChatSupport;
+import game.gameproject.services.chatCommands.CommandDispatcher;
 
 public class ChatGlobalService {
 	
 	PlayerService PS = new PlayerService();
 	private infoPlayerDto playerInfo;
 
-	// Modificando o construtor para inicializar CCS após a inicialização de playerInfo
 	public ChatGlobalService(infoPlayerDto playerInfo) {
 		this.playerInfo = playerInfo;
 	}
 
 	public void enviarMensagem(int idPlayer, String nickPlayer, String mensagem, infoPlayerDto playerInfo) {
-	    // Verifica se é um comando
 	    if (mensagem.startsWith("//")) {
 	        if (!PS.isOp(idPlayer)) {
 	            System.out.println("Jogador " + nickPlayer + " tentou usar o comando: '" + mensagem + "' sem permissão.");
 	            return;
 	        }
-	        CommandsChatSupport CCS = new CommandsChatSupport(playerInfo);
-	        
-	        System.out.println("Jogador " + nickPlayer + " com permissão de comandos, repassando comando para o CommandExecutor.");
-	        CCS.buscarComando(mensagem, playerInfo);
+	        CommandDispatcher CommandDispatcher = new CommandDispatcher();
+	        CommandDispatcher.processarComando(mensagem, playerInfo);
 	        return;
 	    }
 
-	    // Mensagem normal (não é comando)
 	    String sql = "INSERT INTO tb_chatGlobal (idPlayer, dataEHora, nickPlayer, mensagem) VALUES (?, ?, ?, ?)";
 
 	    try (Connection connection = DatabaseConfig.getConnection();
@@ -58,8 +53,6 @@ public class ChatGlobalService {
     public String obterUltimasMensagens() {
         StringBuilder mensagens = new StringBuilder();
 
-        // Subquery: pega as 30 últimas mensagens por ordem de envio (mais recentes),
-        // depois ordena ASC para mostrar da mais antiga para a mais recente.
         String query = """
             SELECT * FROM (
                 SELECT * FROM tb_chatGlobal ORDER BY id DESC LIMIT 30
