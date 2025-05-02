@@ -5,6 +5,14 @@ public class ConfiguracoesDto {
 	private static boolean visualizarOutrosJogadores = true;
 	private static boolean modoDev = false;
 	private static boolean visualizarDadosHub = true;
+	private static boolean visualizarFps = false;
+	
+	public boolean isVisualizarFps() {
+    	return visualizarFps;
+    }
+    public void setVisualizarHub(boolean visualizarFps) {
+    	ConfiguracoesDto.visualizarFps = visualizarFps;
+    }
 	
 	public boolean isVisualizarOutrosJogadores() {
     	return visualizarOutrosJogadores;

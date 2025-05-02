@@ -74,6 +74,14 @@ public class JpConfiguracoes extends JPanel {
         });
         add(visualizarDadosHub);
         
+        JCheckBox visualizarFps = new JCheckBox("Visualizar FPS");
+        visualizarFps.setBounds(20, 405, 200, 30);
+        visualizarFps.setVisible(true);
+        visualizarFps.addActionListener(e -> {
+	        Config.setVisualizarHub(!Config.isVisualizarFps());
+        });
+        add(visualizarFps);
+        
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
     }

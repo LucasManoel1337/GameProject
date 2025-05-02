@@ -34,9 +34,7 @@ public class JpGame extends JPanel {
         // Criando o Player
         player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
         player.setBounds(0, 0, 1280, 768); // Posição inicial e tamanho
-        add(player);
-        
-        
+        add(player);    
         
      // Cria o ScheduledExecutorService
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
@@ -53,7 +51,7 @@ public class JpGame extends JPanel {
 
             repaint();
             
-        }, 0, 1000 / 30, TimeUnit.MILLISECONDS);
+        }, 0, 1000 / 60, TimeUnit.MILLISECONDS);
 
         // Garante que o Player receba foco corretamente
         SwingUtilities.invokeLater(() -> player.requestFocusInWindow());

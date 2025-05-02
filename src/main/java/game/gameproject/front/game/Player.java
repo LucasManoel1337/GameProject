@@ -13,7 +13,6 @@ import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.ChatGlobalService;
-import game.gameproject.services.PaintComponentService;
 import game.gameproject.services.PlayerService;
 
 import java.io.File;
@@ -28,7 +27,6 @@ public class Player extends JPanel implements KeyListener {
     private BufferedImage personagemEsquerda1, personagemEsquerda2;
     private BufferedImage personagemDireita1, personagemDireita2;
     private BufferedImage personagemAtual;
-    private BufferedImage hotbar;
     private BufferedImage fundoTest;
     public int xPersonagem;
     public int yPersonagem;
@@ -62,12 +60,10 @@ public class Player extends JPanel implements KeyListener {
     private JProgressBar jBarMana = new JProgressBar();
     private JProgressBar jBarStamina = new JProgressBar();
     
-    
+    interfaceHub IH = new interfaceHub(playerInfo);
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
-    PaintComponentService PCS = new PaintComponentService();
     ChatGlobalService CGS = new ChatGlobalService();
-    interfaceHub IH = new interfaceHub();
     
     private int digitarIndex = 0;
     private Timer timerDigitar;
@@ -77,6 +73,7 @@ public class Player extends JPanel implements KeyListener {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
+        this.IH = new interfaceHub(this.playerInfo);
         
         setDoubleBuffered(true);
         carregarImagens();
@@ -162,7 +159,6 @@ public class Player extends JPanel implements KeyListener {
             personagemEsquerda2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito2.png")));
             personagemDireita1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo1.png")));
             personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo2.png")));
-            hotbar = ImageIO.read(new File(String.format("imagens/game/interface/hotbar.png")));
             fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
             digitar[0] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando1.png"));
             digitar[1] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando2.png"));
@@ -278,9 +274,9 @@ public class Player extends JPanel implements KeyListener {
         		g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
             
         		if (jogador.equals(playerInfo)) {
-        			PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+        			IH.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
         		} else {
-        			PCS.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
+        			IH.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
         		}
             
         		if (jogador.getDigitando()) {
@@ -295,11 +291,7 @@ public class Player extends JPanel implements KeyListener {
         }
         g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         
-        PCS.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
-        
-        g.drawImage(hotbar, 385, 678, 500, 50, this);
-        
-        PCS.desenharInformacoes(g);
+        IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
         
         if(CD.isChatAtivo()) {
         	JTFChat.setVisible(true);
