@@ -63,7 +63,7 @@ public class Player extends JPanel implements KeyListener {
     interfaceHub IH = new interfaceHub(playerInfo);
     PlayerService PS = new PlayerService();
     DatabaseConfig bdd = new DatabaseConfig();
-    ChatGlobalService CGS = new ChatGlobalService();
+    ChatGlobalService CGS = new ChatGlobalService(playerInfo);
     
     private int digitarIndex = 0;
     private Timer timerDigitar;
@@ -104,7 +104,7 @@ public class Player extends JPanel implements KeyListener {
         bChatEnviar.setBorderPainted(false);
         bChatEnviar.setVisible(false);
         bChatEnviar.addActionListener(e -> {
-            CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText());
+            CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText(), playerInfo);
             JTFChat.setText("");
             carregarMensagens();
         });

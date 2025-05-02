@@ -6,25 +6,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import game.gameproject.bdd.DatabaseConfig;
+import game.gameproject.dto.infoPlayerDto;
+import game.gameproject.support.CommandsChatSupport;
 
 public class ChatGlobalService {
 	
 	PlayerService PS = new PlayerService();
+	private infoPlayerDto playerInfo;
 
-	public void enviarMensagem(int idPlayer, String nickPlayer, String mensagem) {
+	// Modificando o construtor para inicializar CCS após a inicialização de playerInfo
+	public ChatGlobalService(infoPlayerDto playerInfo) {
+		this.playerInfo = playerInfo;
+	}
+
+	public void enviarMensagem(int idPlayer, String nickPlayer, String mensagem, infoPlayerDto playerInfo) {
 	    // Verifica se é um comando
 	    if (mensagem.startsWith("//")) {
 	        if (!PS.isOp(idPlayer)) {
 	            System.out.println("Jogador " + nickPlayer + " tentou usar o comando: '" + mensagem + "' sem permissão.");
 	            return;
 	        }
-
+	        CommandsChatSupport CCS = new CommandsChatSupport(playerInfo);
+	        
 	        System.out.println("Jogador " + nickPlayer + " com permissão de comandos, repassando comando para o CommandExecutor.");
+	        CCS.buscarComando(mensagem, playerInfo);
 	        return;
 	    }
 
@@ -59,7 +65,7 @@ public class ChatGlobalService {
                 SELECT * FROM tb_chatGlobal ORDER BY id DESC LIMIT 30
             ) AS ultimas
             ORDER BY id ASC
-            """;
+            """; 
 
         try (Connection conn = DatabaseConfig.getConnection(); 
              Statement stmt = conn.createStatement(); 
@@ -78,6 +84,4 @@ public class ChatGlobalService {
 
         return mensagens.toString();
     }
-
-
-    }
+}
