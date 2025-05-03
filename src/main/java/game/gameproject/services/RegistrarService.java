@@ -152,8 +152,8 @@ public class RegistrarService {
             // Inserir coordenadas caso o ID não exista
             try (PreparedStatement statement = connection.prepareStatement(insertQuery)) {
                 statement.setInt(1, id);  // ID do player
-                statement.setInt(2, 0);    // Coordenada X inicial
-                statement.setInt(3, 0);    // Coordenada Y inicial
+                statement.setInt(2, 400);    // Coordenada X inicial
+                statement.setInt(3, 300);    // Coordenada Y inicial
                 statement.setInt(4, 1);    // Sprite inicial
                 statement.setBoolean(5, false);  // Inicialmente offline
                 statement.setBoolean(6, false);  // inicialmente não digitando

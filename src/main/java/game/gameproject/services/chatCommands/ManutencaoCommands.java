@@ -11,5 +11,9 @@ public class ManutencaoCommands {
 	 public ManutencaoCommands(infoPlayerDto playerInfo) {
 		 this.playerInfo = playerInfo;
 	 }
+	 
+	 public void buscarComando(String comando) {
+		 
+	 }
 	
 }
