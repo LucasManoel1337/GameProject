@@ -25,13 +25,14 @@ public class JpGame extends JPanel {
     public PlayerService PS = new PlayerService();
     public chatDto CD = new chatDto();
     public ConfiguracoesDto Config = new ConfiguracoesDto();
-    public KeyController keyController = new KeyController(player, playerInfo);
+    public KeyController keyController;
 
     public JpGame(GameFrame gameFrame, infoPlayerDto playerInfo) {
         this.gameFrame = gameFrame;
         this.playerInfo = playerInfo;
         this.setName("telaJogo"); // No construtor do JpGame
         setLayout(null);
+        keyController = new KeyController(player, playerInfo);
 
         // Criando o Player
         player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
@@ -82,7 +83,6 @@ public class JpGame extends JPanel {
         keyController.bindTKey(this, gameFrame);
 
         // Marca o jogador como online
-        
         PS.setOnline(playerInfo.getIdPlayer());
     }
 

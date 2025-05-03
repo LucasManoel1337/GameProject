@@ -6,10 +6,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.Jogador;
-import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.ChatGlobalService;
@@ -22,12 +20,46 @@ import java.util.List;
 
 public class Player extends JPanel implements KeyListener {
 
+    private BufferedImage fundoTest;
+    private Mapa mapaAtual;
+    public String sprite = "";
+    
+    public int mapa;
+    
+    public List<Jogador> jogadores = new ArrayList<>();
+    
+    // Elementos do HUB de status
+    private JProgressBar jBarXp = new JProgressBar();
+    private JProgressBar jBarVida = new JProgressBar();
+    private JProgressBar jBarMana = new JProgressBar();
+    private JProgressBar jBarStamina = new JProgressBar();
+    
+    // Elementos do chat e sua animação
+    private JTextField JTFChat = new JTextField();
+    private JButton bChatEnviar = new JButton("Enviar");
+    private JTextArea chatArea = new JTextArea();
+    private JScrollPane chatScrollPane = new JScrollPane(chatArea);
+    private int digitarIndex = 0;
+    private Timer timerDigitar;
+    private BufferedImage[] digitar = new BufferedImage[6];
+    
+    // Instanciamento de outras classes
+    private final infoPlayerDto playerInfo;
+    private final chatDto CD = new chatDto();
+    private final ConfiguracoesDto Config = new ConfiguracoesDto();
+    private final interfaceHub IH;
+    private final PlayerService PS = new PlayerService();
+    private ChatGlobalService CGS;
+    public boolean chatAtivo = CD.isChatAtivo();
+    
+    // Imagens de animação do personagem
     private BufferedImage personagemCima1, personagemCima2;
     private BufferedImage personagemBaixo1, personagemBaixo2;
     private BufferedImage personagemEsquerda1, personagemEsquerda2;
     private BufferedImage personagemDireita1, personagemDireita2;
     private BufferedImage personagemAtual;
-    private BufferedImage fundoTest;
+    
+    // Coordenadas e movimentação
     public int xPersonagem;
     public int yPersonagem;
     private int velocidade = 5;
@@ -35,45 +67,13 @@ public class Player extends JPanel implements KeyListener {
     private boolean movendoBaixo = false;
     private boolean movendoEsquerda = false;
     private boolean movendoDireita = false;
-    private Mapa mapaAtual;
-    private infoPlayerDto playerInfo;
-    public String sprite = "";
     
-    public int mapa;
-    
-    chatDto CD = new chatDto();
-    VersoesDto VD = new VersoesDto();
-    ConfiguracoesDto Config = new ConfiguracoesDto();
-    
-    public boolean chatAtivo = CD.isChatAtivo();
-    
-    public List<Jogador> jogadores = new ArrayList<>();
-    
-    private JTextField JTFChat = new JTextField();
-    private JButton bChatEnviar = new JButton("Enviar");
-    
-    private JTextArea chatArea = new JTextArea();
-    private JScrollPane chatScrollPane = new JScrollPane(chatArea);
-    
-    private JProgressBar jBarXp = new JProgressBar();
-    private JProgressBar jBarVida = new JProgressBar();
-    private JProgressBar jBarMana = new JProgressBar();
-    private JProgressBar jBarStamina = new JProgressBar();
-    
-    interfaceHub IH = new interfaceHub(playerInfo);
-    PlayerService PS = new PlayerService();
-    DatabaseConfig bdd = new DatabaseConfig();
-    ChatGlobalService CGS = new ChatGlobalService(playerInfo);
-    
-    private int digitarIndex = 0;
-    private Timer timerDigitar;
-    private BufferedImage[] digitar = new BufferedImage[6];
-
     public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
         this.IH = new interfaceHub(this.playerInfo);
+        this.CGS = new ChatGlobalService(this.playerInfo);
         
         setDoubleBuffered(true);
         carregarImagens();
@@ -334,12 +334,6 @@ public class Player extends JPanel implements KeyListener {
         IH.desenharHubStats(g, playerInfo.getNickPlayer(), playerInfo.getNivel(), playerInfo.getDinheiro(), this);
         
         recarregarStatusHub();
-    }
-
-    public void mudarMapa(Mapa novoMapa) {
-        this.mapaAtual = novoMapa;
-        xPersonagem = mapaAtual.getXSpawn();
-        yPersonagem = mapaAtual.getYSpawn();
     }
 
     private void carregarMensagens() {
