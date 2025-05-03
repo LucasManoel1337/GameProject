@@ -41,9 +41,9 @@ public class GameProject {
 
 	    if (playerInfo != null) { //caso não estiver vazio
 	        if (playerInfo.getClasse() != null) { //Caso estiver nao estiver vazio
-	            GameFrame GF = new GameFrame(); //irá direto pro jogo
+	            GameFrame GF = new GameFrame(playerInfo); //irá direto pro jogo
 	        } else { // Se não
-	            GameFrame GF = new GameFrame(); //Irá direto pro jogo
+	            GameFrame GF = new GameFrame(playerInfo); //Irá direto pro jogo
 	            GF.switchToEscolherClassePanel(); //Porém irá mudar para a tela das classes
 	        }
 	    } else { // Caso o playerinfo estiver vazio

@@ -17,6 +17,9 @@ import game.gameproject.support.ImagemDiretorios;
 
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.*;
 
@@ -34,44 +37,72 @@ public class GameFrame extends JFrame {
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
     private JpConfiguracoes telaConfiguracoes;
-    
     private JpEscolherClasse telaEscolherClasse;
+    
+    private final ScheduledExecutorService scheduler;
 
     private PlayerService PS = new PlayerService();
 
-    public GameFrame() {
-    	ImagemDiretorios ImgD = new ImagemDiretorios();
-    	
+    public GameFrame(infoPlayerDto playerInfo) {
+        this.playerInfo = playerInfo;
+        this.scheduler = Executors.newSingleThreadScheduledExecutor();
+
+        ImagemDiretorios ImgD = new ImagemDiretorios();
+
         setTitle("Room 5 Studios - Game");
-        setSize(1280, 768);  // Tamanho do jogo
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(1280, 768);
+        setResizable(false);
         setLocationRelativeTo(null);
         setIconImage(new ImageIcon(ImgD.getGameIcon()).getImage());
-        setResizable(false);
 
-        // Agora, o playerInfo está inicializado corretamente
+        // Inicializa o painel de menu
         telaMenu = new JpMenu(this, playerInfo);
         currentPanel = telaMenu;
         add(currentPanel);
-        
-        setVisible(true);
-        
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE); // Impede fechamento imediato
+
+        // Substitui EXIT_ON_CLOSE por DO_NOTHING, para controlar o shutdown
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
+                // 1) Marca o jogador como offline
                 int idPlayer = playerInfo.getIdPlayer();
                 if (PS.setOffline(idPlayer) == 1) {
                     System.out.println("Jogador " + idPlayer + " desconectado ao fechar o jogo.");
                 } else {
                     System.err.println("Falha ao atualizar status do jogador.");
                 }
-                
+
+                // 2) Se houver scheduler, encerre-o primeiro
+                scheduler.shutdown();
+                try {
+                    if (!scheduler.awaitTermination(500, TimeUnit.MILLISECONDS)) {
+                        scheduler.shutdownNow();
+                    }
+                } catch (InterruptedException ex) {
+                    scheduler.shutdownNow();
+                    Thread.currentThread().interrupt();
+                }
+
+                // 3) Fecha o pool de conexões
                 DatabaseConfig.close();
-                System.exit(0); // Mata completamente o jogo
+
+                // 4) Fecha a aplicação
+                dispose();
+                System.exit(0);
             }
         });
 
+        setVisible(true);
+    }
+
+    /** Opcional: método para trocar de painel em tempo de execução */
+    public void setCurrentPanel(JPanel painel) {
+        getContentPane().removeAll();
+        currentPanel = painel;
+        add(currentPanel);
+        revalidate();
+        repaint();
     }
 
     // Método para mudar para a tela de Jogo
