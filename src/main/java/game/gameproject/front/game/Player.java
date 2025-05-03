@@ -217,15 +217,19 @@ public class Player extends JPanel implements KeyListener {
         switch (codigo) {
             case KeyEvent.VK_W:
                 movendoCima = true;
+                velocidade = 5;
                 break;
             case KeyEvent.VK_S:
                 movendoBaixo = true;
+                velocidade = 5;
                 break;
             case KeyEvent.VK_A:
                 movendoEsquerda = true;
+                velocidade = 5;
                 break;
             case KeyEvent.VK_D:
                 movendoDireita = true;
+                velocidade = 5;
                 break;
         }
     }
@@ -236,15 +240,27 @@ public class Player extends JPanel implements KeyListener {
         switch (codigo) {
             case KeyEvent.VK_W:
                 movendoCima = false;
+                if(movendoCima == false && movendoBaixo == false && movendoDireita == false && movendoEsquerda == false ) {
+                	velocidade = 0;
+                }
                 break;
             case KeyEvent.VK_S:
                 movendoBaixo = false;
+                if(movendoCima == false && movendoBaixo == false && movendoDireita == false && movendoEsquerda == false ) {
+                	velocidade = 0;
+                }
                 break;
             case KeyEvent.VK_A:
                 movendoEsquerda = false;
+                if(movendoCima == false && movendoBaixo == false && movendoDireita == false && movendoEsquerda == false ) {
+                	velocidade = 0;
+                }
                 break;
             case KeyEvent.VK_D:
                 movendoDireita = false;
+                if(movendoCima == false && movendoBaixo == false && movendoDireita == false && movendoEsquerda == false ) {
+                	velocidade = 0;
+                }
                 break;
         }
     }
@@ -344,5 +360,9 @@ public class Player extends JPanel implements KeyListener {
         movendoEsquerda = false;
         movendoDireita = false;
         velocidade = 5;
+    }
+    
+    public int getVelocidade() {
+    	return velocidade;
     }
 }

@@ -4,12 +4,12 @@ import game.gameproject.controller.GameFrame;
 import game.gameproject.controller.KeyController;
 import game.gameproject.front.game.*;
 import game.gameproject.services.PlayerService;
+import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 
 import javax.swing.*;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.Executors;
@@ -21,15 +21,17 @@ public class JpGame extends JPanel {
     private GameFrame gameFrame;
     private infoPlayerDto playerInfo;
     private Player player;
-    private KeyController keyController;
+    
+    public PlayerService PS = new PlayerService();
+    public chatDto CD = new chatDto();
+    public ConfiguracoesDto Config = new ConfiguracoesDto();
+    public KeyController keyController = new KeyController(player, playerInfo);
 
     public JpGame(GameFrame gameFrame, infoPlayerDto playerInfo) {
         this.gameFrame = gameFrame;
         this.playerInfo = playerInfo;
+        this.setName("telaJogo"); // No construtor do JpGame
         setLayout(null);
-        
-        PlayerService PS = new PlayerService();
-        chatDto CD = new chatDto();
 
         // Criando o Player
         player = new Player(playerInfo.getNickPlayer(), new Mapa(1, null), playerInfo);
@@ -41,15 +43,21 @@ public class JpGame extends JPanel {
         
         // Executa o método atualizar a cada 16,67 milissegundos (60 FPS)
         scheduler.scheduleAtFixedRate(() -> {
-        	repaint();
         	
-            player.trocarImagem();
-            player.moverPersonagem();
-            
-            PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
-            player.jogadores = PS.buscarJogadores(playerInfo.getIdPlayer());
-
-            repaint();
+        	if ("telaJogo".equals(gameFrame.getCurrentPanel().getName())) {
+        		player.trocarImagem();
+                player.moverPersonagem();
+                
+                if(player.getVelocidade() > 0) {
+                	PS.salvarCoordenadas(playerInfo.getIdPlayer(), player.xPersonagem, player.yPersonagem, player.sprite);
+                }
+                
+                if(Config.isVisualizarOutrosJogadores()) {
+                	player.jogadores = PS.buscarJogadores(playerInfo.getIdPlayer());
+                }
+                
+                repaint();
+        	}
             
         }, 0, 1000 / 60, TimeUnit.MILLISECONDS);
 

@@ -22,7 +22,7 @@ import javax.swing.*;
 
 public class GameFrame extends JFrame {
 
-    private JPanel currentPanel;
+    private static JPanel currentPanel;
     private JpMenu telaMenu;
     private JpGame telaJogo;
     infoPlayerDto playerInfo = new infoPlayerDto("a");
@@ -184,5 +184,9 @@ public class GameFrame extends JFrame {
         add(currentPanel);
         revalidate();
         repaint();
+    }
+    
+    public JPanel getCurrentPanel() {
+        return currentPanel;
     }
 }
