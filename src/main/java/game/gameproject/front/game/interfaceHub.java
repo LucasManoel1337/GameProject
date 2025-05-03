@@ -35,33 +35,39 @@ public class interfaceHub {
     private int fps = 0;
     
     private infoPlayerDto playerInfo;
+    
+    private static int nivel;
+    private static int dinheiro;
 
-    public interfaceHub(infoPlayerDto playerInfo) {
+    public interfaceHub(infoPlayerDto playerInfo, JPanel painel, String nick, int nivel, int dinheiro) {
     	this.playerInfo = playerInfo;
+    	this.nivel = nivel;
+    	this.dinheiro = dinheiro;
+    	
+    	painel.add(createLabel(nick, 20, 0, 150, 50));
+        painel.add(createLabel("Lv. " + nivel, 20, 0, 150, 80));
+        painel.add(createLabel("$ " + dinheiro, 49, 94, 150, 80));
+        painel.add(jBarXp);
+        painel.add(jBarVida);
+        painel.add(jBarMana);
+        painel.add(jBarStamina);
+        
         carregarImagens();
         Timer timerMoeda = new Timer(100, e -> animarMoeda());
         timerMoeda.start();
     }
 
-    public void desenharHubStats(Graphics g, String nick, int nivel, int dinheiro, JPanel painel) {
+    public void desenharHubStats(Graphics g, JPanel painel) {
         g.drawImage(fundoHub, 5, 5, 300, 150, null);
         g.drawImage(moedas[moedaIndex], xMoeda, yMoeda, 26, 26, null);
 
-        painel.add(createLabel(nick, 20, 0, 150, 50));
-        painel.add(createLabel("Lv. " + nivel, 20, 0, 150, 80));
-        painel.add(createLabel("$ " + dinheiro, 49, 94, 150, 80));
-
         atualizarBarra(jBarXp, playerInfo.getXpAtual(), playerInfo.getXpMaxima(), playerInfo.getXpAtual()+" / "+playerInfo.getXpMaxima());
-        painel.add(jBarXp);
 
         atualizarBarra(jBarVida, playerInfo.getVidaAtual(), playerInfo.getVidaMaxima(), playerInfo.getVidaAtual()+" / "+playerInfo.getVidaMaxima());
-        painel.add(jBarVida);
 
         atualizarBarra(jBarMana, playerInfo.getManaAtual(), playerInfo.getManaMaxima(), playerInfo.getManaAtual()+" / "+playerInfo.getManaMaxima());
-        painel.add(jBarMana);
 
         atualizarBarra(jBarStamina, playerInfo.getStaminaAtual(), playerInfo.getStaminaMaxima(), playerInfo.getStaminaAtual()+" / "+playerInfo.getStaminaMaxima());
-        painel.add(jBarStamina);
 
         desenharPingEOnline(g);
         g.drawImage(hotbar, 385, 678, 500, 50, null);
@@ -74,12 +80,12 @@ public class interfaceHub {
     }
 
     public void desenharNomeJogador(Graphics g, String nome, int xPersonagem, int yPersonagem, int larguraPersonagem) {
-        FontMetrics fontMetrics = g.getFontMetrics();
+    	FontMetrics fontMetrics = g.getFontMetrics();
         int larguraTexto = fontMetrics.stringWidth(nome);
         int alturaTexto = fontMetrics.getHeight();
         int xTexto = xPersonagem + (larguraPersonagem - larguraTexto) / 2;
         int yTexto = yPersonagem - alturaTexto;
-
+    	
         // Fundo preto externo
         g.setColor(Color.BLACK);
         g.fillRect(xTexto - 5, yTexto - alturaTexto, larguraTexto + 10, alturaTexto + 5);
@@ -158,22 +164,35 @@ public class interfaceHub {
         barra.setStringPainted(config.isVisualizarDadosHub());
     }
 
+    private BufferedImage cachedPingIcon = null;
+    private int lastPing = -1;
+
     private void desenharPingEOnline(Graphics g) {
+        int ping = (int) DatabaseConfig.getDatabasePing();
+        if (ping != lastPing) {
+            lastPing = ping;
+            // Atualiza o ícone do ping quando o valor muda
+            if (ping <= 15) {
+                cachedPingIcon = simPing1;
+            } else if (ping <= 22) {
+                cachedPingIcon = simPing2;
+            } else if (ping <= 28) {
+                cachedPingIcon = simPing3;
+            } else if (ping <= 38) {
+                cachedPingIcon = simPing4;
+            } else {
+                cachedPingIcon = simPing5;
+            }
+        }
+
         g.setColor(Color.BLACK);
         g.fillRect(1138, 706, 140, 24);
 
         g.setColor(Color.WHITE);
         g.fillRect(1140, 709, 140, 22);
 
-        int ping = (int) DatabaseConfig.getDatabasePing();
-        BufferedImage pingIcon = simPing5;
-
-        if (ping <= 15) pingIcon = simPing1;
-        else if (ping <= 22) pingIcon = simPing2;
-        else if (ping <= 28) pingIcon = simPing3;
-        else if (ping <= 38) pingIcon = simPing4;
-
-        g.drawImage(pingIcon, 1140, 710, 20, 20, null);
+        // Usando o cachedPingIcon para desenhar a imagem
+        g.drawImage(cachedPingIcon, 1140, 710, 20, 20, null);
         g.setColor(Color.BLACK);
         g.drawString(ping + "ms", 1160, 725);
 
@@ -184,10 +203,11 @@ public class interfaceHub {
     private void calcularFps() {
         frames++;
         long now = System.nanoTime();
+
         if (now - lastTime >= 1_000_000_000) {
-            fps = frames;
-            frames = 0;
-            lastTime = now;
+            fps = frames;  // Atualiza o FPS
+            frames = 0;    // Reseta a contagem de frames
+            lastTime = now; // Atualiza o tempo de referência
         }
     }
 }

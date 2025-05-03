@@ -53,13 +53,16 @@ public class Player extends JPanel implements KeyListener {
     public boolean chatAtivo = CD.isChatAtivo();
     
     // Imagens de animação do personagem
-    private BufferedImage personagemCima1, personagemCima2;
-    private BufferedImage personagemBaixo1, personagemBaixo2;
-    private BufferedImage personagemEsquerda1, personagemEsquerda2;
-    private BufferedImage personagemDireita1, personagemDireita2;
-    private BufferedImage personagemAtual;
+    private static BufferedImage personagemCima1, personagemCima2;
+    private static BufferedImage personagemBaixo1, personagemBaixo2;
+    private static BufferedImage personagemEsquerda1, personagemEsquerda2;
+    private static BufferedImage personagemDireita1, personagemDireita2;
+    private static BufferedImage personagemAtual;
     
     // Coordenadas e movimentação
+    
+    public static final int larguraPersonagem = 30;
+    public static final int alturaPersonagem = 50;
     public int xPersonagem;
     public int yPersonagem;
     private int velocidade = 5;
@@ -72,7 +75,7 @@ public class Player extends JPanel implements KeyListener {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
-        this.IH = new interfaceHub(this.playerInfo);
+        this.IH = new interfaceHub(this.playerInfo, this, playerInfo.getNickPlayer(), playerInfo.getNivel(), playerInfo.getDinheiro());
         this.CGS = new ChatGlobalService(this.playerInfo);
         
         setDoubleBuffered(true);
@@ -275,9 +278,6 @@ public class Player extends JPanel implements KeyListener {
         super.paintComponent(g);
         mapaAtual.desenhar(g);
 
-        int larguraPersonagem = 30;
-        int alturaPersonagem = 50;
-
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
         if (Config.isVisualizarOutrosJogadores()) {
@@ -317,7 +317,15 @@ public class Player extends JPanel implements KeyListener {
             IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
         }
         
-        if(CD.isChatAtivo()) {
+        sistemaChat(g);
+        
+        IH.desenharHubStats(g, this);
+        
+        recarregarStatusHub();
+    }
+    
+    private void sistemaChat(Graphics g) {
+    	if(CD.isChatAtivo()) {
         	JTFChat.setVisible(true);
         	bChatEnviar.setVisible(true);
         	chatScrollPane.setVisible(true);
@@ -330,10 +338,6 @@ public class Player extends JPanel implements KeyListener {
         	chatScrollPane.setVisible(false);
         	chatArea.setVisible(false);
         }
-        
-        IH.desenharHubStats(g, playerInfo.getNickPlayer(), playerInfo.getNivel(), playerInfo.getDinheiro(), this);
-        
-        recarregarStatusHub();
     }
 
     private void carregarMensagens() {
