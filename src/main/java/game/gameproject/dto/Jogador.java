@@ -9,14 +9,16 @@ public class Jogador {
     private int yPlayer;
     private Image spritePlayer;
     private boolean digitando = false;
-
-    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer, boolean digitando) {
+    private boolean isOp;
+    
+    public Jogador(int idPlayer, String nomePlayer, int xPlayer, int yPlayer, Image spritePlayer, boolean digitando, boolean isOp) {
         this.idPlayer = idPlayer;
         this.nomePlayer = nomePlayer;
         this.xPlayer = xPlayer;
         this.yPlayer = yPlayer;
         this.spritePlayer = spritePlayer;
         this.digitando = digitando;
+        this.isOp = isOp;
     }
 
     // Getters e Setters
@@ -42,5 +44,9 @@ public class Jogador {
     
     public boolean getDigitando() {
         return digitando;
+    }
+    
+    public boolean isOp() {
+        return isOp;
     }
 }

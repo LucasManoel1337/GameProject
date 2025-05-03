@@ -64,14 +64,14 @@ public class AutenticacaoService {
                 ResultSet resultSet = statement.executeQuery();
 
                 if (resultSet.next()) {
-                    // Se o token for encontrado, significa que o usuário está autenticado
-                    System.out.println("Usuário autenticado: " + resultSet.getString("usuario"));
-
-                    // Preenche o infoPlayerDto com os dados do usuário
+                    // Cria o objeto infoPlayerDto
                     infoPlayerDto IPDto = new infoPlayerDto("playerNickname");
-                    infoPlayerDto.setIdPlayer(resultSet.getInt("id"));
-                    infoPlayerDto.setNickPlayer(resultSet.getString("usuario"));
                     
+                    // Preenche as propriedades antes de definir o isOp
+                    IPDto.setIdPlayer(resultSet.getInt("id"));
+                    IPDto.setNickPlayer(resultSet.getString("usuario"));
+                    
+                    // Preenchendo todas as propriedades
                     IPDto.setNivel(playerService.getPlayerNivel(resultSet.getInt("id")));
                     IPDto.setPontos(playerService.getPlayerPontos(resultSet.getInt("id")));
                     IPDto.setVidaMaxima(playerService.getPlayerVida(resultSet.getInt("id")));
@@ -88,17 +88,20 @@ public class AutenticacaoService {
                     
                     IPDto.setXpAtual(playerService.getPlayerXpAtual(resultSet.getInt("id")));
                     IPDto.setXpMaxima(playerService.getPlayerXpMaxima(resultSet.getInt("id")));
+                    
+                    // Agora, podemos verificar se o jogador é "Op" (Administrador)
+                    IPDto.setOp(playerService.isOp(resultSet.getInt("id")));  // Define o status de "Op" por último
 
                     // Retorna o infoPlayerDto preenchido
                     return IPDto;
                 } else {
-                    System.out.println("Token inválido ou não encontrado no banco de dados.");
-                    return null; // Retorna null se o token não for encontrado ou for inválido
+                    System.out.println("Token inválido.");
+                    return null; // Retorna null se o token não for encontrado
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            return null; // Retorna null em caso de erro na consulta
+            return null; // Retorna null em caso de erro
         }
     }
 }

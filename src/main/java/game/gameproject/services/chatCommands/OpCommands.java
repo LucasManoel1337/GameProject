@@ -30,6 +30,10 @@ public class OpCommands {
 
 	            definirOperador(nick, opAtivo);
 	            System.out.println("Agora o OP está "+opAtivo+" para o jogador "+nick);  
+	            
+	            if(nick.equals(playerInfo.getNickPlayer())) {
+	            	playerInfo.setOp(false);
+	            }
 	        } else {
 	            System.out.println("Comando de OP inválido. Use: //op <nick> <true|false>");
 	        }

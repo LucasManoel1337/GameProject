@@ -5,6 +5,7 @@ public class infoPlayerDto {
     public infoPlayerDto(String playerNickname) {
     }
     private static int idPlayer = 0;
+    private static boolean isOp = false;
     private static String NickPlayer = "";
     private static String classe = "";
     private static int nivel = -1;
@@ -157,4 +158,11 @@ public class infoPlayerDto {
         infoPlayerDto.xpMaxima = xpMaxima;
     }
     
+    public boolean isOp() {
+        return isOp;
+    }
+
+    public void setOp(boolean isOp) {
+        this.isOp = isOp;
+    }
 }

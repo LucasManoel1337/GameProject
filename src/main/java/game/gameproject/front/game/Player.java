@@ -142,7 +142,6 @@ public class Player extends JPanel implements KeyListener {
             }
         });
         timerDigitar.start();
-
     }
     
     private void animarDigitar() {
@@ -265,24 +264,28 @@ public class Player extends JPanel implements KeyListener {
 
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
-        if(Config.isVisualizarOutrosJogadores()) {
-        	for (Jogador jogador : jogadores) {
-        		if(Config.isModoDev()) {
-        			g.setColor(Color.black);
-        			g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
-        		}
-        		g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
-            
-        		if (jogador.equals(playerInfo)) {
-        			IH.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
-        		} else {
-        			IH.desenharNomeJogador(g, jogador.getNomePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30);
-        		}
-            
-        		if (jogador.getDigitando()) {
-        			g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
-        		}
-        	}
+        if (Config.isVisualizarOutrosJogadores()) {
+            for (Jogador jogador : jogadores) {
+                // Modo desenvolvedor: desenha contorno
+                if (Config.isModoDev()) {
+                    g.setColor(Color.black);
+                    g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
+                }
+
+                // Desenha o sprite do jogador
+                g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
+
+                // Prepara o nome com prefixo se for admin
+                String nomeExibicao = jogador.isOp() ? "[ADMIN] " + jogador.getNomePlayer() : jogador.getNomePlayer();
+
+                // Desenha o nome do jogador
+                IH.desenharNomeJogador(g, nomeExibicao, jogador.getxPlayer(), jogador.getyPlayer(), 30);
+
+                // Desenha ícone de digitando se necessário
+                if (jogador.getDigitando()) {
+                    g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
+                }
+            }
         }
         
         if(Config.isModoDev()) {
@@ -291,7 +294,12 @@ public class Player extends JPanel implements KeyListener {
         }
         g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         
-        IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        
+        if (playerInfo.isOp()) {
+            IH.desenharNomeJogador(g, "[ADMIN] " + playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        } else {
+            IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        }
         
         if(CD.isChatAtivo()) {
         	JTFChat.setVisible(true);
@@ -299,7 +307,6 @@ public class Player extends JPanel implements KeyListener {
         	chatScrollPane.setVisible(true);
         	chatArea.setVisible(true);
         	g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
-        	carregarMensagens();
         } else {
         	JTFChat.setText("");
         	JTFChat.setVisible(false);

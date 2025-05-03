@@ -99,14 +99,17 @@ public class PlayerService {
     
     public List<Jogador> buscarJogadores(int id) {
         List<Jogador> jogadores = new ArrayList<>();
-        
+
         int idJogadorAtual = id;
 
-        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario, p.digitando FROM tb_player_coordenadas p "
-                   + "JOIN tb_login l ON p.id_player = l.id "
-                   + "WHERE p.online = 1 AND p.id_player != ? ORDER BY p.id_player";
+        String sql = "SELECT p.id_player, p.x, p.y, p.sprite, l.usuario, p.digitando, op.op " +
+                     "FROM tb_player_coordenadas p " +
+                     "JOIN tb_login l ON p.id_player = l.id " +
+                     "LEFT JOIN tb_player_ops op ON p.id_player = op.id_player " +
+                     "WHERE p.online = 1 AND p.id_player != ? " +
+                     "ORDER BY p.id_player";
 
-        try (Connection conn = DatabaseConfig.getConnection(); 
+        try (Connection conn = DatabaseConfig.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idJogadorAtual);
@@ -120,10 +123,11 @@ public class PlayerService {
                 int yPlayer = rs.getInt("y");
                 String spritePath = rs.getString("sprite");
                 boolean digitandoBoolean = rs.getBoolean("digitando");
+                boolean isOp = rs.getBoolean("op"); // Pode retornar false se for null
 
                 Image sprite = carregarSprite(spritePath);
 
-                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite, digitandoBoolean);
+                Jogador jogador = new Jogador(idPlayer, nomePlayer, xPlayer, yPlayer, sprite, digitandoBoolean, isOp);
 
                 jogadores.add(jogador);
             }
@@ -134,6 +138,7 @@ public class PlayerService {
 
         return jogadores;
     }
+
 
 
     public Image carregarSprite(String spritePath) {
@@ -284,6 +289,26 @@ public class PlayerService {
                 }
             }
         }
+    }
+    
+    public static Integer buscarIdPorNick(String nick) {
+        String sql = "SELECT id FROM tb_login WHERE usuario = ?";
+
+        try (Connection conn = DatabaseConfig.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, nick);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace(); // ou usar um sistema de log
+        }
+
+        return null; // Retorna null se não encontrar
     }
 
         public static boolean isOp(int idPlayer) {

@@ -196,23 +196,26 @@ public class StatusService {
         return "Sem classe definida"; // Retorno padrão caso não encontre
     }
     
-    public int getPlayerOp(int id) {
-        String query = "SELECT op FROM tb_player_status WHERE id_player_status = ?";
+    public static boolean isOp(int idPlayer) {
+        String sql = "SELECT op FROM tb_player_ops WHERE id_player = ?";
 
         try (Connection connection = DatabaseConfig.getConnection();
-             PreparedStatement statement = connection.prepareStatement(query)) {
+             PreparedStatement stmt = connection.prepareStatement(sql)) {
 
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getBoolean("op") ? 1 : 0; // Converte boolean para int
+            stmt.setInt(1, idPlayer);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getBoolean("op");
+                }
             }
+
         } catch (SQLException e) {
+            System.err.println("Erro ao verificar se o jogador é OP:");
             e.printStackTrace();
         }
-        
-        return 0; // Retorno padrão caso não encontre o usuário ou ocorra erro
+
+        // Retorna false (não é OP) se não encontrou ou houve erro
+        return false;
     }
 
     public boolean atualizarStatusBanco(int id, int nivel, int pontos, int vida, int stamina, int forca, int mana, int forcaMana, int dinheiro, String classe, int xpAtual, int xpMaxima) {

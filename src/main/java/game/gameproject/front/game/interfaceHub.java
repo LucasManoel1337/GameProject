@@ -80,14 +80,32 @@ public class interfaceHub {
         int xTexto = xPersonagem + (larguraPersonagem - larguraTexto) / 2;
         int yTexto = yPersonagem - alturaTexto;
 
+        // Fundo preto externo
         g.setColor(Color.BLACK);
         g.fillRect(xTexto - 5, yTexto - alturaTexto, larguraTexto + 10, alturaTexto + 5);
 
+        // Fundo branco interno
         g.setColor(Color.WHITE);
         g.fillRect(xTexto - 4, yTexto - alturaTexto + 1, larguraTexto + 8, alturaTexto + 3);
 
-        g.setColor(Color.BLACK);
-        g.drawString(nome, xTexto, yTexto);
+        // Verifica se nome tem prefixo [ADMIN]
+        if (nome.startsWith("[ADMIN] ")) {
+            String adminPrefix = "[ADMIN] ";
+            String nomeReal = nome.substring(adminPrefix.length());
+
+            int larguraAdmin = fontMetrics.stringWidth(adminPrefix);
+
+            // Desenha [ADMIN] em vermelho
+            g.setColor(Color.RED);
+            g.drawString(adminPrefix, xTexto, yTexto);
+
+            // Desenha o nome real em preto
+            g.setColor(Color.BLACK);
+            g.drawString(nomeReal, xTexto + larguraAdmin, yTexto);
+        } else {
+            g.setColor(Color.BLACK);
+            g.drawString(nome, xTexto, yTexto);
+        }
     }
 
     private void carregarImagens() {
