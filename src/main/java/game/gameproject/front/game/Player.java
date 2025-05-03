@@ -28,12 +28,6 @@ public class Player extends JPanel implements KeyListener {
     
     public List<Jogador> jogadores = new ArrayList<>();
     
-    // Elementos do HUB de status
-    private JProgressBar jBarXp = new JProgressBar();
-    private JProgressBar jBarVida = new JProgressBar();
-    private JProgressBar jBarMana = new JProgressBar();
-    private JProgressBar jBarStamina = new JProgressBar();
-    
     // Elementos do chat e sua animação
     private JTextField JTFChat = new JTextField();
     private JButton bChatEnviar = new JButton("Enviar");
@@ -60,7 +54,6 @@ public class Player extends JPanel implements KeyListener {
     private static BufferedImage personagemAtual;
     
     // Coordenadas e movimentação
-    
     public static final int larguraPersonagem = 30;
     public static final int alturaPersonagem = 50;
     public int xPersonagem;
@@ -75,20 +68,19 @@ public class Player extends JPanel implements KeyListener {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
-        this.IH = new interfaceHub(this.playerInfo, this, playerInfo.getNickPlayer(), playerInfo.getNivel(), playerInfo.getDinheiro());
+        this.IH = new interfaceHub(this.playerInfo, this);
         this.CGS = new ChatGlobalService(this.playerInfo);
         
         setDoubleBuffered(true);
         carregarImagens();
-        personagemAtual = personagemBaixo1;
         setFocusable(true);
+        setFocusable(true);
+        requestFocusInWindow();
+        
         xPersonagem = PS.buscarCoordenadaX(playerInfo.getIdPlayer());
         yPersonagem = PS.buscarCoordenadaY(playerInfo.getIdPlayer());
         sprite = PS.buscarSprite(playerInfo.getIdPlayer());
-        //mapa = PS.buscarMapa(playerInfo.getIdPlayer());
-        
-        setFocusable(true);
-        requestFocusInWindow();
+        personagemAtual = personagemBaixo1;
         
         JTFChat.setBounds(5, 695, 300, 30);
         JTFChat.setBackground(new Color(211, 211, 211, 150));
@@ -109,7 +101,6 @@ public class Player extends JPanel implements KeyListener {
         bChatEnviar.addActionListener(e -> {
             CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText(), playerInfo);
             JTFChat.setText("");
-            carregarMensagens();
         });
         this.add(bChatEnviar);
 
@@ -134,9 +125,7 @@ public class Player extends JPanel implements KeyListener {
         chatScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
         chatScrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         chatScrollPane.setBorder(null);
-
         this.add(chatScrollPane);
-        carregarMensagens();
         
         timerDigitar = new Timer(100, new ActionListener() {
             @Override
@@ -276,28 +265,22 @@ public class Player extends JPanel implements KeyListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        mapaAtual.desenhar(g);
 
         g.drawImage(fundoTest, 0, 0, 1280, 768, this);
 
         if (Config.isVisualizarOutrosJogadores()) {
             for (Jogador jogador : jogadores) {
-                // Modo desenvolvedor: desenha contorno
                 if (Config.isModoDev()) {
                     g.setColor(Color.black);
                     g.drawRect(jogador.getxPlayer(), jogador.getyPlayer(), 30, 50);
                 }
 
-                // Desenha o sprite do jogador
                 g.drawImage(jogador.getSpritePlayer(), jogador.getxPlayer(), jogador.getyPlayer(), 30, 50, this);
 
-                // Prepara o nome com prefixo se for admin
                 String nomeExibicao = jogador.isOp() ? "[ADMIN] " + jogador.getNomePlayer() : jogador.getNomePlayer();
 
-                // Desenha o nome do jogador
                 IH.desenharNomeJogador(g, nomeExibicao, jogador.getxPlayer(), jogador.getyPlayer(), 30);
 
-                // Desenha ícone de digitando se necessário
                 if (jogador.getDigitando()) {
                     g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
                 }
@@ -320,8 +303,6 @@ public class Player extends JPanel implements KeyListener {
         sistemaChat(g);
         
         IH.desenharHubStats(g, this);
-        
-        recarregarStatusHub();
     }
     
     private void sistemaChat(Graphics g) {
@@ -331,6 +312,7 @@ public class Player extends JPanel implements KeyListener {
         	chatScrollPane.setVisible(true);
         	chatArea.setVisible(true);
         	g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
+        	carregarMensagens();
         } else {
         	JTFChat.setText("");
         	JTFChat.setVisible(false);
@@ -343,13 +325,6 @@ public class Player extends JPanel implements KeyListener {
     private void carregarMensagens() {
         String mensagens = CGS.obterUltimasMensagens();
         chatArea.setText(mensagens);
-    }
-    
-    private void recarregarStatusHub() {
-    	jBarXp.setValue(playerInfo.getXpAtual());
-    	jBarVida.setValue(playerInfo.getVidaAtual());
-    	jBarMana.setValue(playerInfo.getManaAtual());
-    	jBarStamina.setValue(playerInfo.getStaminaAtual());
     }
     
     public void resetarMovimento() {

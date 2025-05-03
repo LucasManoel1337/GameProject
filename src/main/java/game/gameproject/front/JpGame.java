@@ -56,7 +56,6 @@ public class JpGame extends JPanel {
                 if(Config.isVisualizarOutrosJogadores()) {
                 	player.jogadores = PS.buscarJogadores(playerInfo.getIdPlayer());
                 }
-                
                 repaint();
         	}
             

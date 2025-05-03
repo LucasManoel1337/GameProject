@@ -35,18 +35,13 @@ public class interfaceHub {
     private int fps = 0;
     
     private infoPlayerDto playerInfo;
-    
-    private static int nivel;
-    private static int dinheiro;
 
-    public interfaceHub(infoPlayerDto playerInfo, JPanel painel, String nick, int nivel, int dinheiro) {
+    public interfaceHub(infoPlayerDto playerInfo, JPanel painel) {
     	this.playerInfo = playerInfo;
-    	this.nivel = nivel;
-    	this.dinheiro = dinheiro;
     	
-    	painel.add(createLabel(nick, 20, 0, 150, 50));
-        painel.add(createLabel("Lv. " + nivel, 20, 0, 150, 80));
-        painel.add(createLabel("$ " + dinheiro, 49, 94, 150, 80));
+    	painel.add(createLabel(playerInfo.getNickPlayer(), 20, 0, 150, 50));
+        painel.add(createLabel("Lv. " + playerInfo.getNivel(), 20, 0, 150, 80));
+        painel.add(createLabel("$ " + playerInfo.getDinheiro(), 49, 94, 150, 80));
         painel.add(jBarXp);
         painel.add(jBarVida);
         painel.add(jBarMana);
@@ -69,8 +64,10 @@ public class interfaceHub {
 
         atualizarBarra(jBarStamina, playerInfo.getStaminaAtual(), playerInfo.getStaminaMaxima(), playerInfo.getStaminaAtual()+" / "+playerInfo.getStaminaMaxima());
 
-        desenharPingEOnline(g);
-        g.drawImage(hotbar, 385, 678, 500, 50, null);
+        if (config.isModoDev()) {
+        	desenharPingEOnline(g);
+        	g.drawImage(hotbar, 385, 678, 500, 50, null);
+        }
 
         if (config.isVisualizarFps()) {
             calcularFps();
