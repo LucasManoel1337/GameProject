@@ -22,7 +22,7 @@ import game.gameproject.support.FontLoaderSupport;
 
 public class MenuBarService {
 
-    public String[] menuOptions = {"Status", "Inventário", "Mapa", "Missões", "Amigos", "Guilda", "Configurações"};
+    public String[] menuOptions = {"Status", "Inventário", "Mapa", "Missões", "Amigos", "Guilda", "Configurações", "Creditos", "Estatisticas"};
     
     public static void addMenu(JPanel panel, GameFrame gameFrame, infoPlayerDto playerInfo) {
     	
@@ -42,7 +42,8 @@ public class MenuBarService {
     JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo, customFont);
-    JLabel lBtnCreditos = createMenuButton("Creditos", 540, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnEstatisticas = createMenuButton("Estatisticas", 540, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnCreditos = createMenuButton("Creditos", 600, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.WHITE, gameFrame, playerInfo, customFont);
     JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo, customFont);
@@ -57,6 +58,7 @@ public class MenuBarService {
     panel.add(lBtnGuilda);
     panel.add(lBtnConfiguracoes);
     panel.add(lBtnCreditos);
+    panel.add(lBtnEstatisticas);
     panel.add(lBtnSair);
     panel.add(lBtnDescESair);
 
@@ -108,9 +110,11 @@ public class MenuBarService {
         } else if (text.equals("Configurações")) {
         	label.setBounds(510, 10, 110, 30);
         } else if (text.equals("Creditos")) {
-        	label.setBounds(630, 10, 110, 30);
-        } else if (text.equals("JOGAR")) {
-            label.setBounds(820, 10, 70, 30);
+        	label.setBounds(630, 10, 60, 30);
+        } else if (text.equals("Estatisticas")) {
+        	label.setBounds(710, 10, 80, 30);
+        }else if (text.equals("JOGAR")) {
+            label.setBounds(860, 10, 70, 30);
         } else if (text.equals("Sair")) {
             label.setBounds(1010, 10, 50, 30);
         }
@@ -136,6 +140,8 @@ public class MenuBarService {
                 	gameFrame.switchToConfiguracoesPanel(); // Chama a troca de tela
                 } else if (text.equals("Creditos")) {
                 	gameFrame.switchToCreditosPanel();
+                } else if (text.equals("Estatisticas")) {
+                	gameFrame.switchToEstatisticasPanel();
                 } else if (text.equals("JOGAR")) {
                     gameFrame.switchToGamePanel(); // Chama a troca de tela
                 } else if (text.equals("Sair")) {

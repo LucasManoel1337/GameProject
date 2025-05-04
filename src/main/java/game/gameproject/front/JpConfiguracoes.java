@@ -15,6 +15,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.KeyStroke;
 
 public class JpConfiguracoes extends JPanel {
@@ -47,6 +48,14 @@ public class JpConfiguracoes extends JPanel {
         JLabel logoLabel = new JLabel(logoIcon);
         logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
         add(logoLabel);
+        
+        JSlider volumeSlider = new JSlider(0, 100, 50); // de 0 a 100, valor inicial 50
+        volumeSlider.setMajorTickSpacing(10);
+        volumeSlider.setPaintTicks(true);
+        volumeSlider.setPaintLabels(true);
+        volumeSlider.setVisible(true);
+        volumeSlider.setBounds(20, 200, 200, 50);
+        add(volumeSlider);
         
         JCheckBox devModeCheckBox = new JCheckBox("Modo Desenvolvedor");
         devModeCheckBox.setBounds(20, 300, 200, 30);

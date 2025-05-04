@@ -104,7 +104,7 @@ public class JpStatus extends JPanel {
         lClasse.setFont(new Font("Arial", Font.BOLD, 16));
         lClasse.setForeground(Color.BLACK);
         FontMetrics fmClasse = lClasse.getFontMetrics(lClasse.getFont());
-        int textWidthClasse = fmClasse.stringWidth("Classe: " + playerInfo.getPontos());
+        int textWidthClasse = fmClasse.stringWidth("Classe: " + playerInfo.getClasse());
         lClasse.setPreferredSize(new Dimension(textWidthClasse, 30));
         int areaLarguraClasse = 10+getWidth();
         int xClasse = 626 + (areaLarguraClasse - textWidthClasse) / 2;
@@ -128,7 +128,7 @@ public class JpStatus extends JPanel {
         lVida.setFont(new Font("Arial", Font.BOLD, 16));
         lVida.setForeground(Color.BLACK);
         FontMetrics fmVida = lVida.getFontMetrics(lVida.getFont());
-        int textWidthVida = fmVida.stringWidth("CON: " + playerInfo.getPontos());
+        int textWidthVida = fmVida.stringWidth("CON: " + playerInfo.getVidaMaxima());
         lVida.setPreferredSize(new Dimension(textWidthVida, 30));
         int areaLarguraVida = 10+getWidth();
         xVida = 626 + (areaLarguraVida - textWidthVida) / 2;
@@ -402,8 +402,8 @@ public class JpStatus extends JPanel {
     public void atualizarLabelsEAtualizar() {
         lNivel.setText(""+playerInfo.getNivel());
         lClasse.setText("Classe: "+playerInfo.getClasse());
-        lVida.setText("CON: " + playerInfo.getVidaMaxima());
         lPontos.setText("Pontos disponíveis: " + playerInfo.getPontos());
+        lVida.setText("CON: " + playerInfo.getVidaMaxima());
         lStamina.setText("DEX: " + playerInfo.getStaminaMaxima());
         lForca.setText("STR: " + playerInfo.getForca());
         lMana.setText("SPI: " + playerInfo.getManaMaxima());

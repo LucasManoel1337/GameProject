@@ -6,6 +6,7 @@ import game.gameproject.front.JpAmigos;
 import game.gameproject.front.JpConfiguracoes;
 import game.gameproject.front.JpCreditos;
 import game.gameproject.front.JpEscolherClasse;
+import game.gameproject.front.JpEstatisticas;
 import game.gameproject.front.JpMenu;
 import game.gameproject.front.JpGame;
 import game.gameproject.front.JpGuilda;
@@ -39,6 +40,7 @@ public class GameFrame extends JFrame {
     private JpGuilda telaGuilda;
     private JpConfiguracoes telaConfiguracoes;
     private JpCreditos telaCreditos;
+    private JpEstatisticas telaEstatisticas;
     private JpEscolherClasse telaEscolherClasse;
     
     private final ScheduledExecutorService scheduler;
@@ -137,6 +139,7 @@ public class GameFrame extends JFrame {
             telaStatus = new JpStatus(this, playerInfo); // Cria a tela de jogo
         }
         currentPanel = telaStatus;
+        telaStatus.atualizarLabelsEAtualizar();
         add(currentPanel);
         revalidate();
         repaint();
@@ -214,6 +217,18 @@ public class GameFrame extends JFrame {
             telaCreditos = new JpCreditos(this, playerInfo);
         }
         currentPanel = telaCreditos;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToEstatisticasPanel() {
+        remove(currentPanel);
+        if (telaEstatisticas == null) {
+            telaEstatisticas = new JpEstatisticas(this, playerInfo);
+        }
+        currentPanel = telaEstatisticas;
+        telaEstatisticas.atualizarEstatisticas();
         add(currentPanel);
         revalidate();
         repaint();
