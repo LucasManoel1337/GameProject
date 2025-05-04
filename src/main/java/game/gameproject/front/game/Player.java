@@ -71,16 +71,16 @@ public class Player extends JPanel implements KeyListener {
         this.IH = new interfaceHub(this.playerInfo, this);
         this.CGS = new ChatGlobalService(this.playerInfo);
         
-        setDoubleBuffered(true);
-        carregarImagens();
         setFocusable(true);
+        setDoubleBuffered(true);
         setFocusable(true);
         requestFocusInWindow();
         
+        carregarImagens();
+        personagemAtual = personagemBaixo1;
         xPersonagem = PS.buscarCoordenadaX(playerInfo.getIdPlayer());
         yPersonagem = PS.buscarCoordenadaY(playerInfo.getIdPlayer());
         sprite = PS.buscarSprite(playerInfo.getIdPlayer());
-        personagemAtual = personagemBaixo1;
         
         JTFChat.setBounds(5, 695, 300, 30);
         JTFChat.setBackground(new Color(211, 211, 211, 150));
@@ -101,6 +101,7 @@ public class Player extends JPanel implements KeyListener {
         bChatEnviar.addActionListener(e -> {
             CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText(), playerInfo);
             JTFChat.setText("");
+            carregarMensagens();
         });
         this.add(bChatEnviar);
 
@@ -126,6 +127,7 @@ public class Player extends JPanel implements KeyListener {
         chatScrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
         chatScrollPane.setBorder(null);
         this.add(chatScrollPane);
+        carregarMensagens();
         
         timerDigitar = new Timer(100, new ActionListener() {
             @Override
@@ -312,7 +314,6 @@ public class Player extends JPanel implements KeyListener {
         	chatScrollPane.setVisible(true);
         	chatArea.setVisible(true);
         	g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
-        	carregarMensagens();
         } else {
         	JTFChat.setText("");
         	JTFChat.setVisible(false);
