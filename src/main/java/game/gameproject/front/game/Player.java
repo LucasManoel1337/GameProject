@@ -12,6 +12,7 @@ import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.ChatGlobalService;
 import game.gameproject.services.PlayerService;
+import game.gameproject.services.StatusService;
 
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +29,15 @@ public class Player extends JPanel implements KeyListener {
     
     public List<Jogador> jogadores = new ArrayList<>();
     
+    // Instanciamento de outras classes
+    private final StatusService SS = new StatusService();
+    private final infoPlayerDto playerInfo;
+    private final chatDto CD = new chatDto();
+    private final ConfiguracoesDto Config = new ConfiguracoesDto();
+    private final interfaceHub IH;
+    private final PlayerService PS = new PlayerService();
+    private ChatGlobalService CGS;
+    
     // Elementos do chat e sua animação
     private JTextField JTFChat = new JTextField();
     private JButton bChatEnviar = new JButton("Enviar");
@@ -36,15 +46,8 @@ public class Player extends JPanel implements KeyListener {
     private int digitarIndex = 0;
     private Timer timerDigitar;
     private BufferedImage[] digitar = new BufferedImage[6];
-    
-    // Instanciamento de outras classes
-    private final infoPlayerDto playerInfo;
-    private final chatDto CD = new chatDto();
-    private final ConfiguracoesDto Config = new ConfiguracoesDto();
-    private final interfaceHub IH;
-    private final PlayerService PS = new PlayerService();
-    private ChatGlobalService CGS;
     public boolean chatAtivo = CD.isChatAtivo();
+    public boolean chatVisivel = false;
     
     // Imagens de animação do personagem
     private static BufferedImage personagemCima1, personagemCima2;
@@ -63,6 +66,7 @@ public class Player extends JPanel implements KeyListener {
     private boolean movendoBaixo = false;
     private boolean movendoEsquerda = false;
     private boolean movendoDireita = false;
+    private boolean travaMorte = true;
     
     public Player(String nome, Mapa mapaInicial, infoPlayerDto playerInfo) {
     	this.playerInfo = playerInfo;
@@ -208,7 +212,8 @@ public class Player extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int codigo = e.getKeyCode();
-        switch (codigo) {
+        if(travaMorte) {
+        	switch (codigo) {
             case KeyEvent.VK_W:
                 movendoCima = true;
                 velocidade = 5;
@@ -225,6 +230,7 @@ public class Player extends JPanel implements KeyListener {
                 movendoDireita = true;
                 velocidade = 5;
                 break;
+        }
         }
     }
     
@@ -289,38 +295,72 @@ public class Player extends JPanel implements KeyListener {
             }
         }
         
-        if(Config.isModoDev()) {
-        	g.setColor(Color.RED);
-            g.drawRect(xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem);
-        }
-        g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
+        if(travaMorte) {
+        	if(Config.isModoDev()) {
+        		g.setColor(Color.RED);
+        		g.drawRect(xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem);
+        	}
+        	g.drawImage(personagemAtual, xPersonagem, yPersonagem, larguraPersonagem, alturaPersonagem, this);
         
         
-        if (playerInfo.isOp()) {
-            IH.desenharNomeJogador(g, "[ADMIN] " + playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        	if (!playerInfo.isOp()) {
+        		IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        	} else {
+        		IH.desenharNomeJogador(g, "[ADMIN] " + playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        	}
         } else {
-            IH.desenharNomeJogador(g, playerInfo.getNickPlayer(), xPersonagem, yPersonagem, larguraPersonagem);
+        	// tela de morte e renascimento!
+        	System.out.println("VOCE MORREU!");
         }
         
         sistemaChat(g);
         
         IH.desenharHubStats(g, this);
+        
+        verificarStatus();
     }
     
     private void sistemaChat(Graphics g) {
     	if(CD.isChatAtivo()) {
-        	JTFChat.setVisible(true);
-        	bChatEnviar.setVisible(true);
-        	chatScrollPane.setVisible(true);
-        	chatArea.setVisible(true);
-        	g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
+    		if (chatVisivel == false) {
+    			chatVisivel = true;
+    			
+    			JTFChat.setVisible(true);
+            	bChatEnviar.setVisible(true);
+            	chatScrollPane.setVisible(true);
+            	chatArea.setVisible(true);
+    		}
+    		g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
         } else {
-        	JTFChat.setText("");
-        	JTFChat.setVisible(false);
-        	bChatEnviar.setVisible(false);
-        	chatScrollPane.setVisible(false);
-        	chatArea.setVisible(false);
+        	if(chatVisivel == true) {
+        		JTFChat.setText("");
+            	JTFChat.setVisible(false);
+            	bChatEnviar.setVisible(false);
+            	chatScrollPane.setVisible(false);
+            	chatArea.setVisible(false);
+            	
+            	chatVisivel = false;
+        	}
         }
+    }
+    
+    public void verificarStatus() {
+    	if(playerInfo.getXpAtual() > playerInfo.getXpMaxima()) {
+    		playerInfo.setXpAtual(playerInfo.getXpAtual() - playerInfo.getXpMaxima());
+    		playerInfo.setXpMaxima(playerInfo.getXpMaxima()*2);
+    		playerInfo.setNivel(playerInfo.getNivel()+1);
+    		playerInfo.setPontos(playerInfo.getPontos()+1);
+    		
+    		SS.atualizarStatusBanco(playerInfo.getIdPlayer(), playerInfo.getNivel(), playerInfo.getPontos(), playerInfo.getVidaMaxima(), playerInfo.getStaminaMaxima(), playerInfo.getForca(), playerInfo.getManaMaxima(), playerInfo.getForcaMana(), playerInfo.getDinheiro(), playerInfo.getClasse(), playerInfo.getXpAtual(), playerInfo.getXpMaxima());
+    	}
+    	
+    	if(playerInfo.getVidaAtual() < 0) {
+    		playerInfo.setVidaAtual(0);
+    		
+    		travaMorte = false;
+    		
+    		resetarMovimento();
+    	}
     }
 
     private void carregarMensagens() {

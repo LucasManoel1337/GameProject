@@ -1,2 +1,2 @@
-@echo off
+@echo on
 mvn spring-boot:run
