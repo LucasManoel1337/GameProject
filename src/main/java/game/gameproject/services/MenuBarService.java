@@ -42,6 +42,7 @@ public class MenuBarService {
     JLabel lBtnAmigos = createMenuButton("Amigos", 360, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnGuilda = createMenuButton("Guilda", 580, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnConfiguracoes = createMenuButton("Configurações", 460, panel, gameFrame, playerInfo, customFont);
+    JLabel lBtnCreditos = createMenuButton("Creditos", 540, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnJogar = createMenuButton("JOGAR", 640, panel, Color.WHITE, gameFrame, playerInfo, customFont);
     JLabel lBtnSair = createMenuButton("Sair", 630, panel, gameFrame, playerInfo, customFont);
     JLabel lBtnDescESair = createMenuButton("Desconectar e Sair", 800, panel, gameFrame, playerInfo, customFont);
@@ -55,6 +56,7 @@ public class MenuBarService {
     panel.add(lBtnJogar);
     panel.add(lBtnGuilda);
     panel.add(lBtnConfiguracoes);
+    panel.add(lBtnCreditos);
     panel.add(lBtnSair);
     panel.add(lBtnDescESair);
 
@@ -105,8 +107,10 @@ public class MenuBarService {
             label.setBounds(440, 10, 60, 30);
         } else if (text.equals("Configurações")) {
         	label.setBounds(510, 10, 110, 30);
+        } else if (text.equals("Creditos")) {
+        	label.setBounds(630, 10, 110, 30);
         } else if (text.equals("JOGAR")) {
-            label.setBounds(720, 10, 70, 30);
+            label.setBounds(820, 10, 70, 30);
         } else if (text.equals("Sair")) {
             label.setBounds(1010, 10, 50, 30);
         }
@@ -130,6 +134,8 @@ public class MenuBarService {
                     gameFrame.switchToGuildaPanel(); // Chama a troca de tela
                 } else if (text.equals("Configurações")) {
                 	gameFrame.switchToConfiguracoesPanel(); // Chama a troca de tela
+                } else if (text.equals("Creditos")) {
+                	gameFrame.switchToCreditosPanel();
                 } else if (text.equals("JOGAR")) {
                     gameFrame.switchToGamePanel(); // Chama a troca de tela
                 } else if (text.equals("Sair")) {

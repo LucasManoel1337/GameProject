@@ -10,6 +10,7 @@ public class infoPlayerDto {
     private static String classe = "";
     private static int nivel = -1;
     private static int pontos = -1;
+    private static String sex = "M";
     
     private static int xpMaxima = -1;
     private static int xpAtual = -1;
@@ -163,6 +164,13 @@ public class infoPlayerDto {
     }
 
     public void setOp(boolean isOp) {
-        this.isOp = isOp;
+        infoPlayerDto.isOp = isOp;
+    }
+    
+    public String getSex() {
+        return sex;
+    }
+    public static void setSex(String sex) {
+        infoPlayerDto.sex = sex;
     }
 }

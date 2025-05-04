@@ -82,6 +82,22 @@ public class JpConfiguracoes extends JPanel {
         });
         add(visualizarFps);
         
+        ImageIcon logoIconS = new ImageIcon("imagens/Menu/status/status.png");
+        Image imgS = logoIconS.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        logoIconS = new ImageIcon(imgS);
+
+        JLabel logoLabelS = new JLabel(logoIconS);
+        logoLabelS.setBounds(420, 70 + 50, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabelS);
+        
+        JLabel logoLabelE = new JLabel(logoIconS);
+        logoLabelE.setBounds(420+410, 70 + 50, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabelE);
+        
+        JLabel logoLabelD = new JLabel(logoIconS);
+        logoLabelD.setBounds(10, 70 + 50, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        add(logoLabelD);
+        
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
     }

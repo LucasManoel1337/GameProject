@@ -4,6 +4,7 @@ import game.gameproject.bdd.DatabaseConfig;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.front.JpAmigos;
 import game.gameproject.front.JpConfiguracoes;
+import game.gameproject.front.JpCreditos;
 import game.gameproject.front.JpEscolherClasse;
 import game.gameproject.front.JpMenu;
 import game.gameproject.front.JpGame;
@@ -37,6 +38,7 @@ public class GameFrame extends JFrame {
     private JpAmigos telaAmigos;
     private JpGuilda telaGuilda;
     private JpConfiguracoes telaConfiguracoes;
+    private JpCreditos telaCreditos;
     private JpEscolherClasse telaEscolherClasse;
     
     private final ScheduledExecutorService scheduler;
@@ -201,6 +203,17 @@ public class GameFrame extends JFrame {
             telaConfiguracoes = new JpConfiguracoes(this, playerInfo);
         }
         currentPanel = telaConfiguracoes;
+        add(currentPanel);
+        revalidate();
+        repaint();
+    }
+    
+    public void switchToCreditosPanel() {
+        remove(currentPanel);
+        if (telaCreditos == null) {
+            telaCreditos = new JpCreditos(this, playerInfo);
+        }
+        currentPanel = telaCreditos;
         add(currentPanel);
         revalidate();
         repaint();

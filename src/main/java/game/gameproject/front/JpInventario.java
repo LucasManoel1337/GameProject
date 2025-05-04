@@ -16,12 +16,12 @@ import javax.swing.KeyStroke;
 
 public class JpInventario extends JPanel {
 
-    private GameFrame gameFrame;  // Alterado para GameFrame
-    private infoPlayerDto playerInfo; // Referência ao DTO do jogador
+    private GameFrame gameFrame;
+    private infoPlayerDto playerInfo;
 
     public JpInventario(GameFrame gameFrame, infoPlayerDto playerInfo) {
-        this.gameFrame = gameFrame;  // Agora gameFrame não será mais null
-        this.playerInfo = playerInfo;  // Atribui o playerInfo passado no construtor
+        this.gameFrame = gameFrame;
+        this.playerInfo = playerInfo;
         setLayout(null);
         setBackground(Color.WHITE);
 
@@ -29,45 +29,47 @@ public class JpInventario extends JPanel {
         JLabel lTituloTela = new JLabel("Inventário");
         lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
         lTituloTela.setForeground(Color.BLACK);
-        lTituloTela.setBounds(30, 90, 700, 30);  // Coloquei a posição mais alta para que o título fique acima
+        lTituloTela.setBounds(30, 90, 700, 30);
         lTituloTela.setVisible(true);
         add(lTituloTela);
 
-        ImageIcon originalIcon = new ImageIcon("imagens/Menu/inventario/inventario.png");
-
-// Obter dimensões originais
-        int originalWidth = originalIcon.getIconWidth();
-        int originalHeight = originalIcon.getIconHeight();
-
-// Calcular novas dimensões mantendo a proporção
-        int newWidth = 500; // Largura desejada
-        int newHeight = (originalHeight * newWidth) / originalWidth; // Altura proporcional
-
-        Image scaledImage = originalIcon.getImage().getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-
-// Criar JLabel com a imagem redimensionada corretamente
-        JLabel imageLabel = new JLabel(scaledIcon);
-        imageLabel.setBounds((520 - newWidth) / 2, 200, newWidth, newHeight);
-
-        add(imageLabel);
-
         // Criar a imagem
         ImageIcon logoIcon = new ImageIcon("imagens/Menu/PlacaTelas.png");
-        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
+        Image img = logoIcon.getImage().getScaledInstance(200, 100, Image.SCALE_SMOOTH);
         logoIcon = new ImageIcon(img);
 
         JLabel logoLabel = new JLabel(logoIcon);
-        logoLabel.setBounds(0, 50, 200, 100);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        logoLabel.setBounds(0, 50, 200, 100);
         add(logoLabel);
-
-        ImageIcon logoIconS = new ImageIcon("imagens/Menu/status/status.png");
-        Image imgS = logoIconS.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);  // Ajuste de tamanho da imagem
-        logoIconS = new ImageIcon(imgS);
         
-        JLabel logoLabelE = new JLabel(logoIconS);
-        logoLabelE.setBounds(420+410, 70 + 50, 275+150, 410+150);  // Coloquei a imagem abaixo do título (a partir de y = 50)
+        ImageIcon logoIconPIP1 = new ImageIcon("imagens/Menu/inventario/pergaminhoInventarioP1.png");
+        Image imgPIP1 = logoIconPIP1.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);
+        logoIconPIP1 = new ImageIcon(imgPIP1);
+        
+        ImageIcon logoIconPIP2 = new ImageIcon("imagens/Menu/inventario/pergaminhoInventarioP2.png");
+        Image imgPIP2 = logoIconPIP2.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);
+        logoIconPIP2 = new ImageIcon(imgPIP2);
+        
+        ImageIcon logoIconArmadura;
+        if (playerInfo.getSex().equals("M")) {
+            logoIconArmadura = new ImageIcon("imagens/Menu/inventario/pergaminhoArmaduraM.png");
+        } else {
+            logoIconArmadura = new ImageIcon("imagens/Menu/inventario/pergaminhoArmaduraF.png");
+        }
+        Image imgArmadura = logoIconArmadura.getImage().getScaledInstance(275+150, 410+150, Image.SCALE_SMOOTH);
+        logoIconArmadura = new ImageIcon(imgArmadura);
+
+        JLabel logoLabelS = new JLabel(logoIconPIP1);
+        logoLabelS.setBounds(420, 70 + 50, 275+150, 410+150);
+        add(logoLabelS);
+        
+        JLabel logoLabelE = new JLabel(logoIconPIP2);
+        logoLabelE.setBounds(420+410, 70 + 50, 275+150, 410+150);
         add(logoLabelE);
+        
+        JLabel logoLabelD = new JLabel(logoIconArmadura);
+        logoLabelD.setBounds(10, 70 + 50, 275+150, 410+150);
+        add(logoLabelD);
 
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
