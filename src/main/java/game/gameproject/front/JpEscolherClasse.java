@@ -30,7 +30,7 @@ public class JpEscolherClasse extends JPanel {
         addLabel("Berserker", 385, 165, 14, Color.BLACK);
         addLabel("Tank", 616, 165, 14, Color.BLACK);
         addLabel("Gladiador", 816, 165, 14, Color.BLACK);
-        addLabel("Cavaleiro Sombrio", 1014, 165, 12, Color.BLACK);
+        addLabel("Cavaleiro Sombrio", 1000, 165, 14, Color.BLACK);
         
         // Magos
         addLabel("Elementalista", 158, 484, 14, Color.BLACK);
@@ -255,7 +255,7 @@ public class JpEscolherClasse extends JPanel {
         
         addImage("imagens/Menu/PlacaTelas.png", 0, 50, 200, 100);
         
-        addClassImages("imagens/Menu/classes/fundoclasse.png", new int[][]{
+        addClassImages("imagens/Menu/escolherClasse/pergaminoVazio.png", new int[][]{
             {535, 130}, {750, 130}, {965, 130}, {320, 130}, {105, 130}, // Guerreiros
             {535, 450}, {750, 450}, {965, 450}, {320, 450}, {105, 450}  // Magos
         }, 400 / 2, 540 / 2);

@@ -206,6 +206,7 @@ public class GameFrame extends JFrame {
             telaConfiguracoes = new JpConfiguracoes(this, playerInfo);
         }
         currentPanel = telaConfiguracoes;
+        telaConfiguracoes.atualizarConfig1();
         add(currentPanel);
         revalidate();
         repaint();

@@ -4,6 +4,7 @@ C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproje
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\controller\LauncherFrame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\chatDto.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\ConfiguracoesDto.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\EstatisticasDto.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\infoPlayerDto.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\Jogador.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\dto\VersoesDto.java
@@ -20,6 +21,7 @@ C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproje
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpConfiguracoes.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpCreditos.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpEscolherClasse.java
+C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpEstatisticas.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpGame.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpGuilda.java
 C:\Users\LKZ\Documents\NetBeansProjects\GameProject\src\main\java\game\gameproject\front\JpInventario.java
