@@ -6,9 +6,11 @@ public class ConfiguracoesDto {
 	private static boolean modoDev = false;
 	private static boolean visualizarDadosHub = true;
 	private static boolean visualizarFps = false;
+	private static boolean visualizarEfeitos = true;
 	private static int volumeMaster = 100;
 	private static int volumeMusica = 100;
 	private static int volumeEfeitosSonoros = 100;
+	private static boolean filtroLinguagemChat = false;
 	
 	public boolean isVisualizarFps() {
     	return visualizarFps;
@@ -54,5 +56,17 @@ public class ConfiguracoesDto {
 	}
 	public static void setVolumeEfeitosSonoros(int volumeEfeitosSonoros) {
 		ConfiguracoesDto.volumeEfeitosSonoros = volumeEfeitosSonoros;
+	}
+	public static boolean isVisualizarEfeitos() {
+		return visualizarEfeitos;
+	}
+	public static void setVisualizarEfeitos(boolean visualizarEfeitos) {
+		ConfiguracoesDto.visualizarEfeitos = visualizarEfeitos;
+	}
+	public static boolean isFiltroLinguagemChat() {
+		return filtroLinguagemChat;
+	}
+	public static void setFiltroLinguagemChat(boolean filtroLinguagemChat) {
+		ConfiguracoesDto.filtroLinguagemChat = filtroLinguagemChat;
 	}
 }

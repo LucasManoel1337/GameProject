@@ -14,6 +14,7 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
@@ -30,13 +31,29 @@ public class JpConfiguracoes extends JPanel {
     public JSlider volumeMusica;
     public JSlider volumeEfeito;
     
+    public JLabel lVolumeMaster;
+    public JLabel lVolumeMusica;
+    public JLabel lVolumeEfeito;
+    
+    public JLabel lResolucao;
+    public String[] resolucoes = {
+    	    "1280x768",
+    	};
+    public JComboBox<String> resolucao;
+    
+    public JCheckBox visualizarFPS;
+    public JCheckBox visualizarOutrosJogadores;
+    public JCheckBox visualizarDadosHub;
+    public JCheckBox visualizarEfeitosVisuais;
+    public JCheckBox filtroDeLinguagemNoChat;
+    
+    public JCheckBox modoDesenvolvedor;
+    
     public JpConfiguracoes(GameFrame gameFrame, infoPlayerDto playerInfo) {
         this.gameFrame = gameFrame;
         this.playerInfo = playerInfo;
         setLayout(null);
         setBackground(Color.WHITE);
-        
-        VersoesDto VD = new VersoesDto();
         
         JLabel lTituloTela = new JLabel("Config");
         lTituloTela.setFont(new Font("Arial", Font.BOLD, 30));
@@ -54,34 +71,54 @@ public class JpConfiguracoes extends JPanel {
         logoLabel.setBounds(0, 50, 200, 100);
         add(logoLabel);
         
+        add(lVolumeMaster = criarLabel("Volume Master", 78, 200, 300, 50, "Arial", 14));
         add(volumeMaster = criarSliders(70, 220, 300, 50));
+        add(lVolumeMusica = criarLabel("Volume Música", 78, 270, 300, 50, "Arial", 14));
         add(volumeMusica = criarSliders(70, 290, 300, 50));
+        add(lVolumeEfeito = criarLabel("Volume Efeitos Sonoros", 78, 340, 300, 50, "Arial", 14));
         add(volumeEfeito = criarSliders(70, 360, 300, 50));
         
-        add(criarCheckBox(
+        add(lResolucao = criarLabel("Resolução", 78, 400, 300, 50, "Arial", 14));
+        add(resolucao = criarComboBox(78, 440, 290, 30, resolucoes));
+        
+        add(visualizarFPS =criarCheckBox(
         	    "Visualizar FPS",
         	    900, 200, 200, 30,
         	    Config.isVisualizarFps(),
         	    e -> Config.setVisualizarFps(!Config.isVisualizarFps())
         	));
         
-        add(criarCheckBox(
+        add(visualizarOutrosJogadores = criarCheckBox(
         	    "Visualizar outros jogadores",
         	    900, 235, 200, 30,
         	    Config.isVisualizarOutrosJogadores(),
         	    e -> Config.setVisualizarOutrosJogadores(!Config.isVisualizarOutrosJogadores())
         	));
         
-        add(criarCheckBox(
+        add(visualizarDadosHub = criarCheckBox(
         		"Visualizar dados HUB",
         		900, 270, 200, 30,
         	    Config.isVisualizarDadosHub(),
         	    e -> Config.setVisualizarDadosHub(!Config.isVisualizarDadosHub())
         	));
         
-        add(criarCheckBox(
-        		"Modo desenvolvedor",
+        add(visualizarEfeitosVisuais = criarCheckBox(
+        		"Visualizar Efeitos Visuais",
         		900, 305, 200, 30,
+        	    Config.isVisualizarEfeitos(),
+        	    e -> Config.setVisualizarEfeitos(!Config.isVisualizarEfeitos())
+        	));
+        
+        add(filtroDeLinguagemNoChat = criarCheckBox(
+        		"Filtro de linguagem no chat",
+        		900, 340, 200, 30,
+        	    Config.isFiltroLinguagemChat(),
+        	    e -> Config.setFiltroLinguagemChat(!Config.isFiltroLinguagemChat())
+        	));
+        
+        add(modoDesenvolvedor = criarCheckBox(
+        		"Modo desenvolvedor",
+        		900, 375, 200, 30,
         	    Config.isModoDev(),
         	    e -> Config.setModoDev(!Config.isModoDev())
         	));
@@ -104,6 +141,22 @@ public class JpConfiguracoes extends JPanel {
         
         MenuBarService.addMenu(this, gameFrame, playerInfo);
         bindEscapeKey();
+    }
+    
+    public JComboBox<String> criarComboBox(int x, int y, int largura, int altura, String[] opcoes) {
+        JComboBox<String> comboBox = new JComboBox<>(opcoes);
+        comboBox.setBounds(x, y, largura, altura);
+        comboBox.setVisible(true);
+        comboBox.setFocusable(false);
+        return comboBox;
+    }
+    
+    public JLabel criarLabel(String texto, int x, int y, int largura, int altura, String fonte, int tamanhoFonte) {
+    	JLabel jLabel = new JLabel(texto);
+    	jLabel.setFont(new Font(fonte, Font.BOLD, tamanhoFonte));
+        jLabel.setForeground(Color.BLACK);
+        jLabel.setBounds(x, y, largura, altura);
+    	return jLabel;
     }
     
     public JSlider criarSliders(int x, int y, int largura, int altura) {
