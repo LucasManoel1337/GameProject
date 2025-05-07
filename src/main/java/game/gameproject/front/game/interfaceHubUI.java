@@ -14,7 +14,7 @@ import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.PlayerService;
 
-public class interfaceHub {
+public class interfaceHubUI {
 
     private final ConfiguracoesDto config = new ConfiguracoesDto();
 
@@ -39,7 +39,7 @@ public class interfaceHub {
     public JLabel lNivel;
     public JLabel lDinheiro;
 
-    public interfaceHub(infoPlayerDto playerInfo, JPanel painel) {
+    public interfaceHubUI(infoPlayerDto playerInfo, JPanel painel) {
     	this.playerInfo = playerInfo;
     	
     	lNivel = createLabel("Lv. " + playerInfo.getNivel(), 20, 0, 150, 80);
@@ -73,10 +73,8 @@ public class interfaceHub {
         lNivel.setText("Lv. " + playerInfo.getNivel());
         lDinheiro.setText("$ " + playerInfo.getDinheiro());
 
-        if (config.isModoDev()) {
-        	desenharPingEOnline(g);
-        	g.drawImage(hotbar, 385, 678, 500, 50, null);
-        }
+        desenharPingEOnline(g);
+        //g.drawImage(hotbar, 385, 678, 500, 50, null);
 
         if (config.isVisualizarFps()) {
             calcularFps();

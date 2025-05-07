@@ -32,9 +32,10 @@ public class Player extends JPanel implements KeyListener {
     private final StatusService SS = new StatusService();
     private final infoPlayerDto playerInfo;
     private final ConfiguracoesDto Config = new ConfiguracoesDto();
-    private final interfaceHub IH;
+    private final interfaceHubUI IH;
     private final PlayerService PS = new PlayerService();
     private final ChatUI ChatUI;
+    private final HotbarUI HotbarUI = new HotbarUI();
     
     // Imagens de animação do personagem
     private static BufferedImage personagemCima1, personagemCima2;
@@ -59,7 +60,7 @@ public class Player extends JPanel implements KeyListener {
     	this.playerInfo = playerInfo;
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
-        this.IH = new interfaceHub(this.playerInfo, this);
+        this.IH = new interfaceHubUI(this.playerInfo, this);
         this.ChatUI = new ChatUI(this.playerInfo);
         ChatUI.addToParent(this);
         
@@ -239,6 +240,7 @@ public class Player extends JPanel implements KeyListener {
         ChatUI.render(g, xPersonagem, yPersonagem);
         
         IH.desenharHubStats(g, this);
+        HotbarUI.render(g);
         
         verificarStatus();
     }
