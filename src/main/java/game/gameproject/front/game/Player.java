@@ -10,7 +10,6 @@ import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.Jogador;
 import game.gameproject.dto.chatDto;
 import game.gameproject.dto.infoPlayerDto;
-import game.gameproject.services.ChatGlobalService;
 import game.gameproject.services.PlayerService;
 import game.gameproject.services.StatusService;
 
@@ -32,22 +31,10 @@ public class Player extends JPanel implements KeyListener {
     // Instanciamento de outras classes
     private final StatusService SS = new StatusService();
     private final infoPlayerDto playerInfo;
-    private final chatDto CD = new chatDto();
     private final ConfiguracoesDto Config = new ConfiguracoesDto();
     private final interfaceHub IH;
     private final PlayerService PS = new PlayerService();
-    private ChatGlobalService CGS;
-    
-    // Elementos do chat e sua animação
-    private JTextField JTFChat = new JTextField();
-    private JButton bChatEnviar = new JButton("Enviar");
-    private JTextArea chatArea = new JTextArea();
-    private JScrollPane chatScrollPane = new JScrollPane(chatArea);
-    private int digitarIndex = 0;
-    private Timer timerDigitar;
-    private BufferedImage[] digitar = new BufferedImage[6];
-    public boolean chatAtivo = CD.isChatAtivo();
-    public boolean chatVisivel = false;
+    private final ChatUI ChatUI;
     
     // Imagens de animação do personagem
     private static BufferedImage personagemCima1, personagemCima2;
@@ -73,7 +60,8 @@ public class Player extends JPanel implements KeyListener {
         this.setLayout(null);
         this.mapaAtual = mapaInicial;
         this.IH = new interfaceHub(this.playerInfo, this);
-        this.CGS = new ChatGlobalService(this.playerInfo);
+        this.ChatUI = new ChatUI(this.playerInfo);
+        ChatUI.addToParent(this);
         
         setFocusable(true);
         setDoubleBuffered(true);
@@ -85,65 +73,6 @@ public class Player extends JPanel implements KeyListener {
         xPersonagem = PS.buscarCoordenadaX(playerInfo.getIdPlayer());
         yPersonagem = PS.buscarCoordenadaY(playerInfo.getIdPlayer());
         sprite = PS.buscarSprite(playerInfo.getIdPlayer());
-        
-        JTFChat.setBounds(5, 695, 300, 30);
-        JTFChat.setBackground(new Color(211, 211, 211, 150));
-        JTFChat.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-        JTFChat.setVisible(false);
-        JTFChat.addActionListener(e -> bChatEnviar.doClick());
-        this.add(JTFChat);
-
-        // Botão de envio
-        bChatEnviar.setBounds(310, 695, 70, 30);
-        bChatEnviar.setBackground(new Color(32, 3, 3));
-        bChatEnviar.setForeground(Color.WHITE);
-        bChatEnviar.setFocusPainted(false);
-        bChatEnviar.setOpaque(true);
-        bChatEnviar.setContentAreaFilled(true);
-        bChatEnviar.setBorderPainted(false);
-        bChatEnviar.setVisible(false);
-        bChatEnviar.addActionListener(e -> {
-            CGS.enviarMensagem(playerInfo.getIdPlayer(), playerInfo.getNickPlayer(), JTFChat.getText(), playerInfo);
-            JTFChat.setText("");
-            carregarMensagens();
-        });
-        this.add(bChatEnviar);
-
-        chatArea.setEditable(false);
-        chatArea.setBackground(new Color(255, 255, 255, 150));
-        chatArea.setForeground(Color.BLACK);
-        chatArea.setRows(20);
-        chatArea.setColumns(30);
-        chatArea.setLineWrap(true);
-        chatArea.setWrapStyleWord(true);
-        chatArea.setFocusable(false);
-        chatArea.setBorder(null);
-        chatArea.setVisible(false);
-
-        chatScrollPane.setBounds(5, 410, 375, 280);
-        chatScrollPane.setVisible(false);
-        chatScrollPane.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
-
-        chatScrollPane.getVerticalScrollBar().setOpaque(false);
-        chatScrollPane.getHorizontalScrollBar().setOpaque(false);
-
-        chatScrollPane.getVerticalScrollBar().setPreferredSize(new Dimension(0, 0));
-        chatScrollPane.getHorizontalScrollBar().setPreferredSize(new Dimension(0, 0));
-        chatScrollPane.setBorder(null);
-        this.add(chatScrollPane);
-        carregarMensagens();
-        
-        timerDigitar = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                animarDigitar();
-            }
-        });
-        timerDigitar.start();
-    }
-    
-    private void animarDigitar() {
-        digitarIndex = (digitarIndex + 1) % digitar.length;
     }
 
     private void carregarImagens() {
@@ -156,13 +85,7 @@ public class Player extends JPanel implements KeyListener {
             personagemEsquerda2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloDireito2.png")));
             personagemDireita1 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo1.png")));
             personagemDireita2 = ImageIO.read(new File(String.format("imagens/player/"+playerInfo.getClasse()+"/modeloEsquerdo2.png")));
-            fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png")));
-            digitar[0] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando1.png"));
-            digitar[1] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando2.png"));
-            digitar[2] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando3.png"));
-            digitar[3] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando4.png"));
-            digitar[4] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando5.png"));
-            digitar[5] = ImageIO.read(new File("imagens/game/animacaoDigitando/digitando6.png"));
+            fundoTest = ImageIO.read(new File(String.format("imagens/game/fundos/fundo.png"))); // Provisorio até o sistema de mapas
         } catch (IOException e) {
             System.err.println("Erro ao carregar imagens na classe Player!" + e.getMessage());
             System.exit(1);
@@ -274,7 +197,7 @@ public class Player extends JPanel implements KeyListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.drawImage(fundoTest, 0, 0, 1280, 768, this);
+        g.drawImage(fundoTest, 0, 0, 1280, 768, this); // Provisorio até o sistema de mapas
 
         if (Config.isVisualizarOutrosJogadores()) {
             for (Jogador jogador : jogadores) {
@@ -290,7 +213,7 @@ public class Player extends JPanel implements KeyListener {
                 IH.desenharNomeJogador(g, nomeExibicao, jogador.getxPlayer(), jogador.getyPlayer(), 30);
 
                 if (jogador.getDigitando()) {
-                    g.drawImage(digitar[digitarIndex], jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
+                    g.drawImage(ChatUI.getTypingImage(), jogador.getxPlayer(), jogador.getyPlayer() - 60, 30, 30, this);
                 }
             }
         }
@@ -313,35 +236,11 @@ public class Player extends JPanel implements KeyListener {
         	System.out.println("VOCE MORREU!");
         }
         
-        sistemaChat(g);
+        ChatUI.render(g, xPersonagem, yPersonagem);
         
         IH.desenharHubStats(g, this);
         
         verificarStatus();
-    }
-    
-    private void sistemaChat(Graphics g) {
-    	if(CD.isChatAtivo()) {
-    		if (chatVisivel == false) {
-    			chatVisivel = true;
-    			
-    			JTFChat.setVisible(true);
-            	bChatEnviar.setVisible(true);
-            	chatScrollPane.setVisible(true);
-            	chatArea.setVisible(true);
-    		}
-    		g.drawImage(digitar[digitarIndex], xPersonagem, yPersonagem-60, 30, 30, this);
-        } else {
-        	if(chatVisivel == true) {
-        		JTFChat.setText("");
-            	JTFChat.setVisible(false);
-            	bChatEnviar.setVisible(false);
-            	chatScrollPane.setVisible(false);
-            	chatArea.setVisible(false);
-            	
-            	chatVisivel = false;
-        	}
-        }
     }
     
     public void verificarStatus() {
@@ -361,11 +260,6 @@ public class Player extends JPanel implements KeyListener {
     		
     		resetarMovimento();
     	}
-    }
-
-    private void carregarMensagens() {
-        String mensagens = CGS.obterUltimasMensagens();
-        chatArea.setText(mensagens);
     }
     
     public void resetarMovimento() {
