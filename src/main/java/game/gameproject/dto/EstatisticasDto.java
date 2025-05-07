@@ -1,24 +1,32 @@
 package game.gameproject.dto;
 
 public class EstatisticasDto {
+	// === Estatísticas de Combate ===
 	private static int qntMortes = 0;
-	private static int xpGanho = 0;
-	private static int danoSofrido = 0;
 	private static int danoRealizado = 0;
+	private static int danoSofrido = 0;
 	private static int criticosAcertados = 0;
-	private static int itensCurativosUsados = 0;
-	private static int missoesConcluidas = 0;
-	private static int interacoesComNpcs = 0;
-	private static int dinheiroTotalColetado = 0;
-	private static int itensColetados = 0;
-	private static int itensVendidos = 0;
-	private static int comprasRealizadas = 0;
 	private static int manaGasta = 0;
 	private static int magiasLançadas = 0;
 	private static int buffsRecebidos = 0;
 	private static int debuffSofridos = 0;
-	private static int vezesUsouPontoDeTransporte = 0;
+
+	// === Estatísticas de Progressão ===
+	private static int xpGanho = 0;
+	private static int missoesConcluidas = 0;
 	private static int porcentagemExploradaDoMapa = 0;
+
+	// === Estatísticas de Interações ===
+	private static int interacoesComNpcs = 0;
+	private static int vezesUsouPontoDeTransporte = 0;
+	private static int teleportesDescobertos = 0;
+
+	// === Estatísticas de Itens e Recursos ===
+	private static int itensColetados = 0;
+	private static int itensVendidos = 0;
+	private static int comprasRealizadas = 0;
+	private static int dinheiroTotalColetado = 0;
+	private static int itensCurativosUsados = 0;
 	
 	public static int getQntMortes() {
 		return qntMortes;
@@ -74,6 +82,9 @@ public class EstatisticasDto {
 	public static int getPorcentagemExploradaDoMapa() {
 		return porcentagemExploradaDoMapa;
 	}
+	public static int getTeleportesDescobertos() {
+		return teleportesDescobertos;
+	}
 	public static void setQntMortes(int qntMortes) {
 		EstatisticasDto.qntMortes = qntMortes;
 	}
@@ -127,5 +138,8 @@ public class EstatisticasDto {
 	}
 	public static void setPorcentagemExploradaDoMapa(int porcentagemExploradaDoMapa) {
 		EstatisticasDto.porcentagemExploradaDoMapa = porcentagemExploradaDoMapa;
+	}
+	public static void setTeleportesDescobertos(int teleportesDescobertos) {
+		EstatisticasDto.teleportesDescobertos = teleportesDescobertos;
 	}
 }
