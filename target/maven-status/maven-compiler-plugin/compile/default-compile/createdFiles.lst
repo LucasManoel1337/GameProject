@@ -70,7 +70,6 @@ game\gameproject\front\JpMissoes.class
 game\gameproject\services\RegistrarService.class
 game\gameproject\front\JpMapa$1.class
 game\gameproject\controller\KeyController$6.class
-game\gameproject\front\game\interfaceHub.class
 game\gameproject\front\JpStatus$5.class
 game\gameproject\controller\GameFrame$1.class
 game\gameproject\front\Autenticacao\JpLogin$3.class
@@ -80,7 +79,6 @@ game\gameproject\front\JpConfiguracoes.class
 game\gameproject\services\AtualizarGameService.class
 game\gameproject\services\VersionGameService$VersaoService.class
 game\gameproject\controller\KeyController.class
-game\gameproject\front\game\Player$1.class
 game\gameproject\front\Autenticacao\JpLogin.class
 game\gameproject\front\Autenticacao\JpRegistrar$BotaoArredondado.class
 game\gameproject\front\JpStatus$4.class

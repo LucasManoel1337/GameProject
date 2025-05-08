@@ -5,6 +5,8 @@ import game.gameproject.dto.ConfiguracoesDto;
 import game.gameproject.dto.VersoesDto;
 import game.gameproject.dto.infoPlayerDto;
 import game.gameproject.services.MenuBarService;
+import game.gameproject.support.SliderCustomUI;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -12,6 +14,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -19,6 +22,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.KeyStroke;
+import javax.swing.UIManager;
+import javax.swing.plaf.ColorUIResource;
 
 public class JpConfiguracoes extends JPanel {
 
@@ -71,16 +76,17 @@ public class JpConfiguracoes extends JPanel {
         logoLabel.setBounds(0, 50, 200, 100);
         add(logoLabel);
         
-        add(lVolumeMaster = criarLabel("Volume Master", 78, 200, 300, 50, "Arial", 14));
+        add(lVolumeMaster = criarLabel("Volume Master", 78, 200, 300, 50, "Serif", 14));
         add(volumeMaster = criarSliders(70, 220, 300, 50));
-        add(lVolumeMusica = criarLabel("Volume Música", 78, 270, 300, 50, "Arial", 14));
+        add(lVolumeMusica = criarLabel("Volume Música", 78, 270, 300, 50, "Serif", 14));
         add(volumeMusica = criarSliders(70, 290, 300, 50));
-        add(lVolumeEfeito = criarLabel("Volume Efeitos Sonoros", 78, 340, 300, 50, "Arial", 14));
+        add(lVolumeEfeito = criarLabel("Volume Efeitos Sonoros", 78, 340, 300, 50, "Serif", 14));
         add(volumeEfeito = criarSliders(70, 360, 300, 50));
         
-        add(lResolucao = criarLabel("Resolução", 78, 400, 300, 50, "Arial", 14));
+        add(lResolucao = criarLabel("Resolução", 78, 400, 300, 50, "Serif", 14));
         add(resolucao = criarComboBox(78, 440, 290, 30, resolucoes));
         
+        configurarCheckBoxVisual();
         add(visualizarFPS =criarCheckBox(
         	    "Visualizar FPS",
         	    900, 200, 200, 30,
@@ -169,6 +175,9 @@ public class JpConfiguracoes extends JPanel {
         jSlider.setVisible(true);
         jSlider.setFocusable(false);
         jSlider.setBounds(x, y, largura, altura);
+
+        jSlider.setUI(new SliderCustomUI(jSlider, Color.YELLOW));
+
         return jSlider;
     }
     
@@ -176,6 +185,8 @@ public class JpConfiguracoes extends JPanel {
         JCheckBox checkBox = new JCheckBox(texto);
         checkBox.setBounds(x, y, largura, altura);
         checkBox.setSelected(selecionadoInicial);
+        checkBox.setFont(new Font("Serif", Font.BOLD, 16));
+        checkBox.setForeground(Color.BLACK);
         checkBox.setVisible(true);
         checkBox.setOpaque(false);
         checkBox.setFocusable(false);
@@ -187,6 +198,14 @@ public class JpConfiguracoes extends JPanel {
     	volumeMaster.setValue(Config.getVolumeMaster());
     	volumeMusica.setValue(Config.getVolumeMusica());
     	volumeEfeito.setValue(Config.getVolumeEfeitosSonoros());
+    }
+    
+    public void configurarCheckBoxVisual() {
+        UIManager.put("CheckBox.icon", UIManager.getIcon("CheckBox.icon"));
+        UIManager.put("CheckBox.background", new Color(0, 0, 0, 0));
+        UIManager.put("CheckBox.focus", new Color(0, 0, 0, 0));
+        UIManager.put("CheckBox.select", new ColorUIResource(255, 215, 100));
+        UIManager.put("CheckBox.border", BorderFactory.createLineBorder(new Color(255, 215, 100)));
     }
     
     private void bindEscapeKey() {
